@@ -15,23 +15,26 @@ declare(strict_types=1);
 
 namespace SpojeNet\CSas\Ui;
 
-use Ease\Shared as Shr;
-
 require_once '../vendor/autoload.php';
 
-date_default_timezone_set('Europe/Prague');
+require_once './init.php';
 
-session_start();
+$appId = WebPage::getRequestValue('app', 'int');
 
-Shr::Init(['CSAS_API_KEY', 'CSAS_CLIENT_ID', 'CSAS_CLIENT_SECRET', 'CSAS_REDIRECT_URI'], '../.env');
+if ($appId) {
+    $app = new \SpojeNet\CSas\Application($appId, ['autoload' => true]);
+    $app->sandboxMode(WebPage::getRequestValue('env') === 'sandbox');
 
-$auth = new Auth();
+    $auth = new \SpojeNet\CSas\Auth($app);
 
-$idpUri = $auth->getIdpUri();
+    $idpUri = $auth->getIdpUri();
 
-if (\PHP_SAPI === 'cli') {
-    echo $idpUri;
+    if (\PHP_SAPI === 'cli') {
+        echo $idpUri;
+    } else {
+        header('Location: '.$idpUri);
+        echo '<a href='.$idpUri.'>'.$idpUri.'</a>';
+    }
 } else {
-    header('Location: '.$idpUri);
-    echo '<a href='.$idpUri.'>'.$idpUri.'</a>';
+    header('Location: index.php');
 }

@@ -22,4 +22,32 @@ namespace SpojeNet\CSas;
  */
 class Token extends \Ease\SQL\Engine
 {
+    public string $myTable = 'token';
+
+    public function getNextTokenUuid(): string
+    {
+        $this->setDataValue('uuid', \Ease\Functions::guidv4());
+
+        return $this->dbSync() ? $this->getDataValue('uuid') : throw new \RuntimeException(_('Error Creating Token Record'), 22);
+    }
+
+    public function setApplication(Application $app): void
+    {
+        $this->setDataValue('application_id', $app->getMyKey());
+        $this->setDataValue('environment', $app->sandboxMode() ? 'sandbox' : 'production');
+    }
+
+    public function store(\League\OAuth2\Client\Token\AccessToken $tokens): int
+    {
+        $this->setDataValue('access_token', $tokens->getToken());
+        $this->setDataValue('refresh_token', $tokens->getRefreshToken());
+        $this->setDataValue('expires_in', $tokens->getExpires());
+
+        return $this->saveToSQL();
+    }
+
+    public function getAppTokens(Application $app)
+    {
+        return $this->listingQuery()->where(['application_id' => $app->getMyKey()]);
+    }
 }

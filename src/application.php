@@ -19,7 +19,7 @@ require_once '../vendor/autoload.php';
 
 require_once './init.php';
 
-$app = new \SpojeNet\CSas\Application(\Ease\WebPage::getRequestValue('id', 'int'),['autoload'=>true]);
+$app = new \SpojeNet\CSas\Application(\Ease\WebPage::getRequestValue('id', 'int'), ['autoload' => true]);
 
 $action = \Ease\WebPage::getRequestValue('action');
 
@@ -57,8 +57,18 @@ if (empty($instanceName) === false) {
 WebPage::singleton()->addItem(new PageTop(_('CSAS').': '.$instanceName));
 
 $appRow = new \Ease\TWB5\Row();
-$appRow->addColumn(6,new AppEditorForm($app));
-$appRow->addColumn(6,new \Ease\Html\ImgTag($app->getDataValue('logo')));
+$opsCol = $appRow->addColumn(6, [
+    new \Ease\Html\ImgTag($app->getDataValue('logo')),
+    new AppTokenTable($app),
+]);
+
+// if($app->getDataValue('id')) {
+$opsCol->addItem(new \Ease\TWB5\LinkButton('auth.php?app='.$app->getMyKey().'&env=sandbox', 'Auth SandBox', 'primary'));
+// }
+
+$opsCol->addItem(new \Ease\TWB5\LinkButton('auth.php?app='.$app->getMyKey().'&env=production', 'Auth Production', 'success'));
+
+$appRow->addColumn(6, new AppEditorForm($app));
 
 WebPage::singleton()->container->addItem($appRow);
 

@@ -32,6 +32,8 @@
         "robmorgan/phinx": "0.x-dev",
         "vitexsoftware/ease-twbootstrap5": "dev-main",
         "league/oauth2-client": "dev-master",
-        "vitexsoftware/ease-fluentpdo": "dev-main"
+        "vitexsoftware/ease-fluentpdo": "dev-main",
+        "vitexsoftware/ease-html-widgets": "^1.0",
+        "spojenet/csas-accountsapi": "^0.2.0"
     }
 }

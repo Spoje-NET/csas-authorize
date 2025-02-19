@@ -20,16 +20,62 @@ namespace SpojeNet\CSas;
  *
  * @author Vitex <info@vitexsoftware.cz>
  */
-class Application extends \Ease\SQL\Engine {
-
+class Application extends \Ease\SQL\Engine
+{
     public string $myTable = 'application';
+    private $sandboxed = false;
 
-    public static function getImage(string $appUuid): string {
-        return 'https://webapi.developers.erstegroup.com/api/v1/file-manager/files2/' . $appUuid . '/image/small';
+    public static function getImage(string $appUuid): string
+    {
+        return 'https://webapi.developers.erstegroup.com/api/v1/file-manager/files2/'.$appUuid.'/image/small';
     }
 
-    public function takeData(array $data): int {
+    public function takeData(array $data): int
+    {
         unset($data['class']);
+
         return parent::takeData($data);
+    }
+
+    public function getUuid(): string
+    {
+        return $this->getDataValue('');
+    }
+
+    public function sandboxMode(?bool $enabled = null): bool
+    {
+        if ((null === $enabled) === false) {
+            $this->sandboxed = $enabled;
+        }
+
+        return $this->sandboxed;
+    }
+
+    public function getApiKey(): string
+    {
+        return $this->getDataValue($this->sandboxed ? 'sandbox_api_key' : 'production_api_key');
+    }
+
+    public function getClientId(): string
+    {
+        return $this->getDataValue($this->sandboxed ? 'sandbox_client_id' : 'production_client_id');
+    }
+
+    public function getClientSecret(): string
+    {
+        return $this->getDataValue($this->sandboxed ? 'sandbox_client_secret' : 'production_client_secret');
+    }
+
+    public function getRedirectUri(): string
+    {
+        return $this->getDataValue($this->sandboxed ? 'sandbox_redirect_uri' : 'production_redirect_uri');
+    }
+
+    public function getToken(): Token
+    {
+        $tokener = new Token();
+        $tokener->setApplication($this);
+
+        return $tokener;
     }
 }

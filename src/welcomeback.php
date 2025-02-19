@@ -13,95 +13,83 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace SpojeNet\CSas;
+namespace SpojeNet\CSas\Ui;
 
-use Ease\Shared as Shr;
+require_once './init.php';
 
-date_default_timezone_set('Europe/Prague');
-
-require_once '../vendor/autoload.php';
-
-Shr::Init(['CSAS_API_KEY', 'CSAS_CLIENT_ID', 'CSAS_CLIENT_SECRET', 'CSAS_REDIRECT_URI'], '../.env');
-
-session_start();
+$state = WebPage::getRequestValue('state');
+$code = WebPage::getRequestValue('code');
+$token = new \SpojeNet\CSas\Token(null, ['keyColumn' => 'uuid']);
+$token->loadFromSQL($state);
 
 \Ease\TWB5\WebPage::singleton(new \Ease\TWB5\WebPage(_('CSAS Authorize')));
 \Ease\TWB5\WebPage::singleton()->addItem(new \Ease\Html\ImgTag('images/csas-authorize.svg', _('CSAS Authorize'), ['align' => 'right']));
 \Ease\TWB5\WebPage::singleton()->addItem(new \Ease\Html\H1Tag(_('CSAS Authorize')));
 
-$provider = new \SpojeNet\CSas\Auth();
+if ($token->getMyKey()) {
+    $app = new \SpojeNet\CSas\Application($token->getDataValue('application_id'), ['autoload' => true]);
+    $app->sandboxMode($token->getDataValue('environment') === 'sandbox');
 
-// Start session
-// If we don't have an authorization code then get one
-if (!isset($_GET['code'])) {
-    // Fetch the authorization URL from the provider; this returns the
-    // urlAuthorize option and generates and applies any necessary parameters
-    // (e.g. state).
-    $authorizationUrl = $provider->getAuthorizationUrl();
+    $provider = new \SpojeNet\CSas\Auth($app);
 
-    // Get the state generated for you and store it to the session.
-    $_SESSION['oauth2state'] = $provider->getState();
+    // Start session
+    // If we don't have an authorization code then get one
+    if (!isset($code)) {
+        // Fetch the authorization URL from the provider; this returns the
+        // urlAuthorize option and generates and applies any necessary parameters
+        // (e.g. state).
+        $authorizationUrl = $provider->getAuthorizationUrl();
 
-    // Optional, only required when PKCE is enabled.
-    // Get the PKCE code generated for you and store it to the session.
-    $_SESSION['oauth2pkceCode'] = $provider->getPkceCode();
+        // Get the state generated for you and store it to the session.
+        $_SESSION['oauth2state'] = $provider->getState();
 
-    // Redirect the user to the authorization URL.
-    header('Location: '.$authorizationUrl);
+        // Optional, only required when PKCE is enabled.
+        // Get the PKCE code generated for you and store it to the session.
+        $_SESSION['oauth2pkceCode'] = $provider->getPkceCode();
 
-    exit;
+        // Redirect the user to the authorization URL.
+        header('Location: '.$authorizationUrl);
 
-    // Check given state against previously stored one to mitigate CSRF attack
-}
+        exit;
 
-if (empty($_GET['state']) || empty($_SESSION['oauth2state']) || $_GET['state'] !== $_SESSION['oauth2state']) {
-    if (isset($_SESSION['oauth2state'])) {
-        unset($_SESSION['oauth2state']);
+        // Check given state against previously stored one to mitigate CSRF attack
     }
 
-    exit('Invalid state');
+    try {
+        // Optional, only required when PKCE is enabled.
+        // Restore the PKCE code stored in the session.
+        // $provider->setPkceCode($_SESSION['oauth2pkceCode']);
+        // Try to get an access token using the authorization code grant.
+        $tokens = $provider->getAccessToken('authorization_code', ['code' => $code]);
+
+        $token->store($tokens);
+
+        $tokens = $provider->getAccessToken('refresh_token', [
+            'refresh_token' => $tokens->getRefreshToken(),
+        ]);
+
+        //        echo 'access token:<textarea>'.$tokens->getToken().'</textarea>';
+        //        echo 'refresh token:<textarea>'.$tokens->getRefreshToken().'</textarea>';
+        //        // Using the access token, we may look up details about the
+        //        // resource owner.
+        //        $resourceOwner = $provider->getResourceOwner($tokens);
+        //
+        //        var_export($resourceOwner->toArray());
+        //
+        //        // The provider provides a way to get an authenticated API request for
+        //        // the service, using the access token; it returns an object conforming
+        //        // to Psr\Http\Message\RequestInterface.
+        //        $request = $provider->getAuthenticatedRequest(
+        //            'GET',
+        //            'https://service.example.com/resource',
+        //            $tokens
+        //        );
+    } catch (\League\OAuth2\Client\Provider\Exception\IdentityProviderException $e) {
+        // Failed to get the access token or user details.
+        exit($e->getMessage());
+    }
+
+    \Ease\TWB5\WebPage::singleton()->draw();
+} else {
+    header('Location: index.php');
 }
-
-try {
-    // Optional, only required when PKCE is enabled.
-    // Restore the PKCE code stored in the session.
-    $provider->setPkceCode($_SESSION['oauth2pkceCode']);
-
-    // Try to get an access token using the authorization code grant.
-    $tokens = $provider->getAccessToken('authorization_code', [
-        'code' => $_GET['code'],
-    ]);
-
-    // We have an access token, which we may use in authenticated
-    // requests against the service provider's API.
-    echo 'Access Token: '.$tokens->getToken().'<br>';
-    echo 'Refresh Token: '.$tokens->getRefreshToken().'<br>';
-    echo 'Expired in: '.$tokens->getExpires().'<br>';
-    echo 'Already expired? '.($tokens->hasExpired() ? 'expired' : 'not expired').'<br>';
-
-    $tokens = $provider->getAccessToken('refresh_token', [
-        'refresh_token' => $tokens->getRefreshToken(),
-    ]);
-
-    echo 'access token:<textarea>'.$tokens->getToken().'</textarea>';
-    //        echo 'refresh token:<textarea>'.$tokens->getRefreshToken().'</textarea>';
-    //        // Using the access token, we may look up details about the
-    //        // resource owner.
-    //        $resourceOwner = $provider->getResourceOwner($tokens);
-    //
-    //        var_export($resourceOwner->toArray());
-    //
-    //        // The provider provides a way to get an authenticated API request for
-    //        // the service, using the access token; it returns an object conforming
-    //        // to Psr\Http\Message\RequestInterface.
-    //        $request = $provider->getAuthenticatedRequest(
-    //            'GET',
-    //            'https://service.example.com/resource',
-    //            $tokens
-    //        );
-} catch (\League\OAuth2\Client\Provider\Exception\IdentityProviderException $e) {
-    // Failed to get the access token or user details.
-    exit($e->getMessage());
-}
-
-\Ease\TWB5\WebPage::singleton()->draw();

@@ -20,20 +20,23 @@ namespace SpojeNet\CSas\Ui;
  *
  * @author Vitex <info@vitexsoftware.cz>
  */
-class AppTable extends \Ease\TWB5\Table {
-
-    public function __construct(\SpojeNet\CSas\Application $app) {
+class AppTable extends \Ease\TWB5\Table
+{
+    public function __construct(\SpojeNet\CSas\Application $app)
+    {
         $apps = $app->listingQuery();
         parent::__construct();
-        $this->addRowHeaderColumns(['#', '🖼️', ]);
-       
-        foreach ($apps as $appData) {
-            unset($appData['uuid']);
-            if($appData['logo']){
-                $appData['logo'] = new \Ease\Html\ImgTag($appData['logo'], $appData['name'],['height'=>40]);
+        $this->addRowHeaderColumns(['#', '🖼️']);
+
+        foreach ($apps as $appDataRaw) {
+            $appData['id'] = new \Ease\TWB5\LinkButton('application.php?id='.$appDataRaw['id'], $appDataRaw['id'], 'link');
+
+            if ($appDataRaw['logo']) {
+                $appData['logo'] = new \Ease\Html\ImgTag($appDataRaw['logo'], $appDataRaw['name'], ['height' => 40]);
             }
-            $appData['name'] = new \Ease\Html\ATag('application.php?id='.$appData['id'], $appData['name']);
-            $appData['id'] = new \Ease\TWB5\LinkButton('application.php?id='.$appData['id'], $appData['id'], 'link');
+
+            $appData['name'] = new \Ease\Html\ATag('application.php?id='.$appDataRaw['id'], $appDataRaw['name']);
+
             $this->addRowColumns($appData);
         }
     }

@@ -27,16 +27,22 @@ class Auth extends \League\OAuth2\Client\Provider\GenericProvider
 {
     public const PRODUCTION_SITE = 'https://bezpecnost.csas.cz/api/psd2/fl/oidc/v1';
     public const SANDBOX_SITE = 'https://webapi.developers.erstegroup.com/api/csas/sandbox/v1/sandbox-idp';
+
+    /**
+     * @var string Current Token's uuid
+     */
+    protected string $idpState;
     private string $idpLink;
+    private Application $application;
 
-    public function __construct()
+    public function __construct(Application $application)
     {
-        $this->idpLink = Shr::cfg('CSAS_SANDBOX_MODE', false) ? self::SANDBOX_SITE : self::PRODUCTION_SITE;
+        $this->application = $application;
+        $this->idpLink = $application->sandboxMode() ? self::SANDBOX_SITE : self::PRODUCTION_SITE;
 
-        // Use environment variables
-        $clientId = Shr::cfg('CSAS_CLIENT_ID');
-        $clientSecret = Shr::cfg('CSAS_CLIENT_SECRET');
-        $redirectUri = Shr::cfg('CSAS_REDIRECT_URI');
+        $clientId = $application->getClientId();
+        $clientSecret = $application->getClientSecret();
+        $redirectUri = $application->getRedirectUri();
 
         $tokenUrl = $this->idpLink.'/token';
         $authorizeUrl = $this->idpLink.'/authorize';
@@ -63,7 +69,7 @@ class Auth extends \League\OAuth2\Client\Provider\GenericProvider
             'client_id' => Shr::cfg('CSAS_CLIENT_ID'),
             'response_type' => 'code',
             'redirect_uri' => Shr::cfg('CSAS_REDIRECT_URI'),
-            'state' => Fnc::randomString(),
+            'state' => $this->application->getToken()->getNextTokenUuid(),
             'access_type' => 'offline',
             //    'scope' => implode('%20', [
             //        'siblings.accounts',

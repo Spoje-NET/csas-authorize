@@ -34,9 +34,11 @@ class AppEditorForm extends EngineForm
         $this->addInput(new InputTextTag('sandbox_client_id'), _('Sandbox Client ID'));
         $this->addInput(new InputTextTag('sandbox_client_secret'), _('Sandbox Client Secret'));
         $this->addInput(new InputTextTag('sandbox_redirect_uri'), _('Sandbox Redirect URI'));
+        $this->addInput(new InputTextTag('sandbox_api_key'), _('Sandbox API Key'));
         $this->addInput(new InputTextTag('production_client_id'), _('Production Client ID'));
         $this->addInput(new InputTextTag('production_client_secret'), _('Production Client Secret'));
         $this->addInput(new InputTextTag('production_redirect_uri'), _('Production Redirect URI'));
+        $this->addInput(new InputTextTag('production_api_key'), _('Production API Key'));
 
         $this->addItem(new SubmitButton(_('Save'), 'success'));
 
