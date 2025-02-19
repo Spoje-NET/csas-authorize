@@ -33,6 +33,7 @@ class Application extends \Ease\SQL\Engine
     public function takeData(array $data): int
     {
         unset($data['class']);
+
         return parent::takeData($data);
     }
 
@@ -77,5 +78,14 @@ class Application extends \Ease\SQL\Engine
 
         return $tokener;
     }
-    
+
+    public function pruneTokens(): void
+    {
+        $tokens = new Token();
+
+        foreach ($tokens->listingQuery()->where(['application_id' => $this->getMyKey(), 'expire_at < '.time()]) as $tokenData) {
+            $tokens->addStatusMessage('🧹 '._('Removing  Expired Token').$tokenData['id'], 'info');
+            $tokens->deleteFromSQL(['id' => $tokenData['id']]);
+        }
+    }
 }

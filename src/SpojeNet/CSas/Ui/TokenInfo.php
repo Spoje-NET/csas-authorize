@@ -20,9 +20,10 @@ namespace SpojeNet\CSas\Ui;
  *
  * @author Vitex <info@vitexsoftware.cz>
  */
-class TokenInfo extends \Ease\Html\DivTag {
-
-    public function __construct(\SpojeNet\CSas\Token $token) {
+class TokenInfo extends \Ease\Html\DivTag
+{
+    public function __construct(\SpojeNet\CSas\Token $token)
+    {
         parent::__construct(new \Ease\Html\H3Tag($token->getDataValue('uuid')));
         $this->addItem(new \Ease\Html\DivTag($token->getDataValue('environment')));
 
@@ -41,10 +42,9 @@ class TokenInfo extends \Ease\Html\DivTag {
                 $class = 'text-default';
             }
 
-            $this->addItem(new \Ease\Html\DivTag(_('Created At') . ' ' . $token->getDataValue('created_at') . ' (' . new \Ease\Html\Widgets\LiveAge(new \DateTime($token->getDataValue('created_at'))) . ' )'));
-            $this->addItem(new \Ease\Html\DivTag(_('Expires At') . ' ' . $expiresAt->format('Y-m-d H:i:s') . ' (' . new \Ease\Html\Widgets\LiveAge($expiresAt, ['class' => $class]) . ' )'));
+            $this->addItem(new \Ease\Html\DivTag(_('Created At').' '.$token->getDataValue('created_at').' ('.new \Ease\Html\Widgets\LiveAge(new \DateTime($token->getDataValue('created_at'))).' )'));
+            $this->addItem(new \Ease\Html\DivTag(_('Expires At').' '.$expiresAt->format('Y-m-d H:i:s').' ('.new \Ease\Html\Widgets\LiveAge($expiresAt, ['class' => $class]).' )'));
         }
-
 
         $this->addItem(new \Ease\Html\DivTag(_('Access Token')));
         $this->addItem(new \Ease\Html\TextareaTag('access_token', $token->getDataValue('access_token')));

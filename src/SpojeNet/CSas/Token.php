@@ -15,10 +15,13 @@ declare(strict_types=1);
 
 namespace SpojeNet\CSas;
 
+use League\OAuth2\Client\Provider\AbstractProvider;
+use League\OAuth2\Client\Token\AccessToken;
+
 /**
  * Description of Token.
  *
- * @author Vitex <info@vitexsoftware.cz>
+ * Author: Vitex <info@vitexsoftware.cz>
  */
 class Token extends \Ease\SQL\Engine
 {
@@ -37,7 +40,7 @@ class Token extends \Ease\SQL\Engine
         $this->setDataValue('environment', $app->sandboxMode() ? 'sandbox' : 'production');
     }
 
-    public function store(\League\OAuth2\Client\Token\AccessToken $tokens): int
+    public function store(AccessToken $tokens): int
     {
         $this->setDataValue('access_token', $tokens->getToken());
         $this->setDataValue('refresh_token', $tokens->getRefreshToken());
@@ -56,5 +59,22 @@ class Token extends \Ease\SQL\Engine
         $expiresIn = $this->getDataValue('expires_in');
 
         return $expiresIn !== null && $expiresIn < time();
+    }
+
+    public function refreshToken(AbstractProvider $provider): AccessToken
+    {
+        $refreshToken = $this->getDataValue('refresh_token');
+
+        if (empty($refreshToken)) {
+            throw new \RuntimeException(_('No refresh token available'), 23);
+        }
+
+        $newToken = $provider->getAccessToken('refresh_token', [
+            'refresh_token' => $refreshToken,
+        ]);
+
+        $this->store($newToken);
+
+        return $newToken;
     }
 }
