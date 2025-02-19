@@ -30,18 +30,53 @@ if (null === $tokenId) {
 $token = new \SpojeNet\CSas\Token($tokenId, ['autoload' => true]);
 
 $app = new \SpojeNet\CSas\Application($token->getDataValue('application_id'), ['autoload' => true]);
+$app->sandboxMode($token->getDataValue('environment') == 'sandbox');
 
-WebPage::singleton()->addItem(new PageTop(_('CSAS').': '._('Token')));
+$action = \Ease\WebPage::getRequestValue('action');
+
+if ($action == 'delete') {
+    $token->deleteFromSQL();
+    $token->addStatusMessage(sprintf(_('Token %s removal'), $token->getMyKey()), 'success');
+    WebPage::singleton()->redirect('application.php?id=' . $app->getMyKey());
+}
+
+WebPage::singleton()->addItem(new PageTop(_('CSAS') . ': ' . _('Token')));
 
 $tokenRow = new \Ease\TWB5\Row();
 $opsCol = $tokenRow->addColumn(6, [
     new \Ease\Html\H2Tag($app->getDataValue('name')),
     new \Ease\Html\ImgTag($app->getDataValue('logo')),
-]);
+    new \Ease\TWB5\LinkButton('token.php?id=' . $tokenId . '&action=test', '💨 ' . _('Test'), 'warning'),
+        ]);
+
+if ($token->isExpired()) {
+    $opsCol->addItem(new \Ease\TWB5\LinkButton('token.php?id=' . $tokenId . '&action=delete', '🗑 ️' . _('Remove'), 'danger'));
+} else {
+    $opsCol->addItem(new \Ease\TWB5\LinkButton('', '🗑 ️' . _('Remove'), 'danger disabled'));
+}
 
 $tokenRow->addColumn(6, new TokenInfo($token));
 
 WebPage::singleton()->container->addItem($tokenRow);
+
+if ($action == 'test') {
+    $apiInstance = new \SpojeNET\Csas\Accounts\DefaultApi(new \SpojeNET\Csas\ApiClient(
+                    [
+                'apikey' => $app->getApiKey(),
+                'token' => $token->getDataValue('access_token'),
+                'debug' => false,
+                'sandbox' => $app->sandboxMode(),
+                    ],
+            ));
+
+    try {
+        $result = $apiInstance->getAccounts();
+        WebPage::singleton()->container->addItem( new \Ease\Html\PreTag(nl2br(print_r($result, true))));
+    } catch (Exception $e) {
+        WebPage::singleton()->container->addItem('Exception when calling DefaultApi->getAccounts: ', $e->getMessage());
+    }
+}
+
 
 WebPage::singleton()->addItem(new PageBottom());
 

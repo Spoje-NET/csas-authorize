@@ -33,7 +33,6 @@ class Application extends \Ease\SQL\Engine
     public function takeData(array $data): int
     {
         unset($data['class']);
-
         return parent::takeData($data);
     }
 
@@ -78,4 +77,5 @@ class Application extends \Ease\SQL\Engine
 
         return $tokener;
     }
+    
 }

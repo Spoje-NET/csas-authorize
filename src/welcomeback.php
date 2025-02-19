@@ -68,6 +68,7 @@ if ($token->getMyKey()) {
             'refresh_token' => $tokens->getRefreshToken(),
         ]);
 
+        WebPage::singleton()->container->addItem(new \Ease\TWB5\LinkButton('token.php?id='.$token->getDataValue('id'), '🔑'._('Token'), 'success'));
         //        echo 'access token:<textarea>'.$tokens->getToken().'</textarea>';
         //        echo 'refresh token:<textarea>'.$tokens->getRefreshToken().'</textarea>';
         //        // Using the access token, we may look up details about the

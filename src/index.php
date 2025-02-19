@@ -27,7 +27,7 @@ WebPage::singleton()->container->addItem(new \Ease\TWB5\LinkButton('application.
 
 WebPage::singleton()->container->addItem(new \SpojeNet\CSas\Ui\AppTable(new \SpojeNet\CSas\Application()));
 
-WebPage::singleton()->container->addItem(new \Ease\TWB5\LinkButton('auth.php', _('Authorization'), 'primary'));
+// WebPage::singleton()->container->addItem(new \Ease\TWB5\LinkButton('auth.php', _('Authorization'), 'primary'));
 
 WebPage::singleton()->addItem(new PageBottom());
 

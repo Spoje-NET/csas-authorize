@@ -50,4 +50,11 @@ class Token extends \Ease\SQL\Engine
     {
         return $this->listingQuery()->where(['application_id' => $app->getMyKey()]);
     }
+
+    public function isExpired(): bool
+    {
+        $expiresIn = $this->getDataValue('expires_in');
+
+        return $expiresIn !== null && $expiresIn < time();
+    }
 }
