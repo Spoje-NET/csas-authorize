@@ -20,7 +20,7 @@ require_once '../vendor/autoload.php';
 require_once './init.php';
 
 $app = new \SpojeNet\CSas\Application(\Ease\WebPage::getRequestValue('id', 'int'), ['autoload' => true]);
-//$app->pruneTokens();
+// $app->pruneTokens();
 
 $action = \Ease\WebPage::getRequestValue('action');
 

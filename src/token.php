@@ -57,8 +57,9 @@ if ($token->isExpired()) {
     $opsCol->addItem(new \Ease\TWB5\LinkButton('token.php?id='.$tokenId.'&action=delete', '🗑 ️'._('Remove'), 'danger'));
 } else {
     $opsCol->addItem(new \Ease\TWB5\LinkButton('', '🗑 ️'._('Remove'), 'danger disabled'));
-    $opsCol->addItem(new \Ease\TWB5\LinkButton('token.php?id='.$tokenId.'&action=refresh', '♻️ ️'._('Refresh'), 'secondary'));
 }
+
+$opsCol->addItem(new \Ease\TWB5\LinkButton('token.php?id='.$tokenId.'&action=refresh', '♻️ ️'._('Refresh'), 'secondary'));
 
 $tokenRow->addColumn(6, new TokenInfo($token));
 
@@ -81,7 +82,6 @@ if ($action === 'test') {
         WebPage::singleton()->container->addItem('Exception when calling DefaultApi->getAccounts: ', $e->getMessage());
     }
 }
-
 
 WebPage::singleton()->addItem(new PageBottom());
 

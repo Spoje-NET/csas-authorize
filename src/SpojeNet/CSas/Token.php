@@ -26,6 +26,8 @@ use League\OAuth2\Client\Token\AccessToken;
 class Token extends \Ease\SQL\Engine
 {
     public string $myTable = 'token';
+    public ?string $createColumn = 'created_at';
+    public ?string $updateColumn = 'updated_at';
 
     public function getNextTokenUuid(): string
     {
@@ -43,7 +45,12 @@ class Token extends \Ease\SQL\Engine
     public function store(AccessToken $tokens): int
     {
         $this->setDataValue('access_token', $tokens->getToken());
-        $this->setDataValue('refresh_token', $tokens->getRefreshToken());
+        $refreshToken = $tokens->getRefreshToken();
+
+        if (empty($refreshToken) === false) {
+            $this->setDataValue('refresh_token', $refreshToken);
+        }
+
         $this->setDataValue('expires_in', $tokens->getExpires());
 
         return $this->saveToSQL();
@@ -73,7 +80,9 @@ class Token extends \Ease\SQL\Engine
             'refresh_token' => $refreshToken,
         ]);
 
+        
         $this->store($newToken);
+        $this->addStatusMessage(_('Token Refreshed'), 'success');
 
         return $newToken;
     }
