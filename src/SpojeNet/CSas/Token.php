@@ -27,7 +27,7 @@ class Token extends \Ease\SQL\Engine
 {
     public string $myTable = 'token';
     public ?string $createColumn = 'created_at';
-    public ?string $updateColumn = 'updated_at';
+    public ?string $lastModifiedColumn = 'updated_at';
 
     public function getNextTokenUuid(): string
     {
@@ -42,7 +42,7 @@ class Token extends \Ease\SQL\Engine
         $this->setDataValue('environment', $app->sandboxMode() ? 'sandbox' : 'production');
     }
 
-    public function store(AccessToken $tokens): int
+    public function store(AccessToken $tokens): bool
     {
         $this->setDataValue('access_token', $tokens->getToken());
         $refreshToken = $tokens->getRefreshToken();
@@ -52,8 +52,9 @@ class Token extends \Ease\SQL\Engine
         }
 
         $this->setDataValue('expires_in', $tokens->getExpires());
-
-        return $this->saveToSQL();
+        $this->unsetDataValue('created_at');
+        $this->unsetDataValue('updated_at');
+        return $this->dbSync();
     }
 
     public function getAppTokens(Application $app)
@@ -83,7 +84,6 @@ class Token extends \Ease\SQL\Engine
         
         $this->store($newToken);
         $this->addStatusMessage(_('Token Refreshed'), 'success');
-
         return $newToken;
     }
 }

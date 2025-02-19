@@ -66,9 +66,9 @@ class Auth extends \League\OAuth2\Client\Provider\GenericProvider
          * @var array<string, string> Authorization link parameters
          */
         $idpParams = [
-            'client_id' => Shr::cfg('CSAS_CLIENT_ID'),
+            'client_id' => $this->application->getClientId(),
             'response_type' => 'code',
-            'redirect_uri' => Shr::cfg('CSAS_REDIRECT_URI'),
+            'redirect_uri' => $this->application->getRedirectUri(),
             'state' => $this->application->getToken()->getNextTokenUuid(),
             'access_type' => 'offline',
             //    'scope' => implode('%20', [
