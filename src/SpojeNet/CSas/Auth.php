@@ -16,7 +16,6 @@ declare(strict_types=1);
 namespace SpojeNet\CSas;
 
 use Ease\Functions as Fnc;
-use Ease\Shared as Shr;
 
 /**
  * Description of Auth.

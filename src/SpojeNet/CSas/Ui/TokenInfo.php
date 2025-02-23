@@ -48,6 +48,24 @@ class TokenInfo extends \Ease\Html\DivTag
 
         $this->addItem(new \Ease\Html\DivTag(_('Access Token')));
         $this->addItem(new \Ease\Html\TextareaTag('access_token', $token->getDataValue('access_token')));
+
+        // Check refresh token expiration
+        if ($token->getDataValue('created_at')) {
+            $refreshCreated = new \DateTime($token->getDataValue('created_at'));
+            $refreshExpiresAt = $refreshCreated->modify('+ 180 days');
+
+            $refreshInterval = $now->diff($refreshExpiresAt);
+
+            if ($refreshExpiresAt < $now || $refreshInterval->days < 1) {
+                $refreshClass = 'text-danger';
+            } else {
+                $refreshClass = 'text-default';
+            }
+
+            $this->addItem(new \Ease\Html\DivTag(_('Refresh Token Expires At').' '.$refreshExpiresAt->format('Y-m-d H:i:s').' ('.new \Ease\Html\Widgets\LiveAge($refreshExpiresAt, ['class' => $refreshClass]).' )'));
+            $this->addItem(new \Ease\Html\DivTag(sprintf(_('Expire in %d days'), $refreshInterval->days)));
+        }
+
         $this->addItem(new \Ease\Html\DivTag(_('Refresh Token')));
         $this->addItem(new \Ease\Html\TextareaTag('refresh_token', $token->getDataValue('refresh_token')));
     }

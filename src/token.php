@@ -59,7 +59,8 @@ if ($token->isExpired()) {
     $opsCol->addItem(new \Ease\TWB5\LinkButton('', '🗑 ️'._('Remove'), 'danger disabled'));
 }
 
-$opsCol->addItem(new \Ease\TWB5\LinkButton('token.php?id='.$tokenId.'&action=refresh', '♻️ ️'._('Refresh'), 'secondary'));
+  
+$opsCol->addItem(new \Ease\TWB5\LinkButton('token.php?id='.$tokenId.'&action=refresh', '♻️ ️'._('Refresh'), $token->tokenValiditySeconds() < 0 ? 'success' :  'secondary'));
 
 $tokenRow->addColumn(6, new TokenInfo($token));
 

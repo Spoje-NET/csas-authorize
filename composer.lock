@@ -4490,12 +4490,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "5c0771ee082dd659fcd67735339b9a569b3fe3bc"
+                "reference": "85ee4f91b6bb30fb6ac97eef91cb98d356762dae"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/5c0771ee082dd659fcd67735339b9a569b3fe3bc",
-                "reference": "5c0771ee082dd659fcd67735339b9a569b3fe3bc",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/85ee4f91b6bb30fb6ac97eef91cb98d356762dae",
+                "reference": "85ee4f91b6bb30fb6ac97eef91cb98d356762dae",
                 "shasum": ""
             },
             "require": {
@@ -4541,7 +4541,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-02-17T20:35:15+00:00"
+            "time": "2025-02-20T08:02:10+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",
@@ -4876,12 +4876,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "a89821126ce86970d78213b430cd549e95073c9c"
+                "reference": "053e70fc00d2fe87434c89ba625db8c9585e73ae"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/a89821126ce86970d78213b430cd549e95073c9c",
-                "reference": "a89821126ce86970d78213b430cd549e95073c9c",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/053e70fc00d2fe87434c89ba625db8c9585e73ae",
+                "reference": "053e70fc00d2fe87434c89ba625db8c9585e73ae",
                 "shasum": ""
             },
             "require": {
@@ -4966,7 +4966,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2025-02-18T14:13:36+00:00"
+            "time": "2025-02-20T08:16:46+00:00"
         },
         {
             "name": "psr/event-dispatcher",
@@ -6722,12 +6722,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-php80.git",
-                "reference": "60328e362d4c2c802a54fcbf04f9d3fb892b4cf8"
+                "reference": "0cc9dd0f17f61d8131e7df6b84bd344899fe2608"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-php80/zipball/60328e362d4c2c802a54fcbf04f9d3fb892b4cf8",
-                "reference": "60328e362d4c2c802a54fcbf04f9d3fb892b4cf8",
+                "url": "https://api.github.com/repos/symfony/polyfill-php80/zipball/0cc9dd0f17f61d8131e7df6b84bd344899fe2608",
+                "reference": "0cc9dd0f17f61d8131e7df6b84bd344899fe2608",
                 "shasum": ""
             },
             "require": {
@@ -6779,7 +6779,7 @@
                 "shim"
             ],
             "support": {
-                "source": "https://github.com/symfony/polyfill-php80/tree/v1.31.0"
+                "source": "https://github.com/symfony/polyfill-php80/tree/1.x"
             },
             "funding": [
                 {
@@ -6795,7 +6795,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-09-09T11:45:10+00:00"
+            "time": "2025-01-02T08:10:11+00:00"
         },
         {
             "name": "symfony/polyfill-php81",
@@ -7051,14 +7051,14 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "league/oauth2-client": 20,
         "robmorgan/phinx": 20,
-        "vitexsoftware/ease-fluentpdo": 20,
-        "vitexsoftware/ease-twbootstrap5": 20
+        "vitexsoftware/ease-twbootstrap5": 20,
+        "league/oauth2-client": 20,
+        "vitexsoftware/ease-fluentpdo": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
-    "platform": {},
-    "platform-dev": {},
+    "platform": [],
+    "platform-dev": [],
     "plugin-api-version": "2.6.0"
 }

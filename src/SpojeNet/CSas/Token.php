@@ -54,6 +54,7 @@ class Token extends \Ease\SQL\Engine
         $this->setDataValue('expires_in', $tokens->getExpires());
         $this->unsetDataValue('created_at');
         $this->unsetDataValue('updated_at');
+
         return $this->dbSync();
     }
 
@@ -81,9 +82,52 @@ class Token extends \Ease\SQL\Engine
             'refresh_token' => $refreshToken,
         ]);
 
-        
         $this->store($newToken);
         $this->addStatusMessage(_('Token Refreshed'), 'success');
+
         return $newToken;
     }
+
+    public function secondsToExpire(string $columnName): int
+    {
+
+        /**
+         * @var string|int Time can be in seconds or SQL datetime
+         */
+        $expiresRaw = $this->getDataValue($columnName);
+        if(is_numeric($expiresRaw)){
+            $expiresAt = (new \DateTime())->setTimestamp($expiresRaw);
+        } else {
+            $expiresAt = new \DateTime($expiresRaw);
+        }
+        
+        return $expiresAt->getTimestamp() - time();
+    }
+
+    public function daysToExpire(string $columnName): int
+    {
+        $seconds = $this->secondsToExpire($columnName);
+
+        return (int) floor($seconds / 86400);
+    }
+    
+    /**
+     * Validity od refresh token is 180 days only
+     * 
+     * @return int
+     */
+    public function tokenRenewInDays(): int {
+        return $this->daysToExpire('created_at');
+    }
+
+
+    /**
+     * The Access Token can be used only 5minutes
+     * 
+     * @return int
+     */
+    public function tokenValiditySeconds() {
+        return $this->secondsToExpire('expires_in');
+    }
+    
 }
