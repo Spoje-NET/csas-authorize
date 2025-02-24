@@ -77,7 +77,12 @@ if ($action === 'test') {
     ));
 
     try {
-        $result = $apiInstance->getAccounts();
+        $toDate = new \DateTime();
+        $fromDate = (clone $toDate)->modify('-1 month');
+        # $result = $apiInstance->getStatements('AA195E7DB499B4D9F48D46C208625FF53F2245F7', $fromDate->format('Y-m-d'), $toDate->format('Y-m-d'));
+        
+        $result =  $apiInstance->getTransactions('AA195E7DB499B4D9F48D46C208625FF53F2245F7', $fromDate->format('Y-m-d'), $toDate->format('Y-m-d'));
+
         WebPage::singleton()->container->addItem(new \Ease\Html\PreTag(nl2br(print_r($result, true))));
     } catch (\Exception $e) {
         WebPage::singleton()->container->addItem('Exception when calling DefaultApi->getAccounts: ', $e->getMessage());

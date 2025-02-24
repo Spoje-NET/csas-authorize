@@ -1,0 +1,2 @@
+#!/bin/sh
+php -q -f /usr/libexec/csas/csas-access-token.php -- $@
