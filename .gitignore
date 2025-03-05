@@ -2,3 +2,12 @@
 /.build/
 /.env
 /vendor/
+/debian/csas-authorize.debhelper.log
+/debian/csas-authorize.substvars
+/debian/debhelper-build-stamp
+/debian/files
+/debian/multiflexi-csas-authorize.debhelper.log
+/debian/multiflexi-csas-authorize.substvars
+/debian/.debhelper/
+/debian/csas-authorize/
+/debian/multiflexi-csas-authorize/

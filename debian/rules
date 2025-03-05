@@ -1,0 +1,14 @@
+#!/usr/bin/make -f
+
+%:
+	dh $@
+
+override_dh_install:
+	dh_install
+#	sed -i -e 's/\.\.\//.\//g' debian/csas-authorize/usr/share/csas-authorize/about.php
+#	sed -i -e 's/..\/vendor/\/var\/lib\/composer\/csas-authorize/g' debian/csas-authorize/usr/share/csas-authorize/includes/init.php
+#	sed -i -e 's/..\/i18n/\/usr\/share\/locale/g' debian/csas-authorize/usr/share/csas-authorize/includes/init.php
+
+override_dh_clean:
+	debconf-updatepo
+	dh_clean

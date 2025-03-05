@@ -1,0 +1,24 @@
+Source: csas-authorize
+Build-Depends: debhelper (>= 7.0.50~), debhelper-compat (= 12), po-debconf,moreutils, jq, composer
+Standards-Version: 3.8.4
+Maintainer: Vítězslav Dvořák <info@vitexsoftware.cz>
+Uploaders: Vitex <vitex@hippy.cz>
+Priority: optional
+Homepage: https://github.com/VitexSoftware/Flexplorer
+
+Package: csas-authorize
+Depends: ${misc:Depends}, composer-debian, php-intl, libjs-font-awesome,php-vitexsoftware-ease-bootstrap-widgets-abraflexi , php-vitexsoftware-ease-bricks, php-vitexsoftware-abraflexi-bricks, php-vitexsoftware-ease-bootstrap-widgets, php-vitexsoftware-datatables-abraflexi
+Architecture: all
+Section: web
+Priority: optional
+Description: CSas/Erste Access Token obtainer
+ Manage Renew/Access tokens for your Erste/Csas Apps
+
+Package: multiflexi-csas-authorize
+Depends: multiflexi, csas-authorize
+Architecture: all
+Section: web
+Priority: optional
+Description: Access Csas/Erste APIs from MultiFlexi
+ Into MultiFlexi add Credential type for Erste/Csas
+ able to obtain fresh API access token
