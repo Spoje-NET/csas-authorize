@@ -59,7 +59,7 @@ WebPage::singleton()->addItem(new PageTop(_('CSAS').': '.$instanceName));
 
 $appRow = new \Ease\TWB5\Row();
 $opsCol = $appRow->addColumn(6, [
-    new \Ease\Html\ImgTag($app->getDataValue('logo')),
+    new \Ease\Html\ImgTag($app->getDataValue('logo') ? $app->getDataValue('logo') : 'images/unknown.svg' ),
     new AppTokenTable($app),
 ]);
 

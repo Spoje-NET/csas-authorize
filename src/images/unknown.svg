@@ -1,0 +1,11 @@
+--2025-03-06 19:06:12--  https://openclipart.org/download/326709/iconunknow.svg
+Resolving openclipart.org (openclipart.org)... 45.79.168.40, 2600:3c03::f03c:91ff:fede:927c
+Connecting to openclipart.org (openclipart.org)|45.79.168.40|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 15198 (15K) [image/svg+xml]
+Saving to: ‘iconunknow.svg’
+
+     0K .......... ....                                       100%  138M=0s
+
+2025-03-06 19:06:12 (138 MB/s) - ‘iconunknow.svg’ saved [15198/15198]
+
