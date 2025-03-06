@@ -19,7 +19,7 @@ require_once '../vendor/autoload.php';
 session_start();
 \Ease\Shared::init(
     ['DB_CONNECTION', 'DB_HOST', 'DB_PORT', 'DB_DATABASE', 'DB_USERNAME', 'DB_PASSWORD'],
-    \dirname(__DIR__).'/.env',
+    '../.env',
 );
 \Ease\Locale::singleton(null, '../i18n', 'csas-authorize');
 
