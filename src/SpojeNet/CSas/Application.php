@@ -88,4 +88,14 @@ class Application extends \Ease\SQL\Engine
             $tokens->deleteFromSQL(['id' => $tokenData['id']]);
         }
     }
+
+    public function hasSandboxRedirectUri(): bool
+    {
+        return !empty($this->getDataValue('sandbox_redirect_uri'));
+    }
+
+    public function hasProductionRedirectUri(): bool
+    {
+        return !empty($this->getDataValue('production_redirect_uri'));
+    }
 }

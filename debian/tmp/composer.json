@@ -1,0 +1,53 @@
+{
+  "name": "spojenet/csas-authorize",
+  "description": "CSAS Access token endpoint App",
+  "type": "project",
+  "require": {
+    "deb/ease-fluentpdo": "*",
+    "deb/ease-html-widgets": "*"
+  },
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Vítězslav Dvořák",
+      "email": "info@vitexsoftware.cz"
+    }
+  ],
+  "config": {
+    "vendor-dir": "/var/lib/composer/csas-authorize"
+  },
+  "minimum-stability": "dev",
+  "autoload": {
+    "psr-4": {
+      "SpojeNet\\CSas\\": "./CSas",
+      "SpojeNet\\CSas\\Ui\\": "./CSas/Ui"
+    }
+  },
+  "repositories": [
+    {
+      "type": "path",
+      "url": "/usr/share/php/EaseCore/"
+    },
+    {
+      "type": "path",
+      "url": "/usr/share/php/EaseHtml/"
+    },
+    {
+      "type": "path",
+      "url": "/usr/share/php/EaseHtmlWidgets/"
+    },
+    {
+      "type": "path",
+      "url": "/usr/share/php/EaseTWB5/"
+    },
+    {
+      "type": "path",
+      "url": "/usr/share/php/EaseFluentPDO/"
+    },
+    {
+      "type": "path",
+      "url": "/usr/share/php/EaseTWB5Widgets/"
+    }
+  ],
+  "version": "0.1.0"
+}

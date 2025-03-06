@@ -7,12 +7,30 @@ Priority: optional
 Homepage: https://github.com/VitexSoftware/Flexplorer
 
 Package: csas-authorize
-Depends: ${misc:Depends}, composer-debian, php-intl,php-vitexsoftware-ease-bootstrap5, php-vitexsoftware-ease-html-widgets, php-vitexsoftware-ease-fluentpdo, php-spojenet-csas-accountsapi
+Depends: ${misc:Depends}, composer-debian, php-intl,php-vitexsoftware-ease-bootstrap5, php-vitexsoftware-ease-html-widgets, php-vitexsoftware-ease-fluentpdo, php-spojenet-csas-accountsapi, php-robmorgan-phinx|php-cakephp-phinx
 Architecture: all
 Section: web
 Priority: optional
 Description: CSas/Erste Access Token obtainer
  Manage Renew/Access tokens for your Erste/Csas Apps
+
+Package: csas-authorize-sqlite
+Multi-Arch: foreign
+Depends: ${misc:Depends},csas-authorize, dbconfig-sqlite3, php-sqlite3, sqlite3
+Conflicts: csas-authorize-mysql
+Architecture: all
+Description: sqlite support for multiabraflexi setup
+ Mandatory dependencies for use CSas Authorize with SQLite database
+
+Package: csas-authorize-mysql
+Multi-Arch: foreign
+Depends: ${misc:Depends},csas-authorize, dbconfig-mysql, php-mysql
+Conflicts: csas-authorize-sqlite
+Suggests: mariadb-server
+Architecture: all
+Description: mariadb support for multiabraflexi setup
+ Mandatory dependencies for use CSas authorize setup with MySQL/MariaDB databas
+
 
 Package: multiflexi-csas-authorize
 Depends: multiflexi, csas-authorize

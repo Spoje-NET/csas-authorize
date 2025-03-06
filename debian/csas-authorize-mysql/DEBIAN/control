@@ -1,0 +1,15 @@
+Package: csas-authorize-mysql
+Source: csas-authorize
+Version: 0.1.0
+Architecture: all
+Maintainer: Vítězslav Dvořák <info@vitexsoftware.cz>
+Installed-Size: 7
+Depends: csas-authorize, dbconfig-mysql, php-mysql
+Suggests: mariadb-server
+Conflicts: csas-authorize-sqlite
+Section: unknown
+Priority: optional
+Multi-Arch: foreign
+Homepage: https://github.com/VitexSoftware/Flexplorer
+Description: mariadb support for multiabraflexi setup
+ Mandatory dependencies for use CSas authorize setup with MySQL/MariaDB databas

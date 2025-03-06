@@ -11,3 +11,9 @@
 /debian/.debhelper/
 /debian/csas-authorize/
 /debian/multiflexi-csas-authorize/
+/.vscode/
+/debian/csas-authorize-mysql.debhelper.log
+/debian/csas-authorize-mysql.substvars
+/debian/csas-authorize-sqlite.debhelper.log
+/debian/csas-authorize-sqlite.substvars
+/debian/csas-authorize.postrm.debhelper

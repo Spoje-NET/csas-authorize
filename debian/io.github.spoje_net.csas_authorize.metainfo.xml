@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+  <id>io.github.spoje_net.csas_authorize</id>
+  
+  <name>CSAS Authorize</name>
+  <summary> Obtain Access Key from CSAS/Erste</summary>
+  
+  <metadata_license>MIT</metadata_license>
+  <project_license>MIT</project_license>
+  
+  <description>
+    <p>
+      This application provides a simple way to authorize your application with CSAS API.
+    </p>
+  </description>
+  
+  <launchable type="desktop-id">io.github.spoje_net.csas_authorize.desktop</launchable>
+  <screenshots>
+    <screenshot type="default">
+      <image>https://github.com/Spoje-NET/csas-authorize/apps-screenshot.png?raw=true</image>
+    </screenshot>
+    <screenshot>
+      <image>https://github.com/Spoje-NET/csas-authorize/app-screenshot.png?raw=true</image>
+    </screenshot>
+    <screenshot>
+      <image>https://github.com/Spoje-NET/csas-authorize/token-screenshot.png?raw=true</image>
+    </screenshot>
+  </screenshots>
+</component>
+

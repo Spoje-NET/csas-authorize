@@ -1,0 +1,12 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+
+Name=CSAS Authorize
+Comment= Obtain Access Key from CSAS/Erste
+Categories=Network;WebDevelopment;
+
+Icon=csas-authorize
+Exec=csas-access-token
+Terminal=false
+

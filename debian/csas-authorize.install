@@ -1,0 +1,23 @@
+src/*.php                                 usr/share/csas-authorize
+src/favicon.ico                           usr/share/csas-authorize
+src/images/*                              usr/share/csas-authorize/images
+db/migrations/*				  usr/lib/csas-authorize/db/migrations
+#db/seeds/*				  usr/lib/csas-authorize/db/seeds
+libexec/*.php				  usr/libexec/csas-authorize
+debian/tmp/composer.json                  usr/lib/csas-authorize
+debian/conf/phinx-adapter.php	          usr/lib/csas-authorize
+
+
+src/SpojeNet/CSas/*.php			 usr/lib/csas-authorize/CSas
+src/SpojeNet/CSas/Ui/*.php		 usr/lib/csas-authorize/CSas/Ui
+
+debian/conf/csas-authorize.conf    		  etc/apache2/conf-available
+debian/conf/csas-authorize.service 		  etc/avahi/services
+bin/*					  usr/bin
+
+
+debian/io.github.spoje_net.csas_authorize.metainfo.xml    usr/share/metainfo/
+debian/io.github.spoje_net.csas_authorize.desktop         usr/share/applications/
+src/images/csas-authorize.svg             usr/share/icons/hicolor/scalable/apps/
+i18n/cs_CZ/LC_MESSAGES/*.mo               usr/share/locale/cs_CZ/LC_MESSAGES/
+i18n/en_US/LC_MESSAGES/*.mo               usr/share/locale/en_US/LC_MESSAGES/

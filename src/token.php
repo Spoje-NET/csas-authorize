@@ -59,8 +59,7 @@ if ($token->isExpired()) {
     $opsCol->addItem(new \Ease\TWB5\LinkButton('', '🗑 ️'._('Remove'), 'danger disabled'));
 }
 
-  
-$opsCol->addItem(new \Ease\TWB5\LinkButton('token.php?id='.$tokenId.'&action=refresh', '♻️ ️'._('Refresh'), $token->tokenValiditySeconds() < 0 ? 'success' :  'secondary'));
+$opsCol->addItem(new \Ease\TWB5\LinkButton('token.php?id='.$tokenId.'&action=refresh', '♻️ ️'._('Refresh'), $token->tokenValiditySeconds() < 0 ? 'success' : 'secondary'));
 
 $tokenRow->addColumn(6, new TokenInfo($token));
 
@@ -79,9 +78,9 @@ if ($action === 'test') {
     try {
         $toDate = new \DateTime();
         $fromDate = (clone $toDate)->modify('-1 month');
-        # $result = $apiInstance->getStatements('AA195E7DB499B4D9F48D46C208625FF53F2245F7', $fromDate->format('Y-m-d'), $toDate->format('Y-m-d'));
-        
-        $result =  $apiInstance->getTransactions('AA195E7DB499B4D9F48D46C208625FF53F2245F7', $fromDate->format('Y-m-d'), $toDate->format('Y-m-d'));
+        // $result = $apiInstance->getStatements('AA195E7DB499B4D9F48D46C208625FF53F2245F7', $fromDate->format('Y-m-d'), $toDate->format('Y-m-d'));
+
+        $result = $apiInstance->getTransactions('AA195E7DB499B4D9F48D46C208625FF53F2245F7', $fromDate->format('Y-m-d'), $toDate->format('Y-m-d'));
 
         WebPage::singleton()->container->addItem(new \Ease\Html\PreTag(nl2br(print_r($result, true))));
     } catch (\Exception $e) {

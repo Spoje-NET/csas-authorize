@@ -63,11 +63,47 @@ $opsCol = $appRow->addColumn(6, [
     new AppTokenTable($app),
 ]);
 
-// if($app->getDataValue('id')) {
-$opsCol->addItem(new \Ease\TWB5\LinkButton('auth.php?app='.$app->getMyKey().'&env=sandbox', 'Auth SandBox', 'primary'));
-// }
+$sandboxDisabled = !$app->hasSandboxRedirectUri() || empty($app->getDataValue('sandbox_client_id')) || empty($app->getDataValue('sandbox_client_secret')) || empty($app->getDataValue('sandbox_api_key'));
+$productionDisabled = !$app->hasProductionRedirectUri() || empty($app->getDataValue('production_client_id')) || empty($app->getDataValue('production_client_secret')) || empty($app->getDataValue('production_api_key'));
 
-$opsCol->addItem(new \Ease\TWB5\LinkButton('auth.php?app='.$app->getMyKey().'&env=production', 'Auth Production', 'success'));
+if ($sandboxDisabled) {
+    if (!$app->hasSandboxRedirectUri()) {
+        $app->addStatusMessage(_('Sandbox redirect URI is not set. "Auth SandBox" button is disabled.'), 'warning');
+    }
+
+    if (empty($app->getDataValue('sandbox_client_id'))) {
+        $app->addStatusMessage(_('Sandbox Client ID is not set. "Auth SandBox" button is disabled.'), 'warning');
+    }
+
+    if (empty($app->getDataValue('sandbox_client_secret'))) {
+        $app->addStatusMessage(_('Sandbox Client Secret is not set. "Auth SandBox" button is disabled.'), 'warning');
+    }
+
+    if (empty($app->getDataValue('sandbox_api_key'))) {
+        $app->addStatusMessage(_('Sandbox API Key is not set. "Auth SandBox" button is disabled.'), 'warning');
+    }
+}
+
+if ($productionDisabled) {
+    if (!$app->hasProductionRedirectUri()) {
+        $app->addStatusMessage(_('Production redirect URI is not set. "Auth Production" button is disabled.'), 'warning');
+    }
+
+    if (empty($app->getDataValue('production_client_id'))) {
+        $app->addStatusMessage(_('Production Client ID is not set. "Auth Production" button is disabled.'), 'warning');
+    }
+
+    if (empty($app->getDataValue('production_client_secret'))) {
+        $app->addStatusMessage(_('Production Client Secret is not set. "Auth Production" button is disabled.'), 'warning');
+    }
+
+    if (empty($app->getDataValue('production_api_key'))) {
+        $app->addStatusMessage(_('Production API Key is not set. "Auth Production" button is disabled.'), 'warning');
+    }
+}
+
+$opsCol->addItem(new \Ease\TWB5\LinkButton('auth.php?app='.$app->getMyKey().'&env=sandbox', 'Auth SandBox', 'primary', ['disabled' => $sandboxDisabled]));
+$opsCol->addItem(new \Ease\TWB5\LinkButton('auth.php?app='.$app->getMyKey().'&env=production', 'Auth Production', 'success', ['disabled' => $productionDisabled]));
 
 $appRow->addColumn(6, new AppEditorForm($app));
 

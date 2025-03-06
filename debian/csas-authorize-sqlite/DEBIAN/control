@@ -1,0 +1,14 @@
+Package: csas-authorize-sqlite
+Source: csas-authorize
+Version: 0.1.0
+Architecture: all
+Maintainer: Vítězslav Dvořák <info@vitexsoftware.cz>
+Installed-Size: 7
+Depends: csas-authorize, dbconfig-sqlite3, php-sqlite3, sqlite3
+Conflicts: csas-authorize-mysql
+Section: unknown
+Priority: optional
+Multi-Arch: foreign
+Homepage: https://github.com/VitexSoftware/Flexplorer
+Description: sqlite support for multiabraflexi setup
+ Mandatory dependencies for use CSas Authorize with SQLite database
