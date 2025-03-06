@@ -7,7 +7,7 @@ Priority: optional
 Homepage: https://github.com/VitexSoftware/Flexplorer
 
 Package: csas-authorize
-Depends: ${misc:Depends}, composer-debian, php-intl,php-vitexsoftware-ease-bootstrap5, php-vitexsoftware-ease-html-widgets,php-vitexsoftware-ease-bootstrap5-widgets, php-vitexsoftware-ease-fluentpdo, php-spojenet-csas-accountsapi, php-robmorgan-phinx|php-cakephp-phinx
+Depends: ${misc:Depends}, composer-debian, php-intl,php-vitexsoftware-ease-bootstrap5, php-vitexsoftware-ease-html-widgets,php-vitexsoftware-ease-bootstrap5-widgets, php-vitexsoftware-ease-fluentpdo, php-spojenet-csas-accountsapi, php-robmorgan-phinx|php-cakephp-phinx, csas-authorize-sqlite|csas-authorize-mysql
 Architecture: all
 Section: web
 Priority: optional
@@ -16,7 +16,7 @@ Description: CSas/Erste Access Token obtainer
 
 Package: csas-authorize-sqlite
 Multi-Arch: foreign
-Depends: ${misc:Depends},csas-authorize, dbconfig-sqlite3, php-sqlite3, sqlite3
+Depends: ${misc:Depends},dbconfig-sqlite3, php-sqlite3, sqlite3
 Conflicts: csas-authorize-mysql
 Architecture: all
 Description: sqlite support for multiabraflexi setup
@@ -24,7 +24,7 @@ Description: sqlite support for multiabraflexi setup
 
 Package: csas-authorize-mysql
 Multi-Arch: foreign
-Depends: ${misc:Depends},csas-authorize, dbconfig-mysql, php-mysql
+Depends: ${misc:Depends},dbconfig-mysql, php-mysql
 Conflicts: csas-authorize-sqlite
 Suggests: mariadb-server
 Architecture: all
