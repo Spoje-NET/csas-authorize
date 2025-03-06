@@ -19,3 +19,5 @@
 /debian/csas-authorize.postrm.debhelper
 /debian/csas-authorize-mysql/
 /debian/csas-authorize-sqlite/
+/debian/csas-authorize-mysql.postrm.debhelper
+/debian/csas-authorize-sqlite.postrm.debhelper
