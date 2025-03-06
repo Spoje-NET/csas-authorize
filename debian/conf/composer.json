@@ -5,7 +5,9 @@
   "type": "project",
   "require": {
     "deb/ease-fluentpdo": "*",
-    "deb/ease-html-widgets": "*"
+    "deb/ease-html": "*",
+    "deb/ease-html-widgets": "*",
+    "deb/ease-bootstrap5": "*"
   },
   "license": "MIT",
   "authors": [
