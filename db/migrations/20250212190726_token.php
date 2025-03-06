@@ -20,9 +20,19 @@ final class Token extends AbstractMigration
     public function change(): void
     {
         $table = $this->table('token');
-        $table->addColumn('application_id', 'integer', ['null'=> false])
-              ->addColumn('environment', 'enum', ['values' => ['sandbox', 'production']])
-              ->addColumn('access_token', 'string', ['limit' => 550])
+        $table->addColumn('application_id', 'integer', ['null' => false]);
+
+        // Detect database type and set column type accordingly
+        $adapter = $this->getAdapter();
+        $adapterType = $adapter->getOption('adapter');
+
+        if (in_array($adapterType, ['mysql', 'pgsql'])) {
+            $table->addColumn('environment', 'enum', ['values' => ['sandbox', 'production']]);
+        } else {
+            $table->addColumn('environment', 'string', ['limit' => 50]);
+        }
+
+        $table->addColumn('access_token', 'string', ['limit' => 550])
               ->addColumn('refresh_token', 'string', ['limit' => 550])
               ->addColumn('expires_in', 'integer')
               ->addColumn('scope', 'string', ['limit' => 255])
