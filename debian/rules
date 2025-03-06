@@ -15,6 +15,8 @@ override_dh_install:
 	sed -i '/DB_DATABASE/c\DB_DATABASE=_DBC_DBNAME_'                     debian/csas-authorize-*sql/usr/lib/csas-authorize/.env.template
 	sed -i '/DB_CONNECTION/c\DB_CONNECTION=sqlite'                       debian/csas-authorize-sqlite/usr/lib/csas-authorize/.env.template
 	sed -i '/DB_CONNECTION/c\DB_CONNECTION=mysql'                        debian/csas-authorize-mysql/usr/lib/csas-authorize/.env.template
+	touch debian/csas-authorize-sqlite/var/lib/dbconfig-common/sqlite3/csas-authorize/csas-authorize
+
 
 #	sed -i -e 's/\.\.\//.\//g' debian/csas-authorize/usr/share/csas-authorize/about.php
 #	sed -i -e 's/..\/vendor/\/var\/lib\/composer\/csas-authorize/g' debian/csas-authorize/usr/share/csas-authorize/includes/init.php

@@ -1,6 +1,7 @@
 #!/bin/sh
 # postinst script for csas-authorize
 set -e
+set -x
 
 . /usr/share/debconf/confmodule
 
