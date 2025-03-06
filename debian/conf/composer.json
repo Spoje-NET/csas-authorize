@@ -7,7 +7,9 @@
     "deb/ease-fluentpdo": "*",
     "deb/ease-html": "*",
     "deb/ease-html-widgets": "*",
-    "deb/ease-bootstrap5": "*"
+    "deb/ease-bootstrap5": "*",
+    "league/oauth2-client": "dev-master",
+    "deb/csas-accountsapi": "*"
   },
   "license": "MIT",
   "authors": [
@@ -50,6 +52,10 @@
     {
       "type": "path",
       "url": "/usr/share/php/EaseTWB5Widgets/"
+    },
+    {
+      "type": "path",
+      "url": "/usr/share/php/CSasAccounts/"
     }
   ]
 }
