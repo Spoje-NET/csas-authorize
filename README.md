@@ -46,6 +46,8 @@ Options:
   --environment, -e   The environment file with DB_* fields (optional)
 ```
 
+If there is no output file specified, the access token is printed to the standard output.
+
 
 ## Development
 
@@ -53,6 +55,7 @@ We use two SQL tables to store data. For production we use MariaDB and for devel
 
 ### Table `application`
 
+<pre>
 +--------------------------+------------------+------+-----+---------------------+-------------------------------+
 | Field                    | Type             | Null | Key | Default             | Extra                         |
 +--------------------------+------------------+------+-----+---------------------+-------------------------------+
@@ -71,10 +74,11 @@ We use two SQL tables to store data. For production we use MariaDB and for devel
 | created_at               | timestamp        | YES  |     | current_timestamp() |                               |
 | updated_at               | timestamp        | YES  |     | current_timestamp() | on update current_timestamp() |
 +--------------------------+------------------+------+-----+---------------------+-------------------------------+
+</pre>
 
 ### Table `token`
 
-
+<pre>
 +----------------+------------------------------+------+-----+---------------------+-------------------------------+
 | Field          | Type                         | Null | Key | Default             | Extra                         |
 +----------------+------------------------------+------+-----+---------------------+-------------------------------+
@@ -89,4 +93,4 @@ We use two SQL tables to store data. For production we use MariaDB and for devel
 | updated_at     | timestamp                    | YES  |     | current_timestamp() | on update current_timestamp() |
 | uuid           | char(36)                     | YES  |     | NULL                |                               |
 +----------------+------------------------------+------+-----+---------------------+-------------------------------+
-
+</pre>
