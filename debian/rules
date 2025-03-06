@@ -7,12 +7,14 @@ override_dh_install:
 	mkdir -p debian/tmp/
 	jq '.version = "'`dpkg-parsechangelog | sed -n 's/^Version: //p'| sed 's/~.*//'`'"'  debian/conf/composer.json |sponge debian/tmp/composer.json
 	dh_install
-	sed -i -e 's/\.\.\/i18n/\/usr\/share\/locale/g'            	     debian/csas-authorize/usr/share/csas-authorize/init.php
+	sed -i -e 's/\.\.\/i18n/\/usr\/share\/locale/g'             	     debian/csas-authorize/usr/share/csas-authorize/init.php
 	mkdir -p                                                             debian/csas-authorize-sqlite/usr/lib/csas-authorize
 	cp debian/conf/.env.template                                         debian/csas-authorize-sqlite/usr/lib/csas-authorize
 	mkdir -p                                                             debian/csas-authorize-mysql/usr/lib/csas-authorize
 	cp debian/conf/.env.template                                         debian/csas-authorize-mysql/usr/lib/csas-authorize
 	sed -i '/DB_DATABASE/c\DB_DATABASE=_DBC_DBNAME_'                     debian/csas-authorize-*sql/usr/lib/csas-authorize/.env.template
+	sed -i '/DB_CONNECTION/c\DB_CONNECTION=sqlite'                       debian/csas-authorize-sqlite/usr/lib/csas-authorize/.env.template
+	sed -i '/DB_CONNECTION/c\DB_CONNECTION=mysql'                        debian/csas-authorize-mysql/usr/lib/csas-authorize/.env.template
 
 #	sed -i -e 's/\.\.\//.\//g' debian/csas-authorize/usr/share/csas-authorize/about.php
 #	sed -i -e 's/..\/vendor/\/var\/lib\/composer\/csas-authorize/g' debian/csas-authorize/usr/share/csas-authorize/includes/init.php
