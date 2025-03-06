@@ -20,7 +20,7 @@ function printUsage() {
     echo "  --tokenId, -t       The token ID (required)\n";
     echo "  --output, -o        The output file (optional)\n";
     echo "  --environment, -e   The environment file with DB_* fields (optional)\n";
-    exit(1);
+    exit(0);
 }
 
 if (!\array_key_exists('tokenId', $options) && !\array_key_exists('t', $options)) {
