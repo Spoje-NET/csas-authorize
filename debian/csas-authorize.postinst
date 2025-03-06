@@ -1,19 +1,19 @@
 #!/bin/sh
 # postinst script for csas-authorize
 set -e
-set -x
+#set -x
 
 . /usr/share/debconf/confmodule
 
 
 if [ -f /usr/share/dbconfig-common/dpkg/postinst ]; then
+    composer-debian csas-authorize
 
     echo "############################"
     cat /etc/csas-authorize/csas-authorize.env
     echo "############################"
 
 
-    composer-debian csas-authorize
     # phinx migrate -c /usr/lib/csas-authorize/phinx-adapter.php
 
 fi
