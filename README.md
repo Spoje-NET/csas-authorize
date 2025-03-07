@@ -37,14 +37,17 @@ Refresh token is valid for 180 days and Access Token for 5 minutes.
 
 ## Command line usage
 
-```bash
-csas-access-token 
-Usage: csas-access-token --tokenId=<TOKEN_ID> [--output=<OUTPUT_FILE>] [--environment=<ENVIRONMENT>]
+```shell
+Usage: php csas-access-token --tokenId=<TOKEN_ID> [--output=<OUTPUT_FILE>] [--environment=<ENVIRONMENT>] [--list]
 Options:
-  --tokenId, -t       The token ID (required)
-  --output, -o        The output file (optional)
-  --environment, -e   The environment file with DB_* fields (optional)
-  --list, -l          List available tokens (optional
+  --tokenId, -t        The token ID (required)
+  --output, -o         The output file (optional)
+  --environment, -e    The environment file with DB_* fields (optional)
+  --list, -l           List available tokens (optional)
+  --accestokenKey, -a  Specify custom Access Token key instead of ACCESS_TOKEN
+  --sandboxmodeKey, -s Specify custom SandBox Mode key instead of SANDBOX_MODE
+
+Example:  csas-access-token -t71004963-e3d4-471f-96fc-1aef79d17ec1 -aCSAS_TOKEN -o.env
 ```
 
 If there is no output file specified, the access token is printed to the standard output.

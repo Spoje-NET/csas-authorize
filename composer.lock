@@ -4003,12 +4003,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/jsonrainbow/json-schema.git",
-                "reference": "bb68276a3be9253a66765f517f508e07d85afa18"
+                "reference": "a8c008885ddd576a4acd7e8a13e516923ecc6fe9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jsonrainbow/json-schema/zipball/bb68276a3be9253a66765f517f508e07d85afa18",
-                "reference": "bb68276a3be9253a66765f517f508e07d85afa18",
+                "url": "https://api.github.com/repos/jsonrainbow/json-schema/zipball/a8c008885ddd576a4acd7e8a13e516923ecc6fe9",
+                "reference": "a8c008885ddd576a4acd7e8a13e516923ecc6fe9",
                 "shasum": ""
             },
             "require": {
@@ -4072,7 +4072,7 @@
                 "issues": "https://github.com/jsonrainbow/json-schema/issues",
                 "source": "https://github.com/jsonrainbow/json-schema/tree/master"
             },
-            "time": "2025-02-27T11:06:44+00:00"
+            "time": "2025-03-07T13:35:34+00:00"
         },
         {
             "name": "kubawerlos/php-cs-fixer-custom-fixers",
@@ -4493,12 +4493,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "12567f91a74036d56ba0af6d56c8e73ac0e8d850"
+                "reference": "dc576b9721ce6d5f98a2942fbcf42b5253ec904b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/12567f91a74036d56ba0af6d56c8e73ac0e8d850",
-                "reference": "12567f91a74036d56ba0af6d56c8e73ac0e8d850",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/dc576b9721ce6d5f98a2942fbcf42b5253ec904b",
+                "reference": "dc576b9721ce6d5f98a2942fbcf42b5253ec904b",
                 "shasum": ""
             },
             "require": {
@@ -4544,7 +4544,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-03-05T13:43:55+00:00"
+            "time": "2025-03-07T10:20:06+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",
@@ -4879,12 +4879,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "a0df82191bb8a0e99ec375e7a93c2fe64781efb9"
+                "reference": "041cfe62798f931291f3bf88a7df6c532c888a03"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/a0df82191bb8a0e99ec375e7a93c2fe64781efb9",
-                "reference": "a0df82191bb8a0e99ec375e7a93c2fe64781efb9",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/041cfe62798f931291f3bf88a7df6c532c888a03",
+                "reference": "041cfe62798f931291f3bf88a7df6c532c888a03",
                 "shasum": ""
             },
             "require": {
@@ -4904,7 +4904,7 @@
                 "phpunit/php-text-template": "^5.0.0",
                 "phpunit/php-timer": "^8.0.0",
                 "sebastian/cli-parser": "^4.0.0",
-                "sebastian/comparator": "^7.0.0",
+                "sebastian/comparator": "^7.0.1",
                 "sebastian/diff": "^7.0.0",
                 "sebastian/environment": "^8.0.0",
                 "sebastian/exporter": "^7.0.0",
@@ -4969,7 +4969,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2025-03-05T07:39:50+00:00"
+            "time": "2025-03-07T07:33:13+00:00"
         },
         {
             "name": "psr/event-dispatcher",
@@ -5617,12 +5617,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/comparator.git",
-                "reference": "18eb5a4f854dbd1d6512c459b605de2edb5a0b47"
+                "reference": "b478f34614f934e0291598d0c08cbaba9644bee5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/comparator/zipball/18eb5a4f854dbd1d6512c459b605de2edb5a0b47",
-                "reference": "18eb5a4f854dbd1d6512c459b605de2edb5a0b47",
+                "url": "https://api.github.com/repos/sebastianbergmann/comparator/zipball/b478f34614f934e0291598d0c08cbaba9644bee5",
+                "reference": "b478f34614f934e0291598d0c08cbaba9644bee5",
                 "shasum": ""
             },
             "require": {
@@ -5682,7 +5682,7 @@
             "support": {
                 "issues": "https://github.com/sebastianbergmann/comparator/issues",
                 "security": "https://github.com/sebastianbergmann/comparator/security/policy",
-                "source": "https://github.com/sebastianbergmann/comparator/tree/7.0.0"
+                "source": "https://github.com/sebastianbergmann/comparator/tree/7.0.1"
             },
             "funding": [
                 {
@@ -5690,7 +5690,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-02-07T04:54:52+00:00"
+            "time": "2025-03-07T07:00:32+00:00"
         },
         {
             "name": "sebastian/complexity",
