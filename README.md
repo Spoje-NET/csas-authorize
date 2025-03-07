@@ -44,6 +44,7 @@ Options:
   --tokenId, -t       The token ID (required)
   --output, -o        The output file (optional)
   --environment, -e   The environment file with DB_* fields (optional)
+  --list, -l          List available tokens (optional
 ```
 
 If there is no output file specified, the access token is printed to the standard output.

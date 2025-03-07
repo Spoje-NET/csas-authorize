@@ -1,5 +1,11 @@
-csas-authorize (0.1.0) UNRELEASED; urgency=medium
+csas-authorize (0.1.1) UNRELEASED; urgency=medium
+
+  * commandline token listing added
+
+ -- vitex <info@vitexsoftware.cz>  Fri, 07 Mar 2025 16:14:25 +0100
+
+csas-authorize (0.1.0) unstable; urgency=medium
 
   * Initial Commit
 
- -- vitex <info@vitexsoftware.cz>  Wed, 05 Mar 2025 17:12:30 +0100
+ -- vitex <info@vitexsoftware.cz>  Fri, 07 Mar 2025 16:14:06 +0100

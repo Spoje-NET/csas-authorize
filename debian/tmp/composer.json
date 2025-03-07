@@ -4,7 +4,11 @@
   "type": "project",
   "require": {
     "deb/ease-fluentpdo": "*",
-    "deb/ease-html-widgets": "*"
+    "deb/ease-html": "*",
+    "deb/ease-html-widgets": "*",
+    "deb/ease-bootstrap5": "*",
+    "league/oauth2-client": "dev-master",
+    "deb/csas-accountsapi": "*"
   },
   "license": "MIT",
   "authors": [
@@ -47,6 +51,10 @@
     {
       "type": "path",
       "url": "/usr/share/php/EaseTWB5Widgets/"
+    },
+    {
+      "type": "path",
+      "url": "/usr/share/php/CSasAccounts/"
     }
   ],
   "version": "0.1.0"
