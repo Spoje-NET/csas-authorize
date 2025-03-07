@@ -44,8 +44,8 @@ Options:
   --output, -o         The output file (optional)
   --environment, -e    The environment file with DB_* fields (optional)
   --list, -l           List available tokens (optional)
-  --accestokenKey, -a  Specify custom Access Token key instead of ACCESS_TOKEN
-  --sandboxmodeKey, -s Specify custom SandBox Mode key instead of SANDBOX_MODE
+  --accesTokenKey, -a  Specify custom Access Token key instead of ACCESS_TOKEN
+  --sandboxModeKey, -s Specify custom SandBox Mode key instead of SANDBOX_MODE
 
 Example:  csas-access-token -t71004963-e3d4-471f-96fc-1aef79d17ec1 -aCSAS_TOKEN -o.env
 ```

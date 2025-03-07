@@ -34,22 +34,22 @@ if (empty($tokenId)) {
     echo "  --output, -o         The output file (optional)\n";
     echo "  --environment, -e    The environment file with DB_* fields (optional)\n";
     echo "  --list, -l           List available tokens (optional)\n";
-    echo "  --accestokenKey, -a  Specify custom Access Token key instead of ACCESS_TOKEN\n";
-    echo "  --sandboxmodeKey, -s Specify custom SandBox Mode key instead of SANDBOX_MODE\n";
+    echo "  --accesTokenKey, -a  Specify custom Access Token key instead of CSAS_ACCESS_TOKEN\n";
+    echo "  --sandboxModeKey, -s Specify custom SandBox Mode key instead of CSAS_SANDBOX_MODE\n";
     echo "\n";
     echo "Example:  csas-access-token -t71004963-e3d4-471f-96fc-1aef79d17ec1 -aCSAS_TOKEN -o.env\n";
 } else {
     // Fetch the token from the database
     $token = new \SpojeNet\CSas\Token($tokenId, ['autoload' => true, 'keyColumn' => (is_numeric($tokenId) ? 'id' : 'uuid')]);
 
-    $accesTokenKey = \array_key_exists('accestokenKey', $options) ? $options['accestokenKey'] : (array_key_exists('a', $options) ? $options['a'] : 'ACCESS_TOKEN');
-    $sandboxModeKey = \array_key_exists('sandboxmodeKey', $options) ? $options['sandboxmodeKey'] : (array_key_exists('s', $options) ? $options['s'] : 'SANDBOX_MODE');
+    $accesTokenKey = \array_key_exists('accesTokenKey', $options) ? $options['accesTokenKey'] : (array_key_exists('a', $options) ? $options['a'] : 'CSAS_ACCESS_TOKEN');
+    $sandboxModeKey = \array_key_exists('sandboxModeKey', $options) ? $options['sandboxModeKey'] : (array_key_exists('s', $options) ? $options['s'] : 'CSAS_SANDBOX_MODE');
 
     // Check if the access token is expired
     $expiresAt = (new \DateTime())->setTimestamp($token->getDataValue('expires_in'));
     $now = new \DateTime();
 
-    if ($expiresAt < $now) {
+    if (($expiresAt - 10) < $now) {
         // Refresh the token if it is expired
         $app = new \SpojeNet\CSas\Application($token->getDataValue('application_id'), ['autoload' => true]);
         $app->sandboxMode($token->getDataValue('environment') === 'sandbox');
