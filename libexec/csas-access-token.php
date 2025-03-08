@@ -49,7 +49,7 @@ if (empty($tokenId)) {
     $expiresAt = (new \DateTime())->setTimestamp($token->getDataValue('expires_in'));
     $now = new \DateTime();
 
-    if (($expiresAt - 10) < $now) {
+    if (($expiresAt) < $now) {
         // Refresh the token if it is expired
         $app = new \SpojeNet\CSas\Application($token->getDataValue('application_id'), ['autoload' => true]);
         $app->sandboxMode($token->getDataValue('environment') === 'sandbox');
