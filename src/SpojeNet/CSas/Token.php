@@ -42,7 +42,7 @@ class Token extends \Ease\SQL\Engine
         $this->setDataValue('environment', $app->sandboxMode() ? 'sandbox' : 'production');
     }
 
-    public function store(AccessToken $tokens): bool
+    public function store(\League\OAuth2\Client\Token\AccessTokenInterface $tokens): bool
     {
         $this->setDataValue('access_token', $tokens->getToken());
         $refreshToken = $tokens->getRefreshToken();
@@ -124,7 +124,7 @@ class Token extends \Ease\SQL\Engine
         $oneWeekFromNow = (new \DateTime())->modify('+1 week')->getTimestamp();
 
         return $this->listingQuery()->select(['application.name', 'application.email', 'production_redirect_uri', 'sandbox_redirect_uri'])->leftJoin('application ON application.id = token.application_id')
-            ->where('expires_in', '<'. $oneWeekFromNow)
+            ->where('expires_in', '<'.$oneWeekFromNow)
             ->fetchAll();
     }
 

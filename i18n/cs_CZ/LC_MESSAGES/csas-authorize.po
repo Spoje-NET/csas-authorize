@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: MultiFlexi\n"
-"POT-Creation-Date: 2025-03-06 13:14+0100\n"
-"PO-Revision-Date: 2025-03-06 13:27+0100\n"
+"POT-Creation-Date: 2025-03-11 18:07+0100\n"
+"PO-Revision-Date: 2025-03-11 18:09+0100\n"
 "Last-Translator: Vítězslav Dvořák <vitex@vitexsoftware.cz>\n"
 "Language-Team: \n"
 "Language: cs_CZ\n"
@@ -19,6 +19,31 @@ msgstr ""
 #: ../src/SpojeNet/CSas/Application.php:87
 msgid "Removing  Expired Token"
 msgstr "Odstraňuji expirovaný token"
+
+#: ../src/SpojeNet/CSas/Notificator.php:29
+#: ../src/SpojeNet/CSas/Notificator.php:30
+#, php-format
+msgid "Token %s renew"
+msgstr "Obnovení Tokenu %s"
+
+#: ../src/SpojeNet/CSas/Notificator.php:40
+#, php-format
+msgid "Token expiration date: %s"
+msgstr "Datum expirace tokenu: %s"
+
+#: ../src/SpojeNet/CSas/Notificator.php:41
+#, php-format
+msgid "Remaining time: %d days, %d hours, %d minutes"
+msgstr "Zbývající čas: %d dní, %d hodin, %d minut"
+
+#: ../src/SpojeNet/CSas/Notificator.php:46
+msgid "Renew"
+msgstr "Obnovení"
+
+#: ../src/SpojeNet/CSas/Notificator.php:51
+#, php-format
+msgid "%s token renew"
+msgstr "obnova tokenu %s"
 
 #: ../src/SpojeNet/CSas/Token.php:36
 msgid "Error Creating Token Record"
@@ -76,7 +101,11 @@ msgstr "Produkční adresa přesměrování"
 msgid "Production API Key"
 msgstr "Klíč produkčního API"
 
-#: ../src/SpojeNet/CSas/Ui/AppEditorForm.php:43
+#: ../src/SpojeNet/CSas/Ui/AppEditorForm.php:42
+msgid "Email for Renewal Notifications"
+msgstr "Emailová adresa pro notifikaci prodloužení"
+
+#: ../src/SpojeNet/CSas/Ui/AppEditorForm.php:44
 msgid "Save"
 msgstr "Ulož"
 
@@ -173,35 +202,53 @@ msgstr "ČSAS"
 
 #: ../src/application.php:71
 msgid "Sandbox redirect URI is not set. \"Auth SandBox\" button is disabled."
-msgstr "URI přesměrování izolovaného prostoru není nastaveno. Tlačítko „Auth SandBox“ je deaktivováno."
+msgstr ""
+"URI přesměrování izolovaného prostoru není nastaveno. Tlačítko „Auth "
+"SandBox“ je deaktivováno."
 
 #: ../src/application.php:75
 msgid "Sandbox Client ID is not set. \"Auth SandBox\" button is disabled."
-msgstr "ID klienta Sandbox není nastaveno. Tlačítko „Autentifikace do pískoviště“ je deaktivováno."
+msgstr ""
+"ID klienta Sandbox není nastaveno. Tlačítko „Autentifikace do pískoviště“ je "
+"deaktivováno."
 
 #: ../src/application.php:79
 msgid "Sandbox Client Secret is not set. \"Auth SandBox\" button is disabled."
-msgstr "Tajný klíč klienta Sandbox není nastaven. Tlačítko „Autentizace do pískoviště“ je deaktivováno."
+msgstr ""
+"Tajný klíč klienta Sandbox není nastaven. Tlačítko „Autentizace do "
+"pískoviště“ je deaktivováno."
 
 #: ../src/application.php:83
 msgid "Sandbox API Key is not set. \"Auth SandBox\" button is disabled."
-msgstr "Sandbox API Key není nastaven. Tlačítko „Auth SandBox“ je deaktivováno."
+msgstr ""
+"Sandbox API Key není nastaven. Tlačítko „Auth SandBox“ je deaktivováno."
 
 #: ../src/application.php:89
-msgid "Production redirect URI is not set. \"Auth Production\" button is disabled."
-msgstr "URI přesměrování výroby není nastaveno. Tlačítko \"Produkční autentifikace\" je deaktivováno."
+msgid ""
+"Production redirect URI is not set. \"Auth Production\" button is disabled."
+msgstr ""
+"URI přesměrování výroby není nastaveno. Tlačítko \"Produkční autentifikace\" "
+"je deaktivováno."
 
 #: ../src/application.php:93
-msgid "Production Client ID is not set. \"Auth Production\" button is disabled."
-msgstr "Produkční ID klienta není nastaveno. Tlačítko \"Autentifikace produkce\" je deaktivováno."
+msgid ""
+"Production Client ID is not set. \"Auth Production\" button is disabled."
+msgstr ""
+"Produkční ID klienta není nastaveno. Tlačítko \"Autentifikace produkce\" je "
+"deaktivováno."
 
 #: ../src/application.php:97
-msgid "Production Client Secret is not set. \"Auth Production\" button is disabled."
-msgstr "Není nastaven tajný klíč produkčního klienta. Tlačítko \"Produkční autentifikace\" je deaktivováno."
+msgid ""
+"Production Client Secret is not set. \"Auth Production\" button is disabled."
+msgstr ""
+"Není nastaven tajný klíč produkčního klienta. Tlačítko \"Produkční "
+"autentifikace\" je deaktivováno."
 
 #: ../src/application.php:101
 msgid "Production API Key is not set. \"Auth Production\" button is disabled."
-msgstr "Produkční klíč API není nastaven. Tlačítko \"Auth Production\" je deaktivováno."
+msgstr ""
+"Produkční klíč API není nastaven. Tlačítko \"Auth Production\" je "
+"deaktivováno."
 
 #: ../src/index.php:26
 msgid "Application"
@@ -212,7 +259,7 @@ msgstr "Aplikace"
 msgid "Token %s removal"
 msgstr "Odstranění Tokenu %s"
 
-#: ../src/token.php:47 ../src/welcomeback.php:71
+#: ../src/token.php:47
 msgid "Token"
 msgstr "Token"
 
@@ -227,6 +274,15 @@ msgstr "Odstranit"
 #: ../src/token.php:62
 msgid "Refresh"
 msgstr "Obnovit"
+
+#: ../src/welcomeback.php:69
+msgid "Success"
+msgstr "Úspěch"
+
+#: ../src/welcomeback.php:78
+#, php-format
+msgid "Token will expire in %d days"
+msgstr "Expiruje během %d dní"
 
 #, php-format
 #~ msgid "label %s created"
@@ -374,7 +430,8 @@ msgstr "Obnovit"
 #~ msgstr "Soubor metriky"
 
 #~ msgid "File with metrics. Leave empty to send stdout"
-#~ msgstr "Soubor s metrikami. Nechte prázdné pro odeslání standardního výstupu"
+#~ msgstr ""
+#~ "Soubor s metrikami. Nechte prázdné pro odeslání standardního výstupu"
 
 #~ msgid "Zabbix Server"
 #~ msgstr "Server Zabbixu"
@@ -694,13 +751,17 @@ msgstr "Obnovit"
 #~ msgstr "Příkaz pro nastavení"
 
 #~ msgid "Command used to setup new company for use with command"
-#~ msgstr "Příkaz použitý pro nastavení nové společnosti pro použití s příkazem"
+#~ msgstr ""
+#~ "Příkaz použitý pro nastavení nové společnosti pro použití s příkazem"
 
 #~ msgid "Command arguments"
 #~ msgstr "Parametry příkazu"
 
-#~ msgid "you can use macros like {ABRAFLEXI_URL} or custom defined config fields."
-#~ msgstr "je možné použít makra jako {ABRAFLEXI_URL} nebo uživatelsky definovaná pole."
+#~ msgid ""
+#~ "you can use macros like {ABRAFLEXI_URL} or custom defined config fields."
+#~ msgstr ""
+#~ "je možné použít makra jako {ABRAFLEXI_URL} nebo uživatelsky definovaná "
+#~ "pole."
 
 #~ msgid "Application Icon"
 #~ msgstr "Ikona Aplikace"
@@ -1087,9 +1148,6 @@ msgstr "Obnovit"
 #~ msgid "fail"
 #~ msgstr "neúspěch"
 
-#~ msgid "success"
-#~ msgstr "úspěch"
-
 #~ msgid "Job Info"
 #~ msgstr "Info úlohy"
 
@@ -1133,13 +1191,15 @@ msgstr "Obnovit"
 #~ msgstr "Zvolte spouštěcí platformu"
 
 #~ msgid "No company registered yet. Please register one."
-#~ msgstr "Žádná společnost není zatím registrován. Zaregistrujte prosím nějaký."
+#~ msgstr ""
+#~ "Žádná společnost není zatím registrován. Zaregistrujte prosím nějaký."
 
 #~ msgid "No customer registered yet. Please register one."
 #~ msgstr "Žádný zákazník není zatím registrován. Zaregistrujte prosím nějaký."
 
 #~ msgid "No application registered yet. Please register one."
-#~ msgstr "Žádná aplikace není zatím registrována. Zaregistrujte prosím nějakou."
+#~ msgstr ""
+#~ "Žádná aplikace není zatím registrována. Zaregistrujte prosím nějakou."
 
 #~ msgid "Logs"
 #~ msgstr "Logy"
@@ -1150,8 +1210,11 @@ msgstr "Obnovit"
 #~ msgid "Sign Off"
 #~ msgstr "Odhlášení"
 
-#~ msgid "MultiFlexi systemd service is not running. Consider `systemctl start multiflexi`"
-#~ msgstr "Ssystemd služba MultiFlexi neběží. Zvažte `systemctl start multiflexi`"
+#~ msgid ""
+#~ "MultiFlexi systemd service is not running. Consider `systemctl start "
+#~ "multiflexi`"
+#~ msgstr ""
+#~ "Ssystemd služba MultiFlexi neběží. Zvažte `systemctl start multiflexi`"
 
 #~ msgid "Register Application"
 #~ msgstr "Registruj Aplikaci"
@@ -1583,8 +1646,12 @@ msgstr "Obnovit"
 #~ msgid "Tip"
 #~ msgstr "Tip"
 
-#~ msgid "Forgot your password? Enter your e-mail address you entered during the registration and we will send you a new one."
-#~ msgstr "Zapoměli jste heslo ? Vložte svojí e-mailovou adresu kterou jste zadali během registrace a my vám pošleme nové."
+#~ msgid ""
+#~ "Forgot your password? Enter your e-mail address you entered during the "
+#~ "registration and we will send you a new one."
+#~ msgstr ""
+#~ "Zapoměli jste heslo ? Vložte svojí e-mailovou adresu kterou jste zadali "
+#~ "během registrace a my vám pošleme nové."
 
 #~ msgid "Password Recovery"
 #~ msgstr "Obnova hesla"
@@ -1699,7 +1766,8 @@ msgstr "Obnovit"
 #~ msgstr "firma_s_r_o_ nebo 30000"
 
 #~ msgid "For AbraFlexi use lowercase and for Pohoda use mServer port number"
-#~ msgstr "Pro AbraFlexi použijte malá písmena a pro Pohodu číslo portu mServeru"
+#~ msgstr ""
+#~ "Pro AbraFlexi použijte malá písmena a pro Pohodu číslo portu mServeru"
 
 #~ msgid "Choose server"
 #~ msgstr "Zvolte server"
@@ -1873,8 +1941,12 @@ msgstr "Obnovit"
 #~ msgid "AbraFlexi Bulk Mailer"
 #~ msgstr "Hromadná pošta z AbraFlexi"
 
-#~ msgid "By Query select recipients from Addressbook and send mail based on template"
-#~ msgstr "Na základě dotazu zvolí příjmce z adresáře a odesílá mail na základě šablony"
+#~ msgid ""
+#~ "By Query select recipients from Addressbook and send mail based on "
+#~ "template"
+#~ msgstr ""
+#~ "Na základě dotazu zvolí příjmce z adresáře a odesílá mail na základě "
+#~ "šablony"
 
 #~ msgid "Task launcher testing tool"
 #~ msgstr "Testovací nástroj spouštěče úloh"

@@ -43,7 +43,7 @@ class Notificator extends \Ease\HtmlMailer
         $tokenId = $token->getDataValue('id');
         $renewalLink = str_replace('welcomeback.php', 'auth.php?app='.$token->getDataValue('application_id').'&env='.$token->getDataValue('environment'), $redirectUri);
 
-        $mailBody->addItem(new \Ease\Html\ATag($renewalLink, '♻️ '._('Renew'), ['style'=>'font-size: xxx-large;']));
+        $mailBody->addItem(new \Ease\Html\ATag($renewalLink, '♻️ '._('Renew'), ['style' => 'font-size: xxx-large;']));
 
         $hostname = gethostname();
         $username = get_current_user();

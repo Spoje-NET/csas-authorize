@@ -56,10 +56,6 @@ if ($token->getMyKey()) {
     }
 
     try {
-        // Optional, only required when PKCE is enabled.
-        // Restore the PKCE code stored in the session.
-        // $provider->setPkceCode($_SESSION['oauth2pkceCode']);
-        // Try to get an access token using the authorization code grant.
         $tokens = $provider->getAccessToken('authorization_code', ['code' => $code]);
 
         $token->store($tokens);
@@ -68,23 +64,21 @@ if ($token->getMyKey()) {
             'refresh_token' => $tokens->getRefreshToken(),
         ]);
 
-        WebPage::singleton()->container->addItem(new \Ease\TWB5\LinkButton('token.php?id='.$token->getDataValue('id'), '🔑'._('Token'), 'success'));
-        //        echo 'access token:<textarea>'.$tokens->getToken().'</textarea>';
-        //        echo 'refresh token:<textarea>'.$tokens->getRefreshToken().'</textarea>';
-        //        // Using the access token, we may look up details about the
-        //        // resource owner.
-        //        $resourceOwner = $provider->getResourceOwner($tokens);
-        //
-        //        var_export($resourceOwner->toArray());
-        //
-        //        // The provider provides a way to get an authenticated API request for
-        //        // the service, using the access token; it returns an object conforming
-        //        // to Psr\Http\Message\RequestInterface.
-        //        $request = $provider->getAuthenticatedRequest(
-        //            'GET',
-        //            'https://service.example.com/resource',
-        //            $tokens
-        //        );
+        // WebPage::singleton()->container->addItem(new \Ease\TWB5\LinkButton('token.php?id='.$token->getDataValue('id'), '🔑'._('Token'), 'success'));
+
+        \Ease\TWB5\WebPage::singleton()->addItem(_('Success'));
+
+        $expiresAt = $tokens->getExpires();
+        $currentDate = new \DateTime();
+        $expirationDate = (new \DateTime())->setTimestamp($expiresAt);
+        $interval = $currentDate->diff($expirationDate);
+
+        \Ease\TWB5\WebPage::singleton()->addItem(
+            new \Ease\Html\DivTag(
+                sprintf(_('Token will expire in %d days'), $interval->days),
+                ['class' => 'alert alert-info'],
+            ),
+        );
     } catch (\League\OAuth2\Client\Provider\Exception\IdentityProviderException $e) {
         // Failed to get the access token or user details.
         exit($e->getMessage());

@@ -102,8 +102,8 @@ if ($productionDisabled) {
     }
 }
 
-$opsCol->addItem(new \Ease\TWB5\LinkButton('auth.php?app='.$app->getMyKey().'&env=sandbox', 'Auth SandBox', 'primary', ['disabled' => $sandboxDisabled]));
-$opsCol->addItem(new \Ease\TWB5\LinkButton('auth.php?app='.$app->getMyKey().'&env=production', 'Auth Production', 'success', ['disabled' => $productionDisabled]));
+$opsCol->addItem(new \Ease\TWB5\LinkButton('auth.php?app='.$app->getMyKey().'&env=sandbox', 'Auth SandBox', 'primary' . ( $sandboxDisabled ? ' disabled' : '')));
+$opsCol->addItem(new \Ease\TWB5\LinkButton('auth.php?app='.$app->getMyKey().'&env=production', 'Auth Production', 'success' . ( $productionDisabled ? ' disabled' : '')));
 
 $appRow->addColumn(6, new AppEditorForm($app));
 
