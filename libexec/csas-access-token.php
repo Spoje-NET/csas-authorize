@@ -7,7 +7,7 @@ require_once '../vendor/autoload.php';
 /**
  * Get today's Statements list.
  */
-$options = getopt('o::e::a::s::t:l', ['output::', 'environment::', 'tokenId::', 'list', 'accestokenKey::', 'sandboxmodeKey::']);
+$options = getopt('o::e::a::s::t:l', ['output::', 'environment::', 'tokenId::', 'list', 'accesTokenKey::', 'sandboxModeKey::']);
 \Ease\Shared::init(
         ['DB_CONNECTION', 'DB_HOST', 'DB_PORT', 'DB_DATABASE', 'DB_USERNAME', 'DB_PASSWORD'],
         \array_key_exists('environment', $options) ? $options['environment'] : (\array_key_exists('e', $options) ? $options['e'] : '../.env')
@@ -45,12 +45,13 @@ if (empty($tokenId)) {
     $accesTokenKey = \array_key_exists('accesTokenKey', $options) ? $options['accesTokenKey'] : (array_key_exists('a', $options) ? $options['a'] : 'CSAS_ACCESS_TOKEN');
     $sandboxModeKey = \array_key_exists('sandboxModeKey', $options) ? $options['sandboxModeKey'] : (array_key_exists('s', $options) ? $options['s'] : 'CSAS_SANDBOX_MODE');
 
-    // Check if the access token is expired
+    // Check if the access token is expired or will expire within 10 seconds
     $expiresAt = (new \DateTime())->setTimestamp($token->getDataValue('expires_in'));
     $now = new \DateTime();
+    $expiresSoon = (clone $now)->modify('+10 seconds');
 
-    if (($expiresAt) < $now) {
-        // Refresh the token if it is expired
+    if ($expiresAt < $expiresSoon) {
+        // Refresh the token if it is expired or will expire soon
         $app = new \SpojeNet\CSas\Application($token->getDataValue('application_id'), ['autoload' => true]);
         $app->sandboxMode($token->getDataValue('environment') === 'sandbox');
         $token->refreshToken(new \SpojeNet\CSas\Auth($app));

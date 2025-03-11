@@ -119,6 +119,15 @@ class Token extends \Ease\SQL\Engine
         return $this->daysToExpire('created_at');
     }
 
+    public function getTokensCloseToExpire()
+    {
+        $oneWeekFromNow = (new \DateTime())->modify('+1 week')->getTimestamp();
+
+        return $this->listingQuery()->select(['application.name', 'application.email', 'production_redirect_uri', 'sandbox_redirect_uri'])->leftJoin('application ON application.id = token.application_id')
+            ->where('expires_in', '<'. $oneWeekFromNow)
+            ->fetchAll();
+    }
+
     /**
      * The Access Token can be used only 5minutes.
      *

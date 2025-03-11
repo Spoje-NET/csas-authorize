@@ -39,6 +39,7 @@ class AppEditorForm extends EngineForm
         $this->addInput(new InputTextTag('production_client_secret'), _('Production Client Secret'));
         $this->addInput(new InputTextTag('production_redirect_uri'), _('Production Redirect URI'));
         $this->addInput(new InputTextTag('production_api_key'), _('Production API Key'));
+        $this->addInput(new \Ease\Html\InputEmailTag('email'), _('Email for Renewal Notifications'));
 
         $this->addItem(new SubmitButton(_('Save'), 'success'));
 

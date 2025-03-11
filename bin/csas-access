@@ -1,0 +1,2 @@
+#!/bin/sh
+php -q -f /usr/libexec/csas-authorize/daemon.php -- $@
