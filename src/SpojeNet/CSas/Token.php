@@ -26,6 +26,7 @@ use League\OAuth2\Client\Token\AccessToken;
 class Token extends \Ease\SQL\Engine
 {
     public string $myTable = 'token';
+    public string $nameColumn = 'uuid';
     public ?string $createColumn = 'created_at';
     public ?string $lastModifiedColumn = 'updated_at';
     private Application $application;
@@ -86,6 +87,16 @@ class Token extends \Ease\SQL\Engine
         return $expiresIn !== null && $expiresIn < time();
     }
 
+    
+    /**
+     * Request new access token and store it
+     * 
+     * @param AbstractProvider $provider
+     * 
+     * @return AccessToken
+     * 
+     * @throws \RuntimeException
+     */
     public function refreshToken(AbstractProvider $provider): AccessToken
     {
         $refreshToken = $this->getDataValue('refresh_token');
@@ -99,8 +110,8 @@ class Token extends \Ease\SQL\Engine
         ]);
 
         $this->store($newToken);
-        $this->addStatusMessage(_('Token Refreshed'), 'success');
-
+        $expiresAt = (new \DateTime())->setTimestamp($this->getDataValue('expires_in'));       
+        $this->addStatusMessage(sprintf( _('Token Refreshed. Valid till: %s'), $expiresAt->format('Y-m-d H:i:s')) , 'success');
         return $newToken;
     }
 

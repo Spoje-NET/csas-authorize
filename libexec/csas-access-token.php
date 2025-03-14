@@ -41,6 +41,11 @@ if (empty($tokenId)) {
 } else {
     // Fetch the token from the database
     $token = new \SpojeNet\CSas\Token($tokenId, ['autoload' => true, 'keyColumn' => (is_numeric($tokenId) ? 'id' : 'uuid')]);
+
+    if (\Ease\Shared::cfg('APP_DEBUG')) {
+        $token->logBanner($token->getDataValue('uuid'), $envFile);
+    }
+
     if ($token->getDataValue('environment')) {
 
         $accesTokenKey = \array_key_exists('accesTokenKey', $options) ? $options['accesTokenKey'] : (array_key_exists('a', $options) ? $options['a'] : 'CSAS_ACCESS_TOKEN');
@@ -57,14 +62,15 @@ if (empty($tokenId)) {
         }
 
         $envArray = $token->exportEnv();
-        $envContent = '';
-
-        foreach ($envArray as $key => $value) {
-            $envContent .= strtoupper($key) . '=' . $value . "\n";
-        }
 
         if (!file_exists($envFile)) {
-            file_put_contents($envFile, $envContent);
+            $envContent = '';
+
+            foreach ($envArray as $key => $value) {
+                $envContent .= strtoupper($key) . '=' . $value . "\n";
+            }
+            $written = file_put_contents($envFile, $envContent);
+            $token->addStatusMessage(sprintf(_('%s bytes of Token %s written to %s '), $written, $token->getDataValue('uuid'), $envFile), $written ? 'success' : 'error');
         } else {
             // Read the existing .env file
             $existingEnvContent = file_get_contents($envFile);
@@ -81,6 +87,18 @@ if (empty($tokenId)) {
 
             // Update the necessary fields
             $envData['#CSAS_TOKEN_UUID'] = $envArray['#CSAS_TOKEN_UUID'];
+
+            if (array_key_exists('CSAS_API_KEY', $envData)) {
+                if ($envData['CSAS_API_KEY'] != $envArray['CSAS_API_KEY']) {
+                    $token->addStatusMessage(sprintf(_('Used CSAS_API_KEY is different. Exporting new one %s'), $envArray['CSAS_API_KEY']),'warning');
+                    $envData['#OLD_CSAS_API_KEY'] = $envData['CSAS_API_KEY'];
+                    $envData['CSAS_API_KEY'] = $envArray['CSAS_API_KEY'];
+                }
+            } else {
+                $token->addStatusMessage(sprintf(_('API_KEY missing ing current configuration. Exporting new one %s'), $envArray['CSAS_API_KEY']));
+                $envData['CSAS_API_KEY'] = $envArray['CSAS_API_KEY'];
+            }
+
             $envData[$accesTokenKey] = $envArray['CSAS_ACCESS_TOKEN'];
             $envData[$sandboxModeKey] = $envArray['CSAS_SANDBOX_MODE'];
 
@@ -91,10 +109,11 @@ if (empty($tokenId)) {
             }
 
             // Write the updated contents back to the .env file
-            file_put_contents($envFile, $updatedEnvContent);
+            $written = file_put_contents($envFile, $updatedEnvContent);
+            $token->addStatusMessage(sprintf(_('%s bytes of Token %s written to %s '), $written, $token->getDataValue('uuid'), $envFile), $written ? 'success' : 'error');
         }
     } else {
-        $token->addStatusMessage(sprintf(_('Token %s not found'), $tokenId),'warning');
+        $token->addStatusMessage(sprintf(_('Token %s not found'), $tokenId), 'warning');
         exit(1);
     }
 }
