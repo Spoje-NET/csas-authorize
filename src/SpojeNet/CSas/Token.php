@@ -28,6 +28,20 @@ class Token extends \Ease\SQL\Engine
     public string $myTable = 'token';
     public ?string $createColumn = 'created_at';
     public ?string $lastModifiedColumn = 'updated_at';
+    private Application $application;
+
+    public function takeData($data): int
+    {
+        if (\array_key_exists('application_id', $data)) {
+            $this->application = new Application($data['application_id'], ['autoload' => true]);
+
+            if (\array_key_exists('environment', $data)) {
+                $this->application->sandboxMode($data['environment'] === 'sandbox');
+            }
+        }
+
+        return parent::takeData($data);
+    }
 
     public function getNextTokenUuid(): string
     {
@@ -40,6 +54,8 @@ class Token extends \Ease\SQL\Engine
     {
         $this->setDataValue('application_id', $app->getMyKey());
         $this->setDataValue('environment', $app->sandboxMode() ? 'sandbox' : 'production');
+
+        $this->application = $app;
     }
 
     public function store(\League\OAuth2\Client\Token\AccessTokenInterface $tokens): bool
@@ -130,12 +146,10 @@ class Token extends \Ease\SQL\Engine
 
     /**
      * The Access Token can be used only 5minutes.
-     *
-     * @return int
      */
-    public function tokenValiditySeconds()
+    public function tokenValiditySeconds(): int
     {
-        return $this->secondsToExpire('expires_in');
+        return (int) $this->secondsToExpire('expires_in');
     }
 
     public function getSandBoxMode(): bool
@@ -150,13 +164,16 @@ class Token extends \Ease\SQL\Engine
      */
     public function exportEnv(): array
     {
-        $application = new Application($this->getDataValue('application_id'), ['autoload' => true]);
-        $apiKey = $application->getDataValue(($this->getSandBoxMode() ? 'sandbox' : 'production').'_api_key');
-
         return [
-            'CSAS_API_KEY' => $apiKey,
+            '#CSAS_TOKEN_UUID' => $this->getDataValue('uuid'),
+            'CSAS_API_KEY' => $this->application->getApiKey(),
             'CSAS_SANDBOX_MODE' => $this->getSandBoxMode() ? 'true' : 'false',
             'CSAS_ACCESS_TOKEN' => $this->getDataValue('access_token'),
         ];
+    }
+
+    public function getApplication(): Application
+    {
+        return $this->application;
     }
 }

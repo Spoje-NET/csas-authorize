@@ -28,9 +28,7 @@ if (null === $tokenId) {
 }
 
 $token = new \SpojeNet\CSas\Token($tokenId, ['autoload' => true]);
-
-$app = new \SpojeNet\CSas\Application($token->getDataValue('application_id'), ['autoload' => true]);
-$app->sandboxMode($token->getDataValue('environment') === 'sandbox');
+$app = $token->getApplication();
 
 $action = \Ease\WebPage::getRequestValue('action');
 
@@ -65,13 +63,24 @@ $tokenRow->addColumn(6, new TokenInfo($token));
 
 WebPage::singleton()->container->addItem($tokenRow);
 
+$envArray = $token->exportEnv();
+$envContent = '';
+
+foreach ($envArray as $key => $value) {
+    $envContent .= strtoupper($key).'='.$value."\n";
+}
+
+$envDiv = new \Ease\Html\DivTag(nl2br($envContent));
+
+WebPage::singleton()->container->addItem($envDiv);
+
 if ($action === 'test') {
     $apiInstance = new \SpojeNET\Csas\Accounts\DefaultApi(new \SpojeNET\Csas\ApiClient(
         [
-            'apikey' => $app->getApiKey(),
-            'token' => $token->getDataValue('access_token'),
+            'apikey' => $envArray['CSAS_API_KEY'],
+            'token' => $envArray['CSAS_ACCESS_TOKEN'],
             'debug' => false,
-            'sandbox' => $app->sandboxMode(),
+            'sandbox' => $envArray['CSAS_SANDBOX_MODE'],
         ],
     ));
 
@@ -85,17 +94,6 @@ if ($action === 'test') {
         WebPage::singleton()->container->addItem('Exception when calling DefaultApi->getAccounts: ', $e->getMessage());
     }
 }
-
-$envArray = $token->exportEnv();
-$envContent = '';
-
-foreach ($envArray as $key => $value) {
-    $envContent .= strtoupper($key).'='.$value."\n";
-}
-
-$envDiv = new \Ease\Html\DivTag(nl2br($envContent));
-
-WebPage::singleton()->container->addItem($envDiv);
 
 WebPage::singleton()->addItem(new PageBottom());
 

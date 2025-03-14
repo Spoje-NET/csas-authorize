@@ -47,7 +47,7 @@ class TokenInfo extends \Ease\Html\DivTag
         }
 
         $this->addItem(new \Ease\Html\DivTag(_('Access Token')));
-        $this->addItem(new \Ease\Html\TextareaTag('access_token', $token->getDataValue('access_token'), ['style' => 'field-sizing: content;','cols'=>80]));
+        $this->addItem(new \Ease\Html\TextareaTag('access_token', $token->getDataValue('access_token'), ['style' => 'field-sizing: content;', 'cols' => 80]));
 
         // Check refresh token expiration
         if ($token->getDataValue('created_at')) {
@@ -67,6 +67,6 @@ class TokenInfo extends \Ease\Html\DivTag
         }
 
         $this->addItem(new \Ease\Html\DivTag(_('Refresh Token')));
-        $this->addItem(new \Ease\Html\TextareaTag('refresh_token', $token->getDataValue('refresh_token'), ['style' => 'field-sizing: content;','cols'=>80]));
+        $this->addItem(new \Ease\Html\TextareaTag('refresh_token', $token->getDataValue('refresh_token'), ['style' => 'field-sizing: content;', 'cols' => 80]));
     }
 }

@@ -41,56 +41,60 @@ if (empty($tokenId)) {
 } else {
     // Fetch the token from the database
     $token = new \SpojeNet\CSas\Token($tokenId, ['autoload' => true, 'keyColumn' => (is_numeric($tokenId) ? 'id' : 'uuid')]);
+    if ($token->getDataValue('name')) {
 
-    $accesTokenKey = \array_key_exists('accesTokenKey', $options) ? $options['accesTokenKey'] : (array_key_exists('a', $options) ? $options['a'] : 'CSAS_ACCESS_TOKEN');
-    $sandboxModeKey = \array_key_exists('sandboxModeKey', $options) ? $options['sandboxModeKey'] : (array_key_exists('s', $options) ? $options['s'] : 'CSAS_SANDBOX_MODE');
+        $accesTokenKey = \array_key_exists('accesTokenKey', $options) ? $options['accesTokenKey'] : (array_key_exists('a', $options) ? $options['a'] : 'CSAS_ACCESS_TOKEN');
+        $sandboxModeKey = \array_key_exists('sandboxModeKey', $options) ? $options['sandboxModeKey'] : (array_key_exists('s', $options) ? $options['s'] : 'CSAS_SANDBOX_MODE');
 
-    // Check if the access token is expired or will expire within 10 seconds
-    $expiresAt = (new \DateTime())->setTimestamp($token->getDataValue('expires_in'));
-    $now = new \DateTime();
-    $expiresSoon = (clone $now)->modify('+10 seconds');
+        // Check if the access token is expired or will expire within 10 seconds
+        $expiresAt = (new \DateTime())->setTimestamp($token->getDataValue('expires_in'));
+        $now = new \DateTime();
+        $expiresSoon = (clone $now)->modify('+10 seconds');
 
-    if ($expiresAt < $expiresSoon) {
-        // Refresh the token if it is expired or will expire soon
-        $app = new \SpojeNet\CSas\Application($token->getDataValue('application_id'), ['autoload' => true]);
-        $app->sandboxMode($token->getDataValue('environment') === 'sandbox');
-        $token->refreshToken(new \SpojeNet\CSas\Auth($app));
-    }
+        if ($expiresAt < $expiresSoon) {
+            // Refresh the token if it is expired or will expire soon
+            $token->refreshToken(new \SpojeNet\CSas\Auth($token->getApplication()));
+        }
 
-    // Write the required fields to the .env file
-    $envContent = sprintf(
-        $accesTokenKey . "=%s\n". $sandboxModeKey ."=%s\n",
-            $token->getDataValue('access_token'),
-            $token->getDataValue('environment') === 'sandbox' ? 'true' : 'false'
-    );
+        $envArray = $token->exportEnv();
+        $envContent = '';
 
-    if (!file_exists($envFile)) {
-        file_put_contents($envFile, $envContent);
-    } else {
-        // Read the existing .env file
-        $existingEnvContent = file_get_contents($envFile);
-        $envLines = explode("\n", $existingEnvContent);
-        $envData = [];
+        foreach ($envArray as $key => $value) {
+            $envContent .= strtoupper($key) . '=' . $value . "\n";
+        }
 
-        // Parse the existing .env file into an associative array
-        foreach ($envLines as $line) {
-            if (strpos($line, '=') !== false) {
-                list($key, $value) = explode('=', $line, 2);
-                $envData[trim($key)] = trim($value);
+        if (!file_exists($envFile)) {
+            file_put_contents($envFile, $envContent);
+        } else {
+            // Read the existing .env file
+            $existingEnvContent = file_get_contents($envFile);
+            $envLines = explode("\n", $existingEnvContent);
+            $envData = [];
+
+            // Parse the existing .env file into an associative array
+            foreach ($envLines as $line) {
+                if (strpos($line, '=') !== false) {
+                    list($key, $value) = explode('=', $line, 2);
+                    $envData[trim($key)] = trim($value);
+                }
             }
+
+            // Update the necessary fields
+            $envData['#TokenUUID'] = $envArray['#CSAS_TOKEN_UUID'];
+            $envData[$accesTokenKey] = $envArray['CSAS_ACCESS_TOKEN'];
+            $envData[$sandboxModeKey] = $envArray['CSAS_SANDBOX_MODE'];
+
+            // Convert the associative array back to a string
+            $updatedEnvContent = '';
+            foreach ($envData as $key => $value) {
+                $updatedEnvContent .= "$key=$value\n";
+            }
+
+            // Write the updated contents back to the .env file
+            file_put_contents($envFile, $updatedEnvContent);
         }
-
-        // Update the necessary fields
-        $envData[$accesTokenKey] = $token->getDataValue('access_token');
-        $envData[$sandboxModeKey] = $token->getDataValue('environment') === 'sandbox' ? 'true' : 'false';
-
-        // Convert the associative array back to a string
-        $updatedEnvContent = '';
-        foreach ($envData as $key => $value) {
-            $updatedEnvContent .= "$key=$value\n";
-        }
-
-        // Write the updated contents back to the .env file
-        file_put_contents($envFile, $updatedEnvContent);
+    } else {
+        $token->addStatusMessage(sprintf(_('Token %s not found'), $tokenId),'warning');
+        exit(1);
     }
 }
