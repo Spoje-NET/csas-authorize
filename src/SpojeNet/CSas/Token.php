@@ -137,4 +137,26 @@ class Token extends \Ease\SQL\Engine
     {
         return $this->secondsToExpire('expires_in');
     }
+
+    public function getSandBoxMode(): bool
+    {
+        return $this->getDataValue('environment') === 'sandbox';
+    }
+
+    /**
+     * Get Api Connection Fields.
+     *
+     * @return array<string, string> Environment
+     */
+    public function exportEnv(): array
+    {
+        $application = new Application($this->getDataValue('application_id'), ['autoload' => true]);
+        $apiKey = $application->getDataValue(($this->getSandBoxMode() ? 'sandbox' : 'production').'_api_key');
+
+        return [
+            'CSAS_API_KEY' => $apiKey,
+            'CSAS_SANDBOX_MODE' => $this->getSandBoxMode() ? 'true' : 'false',
+            'CSAS_ACCESS_TOKEN' => $this->getDataValue('access_token'),
+        ];
+    }
 }

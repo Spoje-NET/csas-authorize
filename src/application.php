@@ -58,7 +58,7 @@ if (empty($instanceName) === false) {
 WebPage::singleton()->addItem(new PageTop(_('CSAS').': '.$instanceName));
 
 $appRow = new \Ease\TWB5\Row();
-$opsCol = $appRow->addColumn(6, [
+$opsCol = $appRow->addColumn(8, [
     new \Ease\Html\ImgTag($app->getDataValue('logo') ?: 'images/unknown.svg'),
     new AppTokenTable($app),
 ]);
@@ -102,10 +102,10 @@ if ($productionDisabled) {
     }
 }
 
-$opsCol->addItem(new \Ease\TWB5\LinkButton('auth.php?app='.$app->getMyKey().'&env=sandbox', 'Auth SandBox', 'primary' . ( $sandboxDisabled ? ' disabled' : '')));
-$opsCol->addItem(new \Ease\TWB5\LinkButton('auth.php?app='.$app->getMyKey().'&env=production', 'Auth Production', 'success' . ( $productionDisabled ? ' disabled' : '')));
+$opsCol->addItem(new \Ease\TWB5\LinkButton('auth.php?app='.$app->getMyKey().'&env=sandbox', 'Auth SandBox', 'primary'.($sandboxDisabled ? ' disabled' : '')));
+$opsCol->addItem(new \Ease\TWB5\LinkButton('auth.php?app='.$app->getMyKey().'&env=production', 'Auth Production', 'success'.($productionDisabled ? ' disabled' : '')));
 
-$appRow->addColumn(6, new AppEditorForm($app));
+$appRow->addColumn(4, new AppEditorForm($app));
 
 WebPage::singleton()->container->addItem($appRow);
 

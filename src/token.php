@@ -86,6 +86,17 @@ if ($action === 'test') {
     }
 }
 
+$envArray = $token->exportEnv();
+$envContent = '';
+
+foreach ($envArray as $key => $value) {
+    $envContent .= strtoupper($key).'='.$value."\n";
+}
+
+$envDiv = new \Ease\Html\DivTag(nl2br($envContent));
+
+WebPage::singleton()->container->addItem($envDiv);
+
 WebPage::singleton()->addItem(new PageBottom());
 
 WebPage::singleton()->draw();
