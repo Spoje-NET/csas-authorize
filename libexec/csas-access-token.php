@@ -41,7 +41,7 @@ if (empty($tokenId)) {
 } else {
     // Fetch the token from the database
     $token = new \SpojeNet\CSas\Token($tokenId, ['autoload' => true, 'keyColumn' => (is_numeric($tokenId) ? 'id' : 'uuid')]);
-    if ($token->getDataValue('name')) {
+    if ($token->getDataValue('environment')) {
 
         $accesTokenKey = \array_key_exists('accesTokenKey', $options) ? $options['accesTokenKey'] : (array_key_exists('a', $options) ? $options['a'] : 'CSAS_ACCESS_TOKEN');
         $sandboxModeKey = \array_key_exists('sandboxModeKey', $options) ? $options['sandboxModeKey'] : (array_key_exists('s', $options) ? $options['s'] : 'CSAS_SANDBOX_MODE');
@@ -80,7 +80,7 @@ if (empty($tokenId)) {
             }
 
             // Update the necessary fields
-            $envData['#TokenUUID'] = $envArray['#CSAS_TOKEN_UUID'];
+            $envData['#CSAS_TOKEN_UUID'] = $envArray['#CSAS_TOKEN_UUID'];
             $envData[$accesTokenKey] = $envArray['CSAS_ACCESS_TOKEN'];
             $envData[$sandboxModeKey] = $envArray['CSAS_SANDBOX_MODE'];
 
