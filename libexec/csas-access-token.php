@@ -27,7 +27,7 @@ if (isset($options['list']) || isset($options['l'])) {
 
 $tokenId = \array_key_exists('tokenId', $options) ? $options['tokenId'] : (\array_key_exists('t', $options) ? $options['t'] : null);
 
-if (empty($tokenId)) {
+if (empty($tokenId) || empty($envFile) ) {
     echo "Usage: php csas-access-token --tokenId=<TOKEN_ID> [--output=<OUTPUT_FILE>] [--environment=<ENVIRONMENT>] [--list]\n";
     echo "Options:\n";
     echo "  --tokenId, -t        The token ID (required)\n";
@@ -95,7 +95,7 @@ if (empty($tokenId)) {
                     $envData['CSAS_API_KEY'] = $envArray['CSAS_API_KEY'];
                 }
             } else {
-                $token->addStatusMessage(sprintf(_('API_KEY missing ing current configuration. Exporting new one %s'), $envArray['CSAS_API_KEY']));
+                $token->addStatusMessage(sprintf(_('CSAS_API_KEY missing in current configuration. Exporting new one %s'), $envArray['CSAS_API_KEY']));
                 $envData['CSAS_API_KEY'] = $envArray['CSAS_API_KEY'];
             }
 
