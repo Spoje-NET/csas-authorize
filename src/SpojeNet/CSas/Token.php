@@ -87,14 +87,9 @@ class Token extends \Ease\SQL\Engine
         return $expiresIn !== null && $expiresIn < time();
     }
 
-    
     /**
-     * Request new access token and store it
-     * 
-     * @param AbstractProvider $provider
-     * 
-     * @return AccessToken
-     * 
+     * Request new access token and store it.
+     *
      * @throws \RuntimeException
      */
     public function refreshToken(AbstractProvider $provider): AccessToken
@@ -110,8 +105,9 @@ class Token extends \Ease\SQL\Engine
         ]);
 
         $this->store($newToken);
-        $expiresAt = (new \DateTime())->setTimestamp($this->getDataValue('expires_in'));       
-        $this->addStatusMessage(sprintf( _('Token Refreshed. Valid till: %s'), $expiresAt->format('Y-m-d H:i:s')) , 'success');
+        $expiresAt = (new \DateTime())->setTimestamp($this->getDataValue('expires_in'));
+        $this->addStatusMessage(sprintf(_('Token Refreshed. Valid till: %s'), $expiresAt->format('Y-m-d H:i:s')), 'success');
+
         return $newToken;
     }
 
