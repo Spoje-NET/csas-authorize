@@ -1,6 +1,8 @@
-![CSAS Auhorize Logo](src/images/csas-authorize.svg?raw=true)
-
 # CSAS Authorize
+
+![CSAS Auhorize Logo](src/images/csas-authorize.svg?raw=true)
+![GitHub](https://img.shields.io/github/license/Spoje-Net/csas-authorize)
+
 
 This application provides a simple way to authorize your application with CSAS API.
 
@@ -38,19 +40,28 @@ Refresh token is valid for 180 days and Access Token for 5 minutes.
 ## Command line usage
 
 ```shell
-Usage: php csas-access-token --tokenId=<TOKEN_ID> [--output=<OUTPUT_FILE>] [--environment=<ENVIRONMENT>] [--list]
+Usage: php csas-access-token --tokenId=<TOKEN_ID> [--output=<OUTPUT_FILE>] [--environment=<ENVIRONMENT>] [--list] [--json]
 Options:
   --tokenId, -t        The token ID (required)
   --output, -o         The output file (optional)
   --environment, -e    The environment file with DB_* fields (optional)
   --list, -l           List available tokens (optional)
-  --accesTokenKey, -a  Specify custom Access Token key instead of ACCESS_TOKEN
-  --sandboxModeKey, -s Specify custom SandBox Mode key instead of SANDBOX_MODE
+  --json, -j           Export token data in JSON format (optional)
+  --accesTokenKey, -a  Specify custom Access Token key instead of CSAS_ACCESS_TOKEN
+  --sandboxModeKey, -s Specify custom SandBox Mode key instead of CSAS_SANDBOX_MODE
 
-Example:  csas-access-token -t71004963-e3d4-471f-96fc-1aef79d17ec1 -aCSAS_TOKEN -o.env
+Example:
+  # Export token data in .env format
+  php csas-access-token -t71004963-e3d4-471f-96fc-1aef79d17ec1 -aCSAS_TOKEN -o.env
+
+  # Export token data in JSON format
+  php csas-access-token -t71004963-e3d4-471f-96fc-1aef79d17ec1 --json
+
+  # List all tokens in JSON format
+  php csas-access-token --list --json
 ```
 
-If there is no output file specified, the access token is printed to the standard output.
+If there is no output file specified, the access token is printed to the standard output. Use the `--json` option to export token data or the token list in JSON format.
 
 
 ## Development

@@ -48,6 +48,11 @@ class MainMenu extends \Ease\Html\NavTag
         ]);
     }
 
+    /**
+     * Summary of navBarCollapse
+     *
+     * @return \Ease\Html\DivTag
+     */
     public function navBarCollapse()
     {
         //        $oUser = \Ease\Shared::user();
