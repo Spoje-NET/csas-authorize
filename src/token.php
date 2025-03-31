@@ -75,7 +75,7 @@ $envDiv = new \Ease\Html\DivTag(nl2br($envContent));
 WebPage::singleton()->container->addItem($envDiv);
 
 if ($action === 'test') {
-    $apiInstance = new \SpojeNET\Csas\Accounts\DefaultApi(new \SpojeNET\Csas\ApiClient(
+    $apiInstance = new \SpojeNet\CSas\Accounts\DefaultApi(new \SpojeNet\CSas\ApiClient(
         [
             'apikey' => $envArray['CSAS_API_KEY'],
             'token' => $envArray['CSAS_ACCESS_TOKEN'],
