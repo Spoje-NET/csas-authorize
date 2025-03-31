@@ -20,15 +20,14 @@ sudo apt install csas-authorize
 ```
 
 ## Usage
+
 1. Register your application at [CSAS Developer Portal](https://developers.csas.cz/)
 2. Create new application and get your `client_id` and `client_secret`
 3. Open in browser `csas-authorize` and fill in your `client_id` and `client_secret`
 4. Open your browser and authorize your application
 
-
 !['Apps'](apps-screenshot.png?raw=true)
 Main screen with list of your applications registered at CSAS Developer Portal
-
 
 ![App](app-screenshot.png?raw=true)
 One application can have multiple tokens
@@ -46,7 +45,7 @@ Options:
   --output, -o         The output file (optional)
   --environment, -e    The environment file with DB_* fields (optional)
   --list, -l           List available tokens (optional)
-  --json, -j           Export token data in JSON format (optional)
+  --json, -j           Export token data or token list in JSON format (optional)
   --accesTokenKey, -a  Specify custom Access Token key instead of CSAS_ACCESS_TOKEN
   --sandboxModeKey, -s Specify custom SandBox Mode key instead of CSAS_SANDBOX_MODE
 
@@ -57,12 +56,14 @@ Example:
   # Export token data in JSON format
   php csas-access-token -t71004963-e3d4-471f-96fc-1aef79d17ec1 --json
 
+  # List all tokens in plain text format
+  php csas-access-token --list
+
   # List all tokens in JSON format
   php csas-access-token --list --json
 ```
 
 If there is no output file specified, the access token is printed to the standard output. Use the `--json` option to export token data or the token list in JSON format.
-
 
 ## Development
 

@@ -49,7 +49,7 @@ class MainMenu extends \Ease\Html\NavTag
     }
 
     /**
-     * Summary of navBarCollapse
+     * Summary of navBarCollapse.
      *
      * @return \Ease\Html\DivTag
      */

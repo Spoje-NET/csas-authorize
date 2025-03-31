@@ -26,9 +26,9 @@ class EngineForm extends Form
      * Formulář Bootstrapu.
      *
      * @param \Ease\SQL\Engine $engine        jméno formuláře
-     * @param mixed  $formContents  prvky uvnitř formuláře
-     * @param array  $tagProperties vlastnosti tagu například:
-     *                              array('enctype' => 'multipart/form-data')
+     * @param mixed            $formContents  prvky uvnitř formuláře
+     * @param array            $tagProperties vlastnosti tagu například:
+     *                                        array('enctype' => 'multipart/form-data')
      */
     public function __construct($engine, $formContents = null, $tagProperties = [])
     {
