@@ -7,7 +7,7 @@ require_once '../vendor/autoload.php';
 /**
  * Get today's Statements list.
  */
-$options = getopt('o::e::a::s::t:l:j', ['output::', 'environment::', 'tokenId::', 'list', 'accesTokenKey::', 'sandboxModeKey::', 'json']);
+$options = getopt('o::e::a::s::t:l::j::', ['output::', 'environment::', 'tokenId::', 'list', 'accesTokenKey::', 'sandboxModeKey::', 'json']);
 \Ease\Shared::init(
     ['DB_CONNECTION', 'DB_HOST', 'DB_PORT', 'DB_DATABASE', 'DB_USERNAME', 'DB_PASSWORD'],
     \array_key_exists('environment', $options) ? $options['environment'] : (\array_key_exists('e', $options) ? $options['e'] : '../.env')
@@ -21,7 +21,7 @@ if (isset($options['list']) || isset($options['l'])) {
 
     if (isset($options['json']) || isset($options['j'])) {
         // Export token list in JSON format
-        echo json_encode($tokenList, JSON_PRETTY_PRINT);
+        echo json_encode($tokenList->fetchAll(), JSON_PRETTY_PRINT);
     } else {
         // Export token list in plain text format
         foreach ($tokenList as $tokenData) {
