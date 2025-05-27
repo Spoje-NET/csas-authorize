@@ -4,7 +4,7 @@ Standards-Version: 3.8.4
 Maintainer: Vítězslav Dvořák <info@vitexsoftware.cz>
 Uploaders: Vitex <vitex@hippy.cz>
 Priority: optional
-Homepage: https://github.com/VitexSoftware/Flexplorer
+Homepage: https://github.com/Spoje-NET/csas-authorize
 
 Package: csas-authorize
 Depends: ${misc:Depends}, composer-debian, php-intl,php-vitexsoftware-ease-bootstrap5, php-vitexsoftware-ease-html-widgets,php-vitexsoftware-ease-bootstrap5-widgets, php-vitexsoftware-ease-fluentpdo, php-spojenet-csas-accountsapi, php-robmorgan-phinx|php-cakephp-phinx, csas-authorize-sqlite|csas-authorize-mysql
