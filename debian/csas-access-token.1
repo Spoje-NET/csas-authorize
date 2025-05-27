@@ -1,0 +1,34 @@
+.TH csas-access-token 1 "June 2024" "csas-access-token"
+.SH NAME
+csas-access-token \- Manage and export CSAS access tokens
+.SH SYNOPSIS
+.B php csas-access-token
+[\fB--tokenId\fR=\fITOKEN_ID\fR] [\fB--output\fR=\fIOUTPUT_FILE\fR] [\fB--environment\fR=\fIENVIRONMENT\fR] [\fB--list\fR] [\fB--json\fR] [\fB--accesTokenKey\fR=\fIKEY\fR] [\fB--sandboxModeKey\fR=\fIKEY\fR]
+.SH DESCRIPTION
+The \fBcsas-access-token\fR command manages and exports CSAS access tokens.
+.SH OPTIONS
+.TP
+\fB--tokenId\fR, \fB-t\fR
+The token ID (required).
+.TP
+\fB--output\fR, \fB-o\fR
+The output file (optional).
+.TP
+\fB--environment\fR, \fB-e\fR
+The environment file with DB_* fields (optional).
+.TP
+\fB--list\fR, \fB-l\fR
+List available tokens (optional).
+.TP
+\fB--json\fR, \fB-j\fR
+Export token data in JSON format (optional).
+.TP
+\fB--accesTokenKey\fR, \fB-a\fR
+Specify custom Access Token key instead of CSAS_ACCESS_TOKEN.
+.TP
+\fB--sandboxModeKey\fR, \fB-s\fR
+Specify custom SandBox Mode key instead of CSAS_SANDBOX_MODE.
+.SH EXAMPLES
+.B csas-access-token -t71004963-e3d4-471f-96fc-1aef79d17ec1 -aCSAS_TOKEN -o.env
+.SH AUTHOR
+Vitex Software

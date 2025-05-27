@@ -1,16 +1,12 @@
-#!/bin/sh
-# If this exists, it is installed into lib/systemd/system/csas-authorize.service in csas-authorize
-# See dh_systemd_enable(1).
-
 [Unit]
-Description=Run csas-authorize scheduled jobs
+Description=Send notification when CSAS access token is about to expire
 After=multi-user.target
 
 [Service]
 User=csas-authorize
 Group=csas-authorize
 EnvironmentFile=/etc/csas-authorize/csas-authorize.env
-ExecStart=/usr/bin/php /usr/libexec/csas-authorize/daemon.php
+ExecStart=/usr/bin/csas-authorize
 LimitNOFILE=8192:16384
 Type=simple
 
