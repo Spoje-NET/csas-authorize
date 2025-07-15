@@ -9,7 +9,8 @@
     "deb/ease-html-widgets": "*",
     "deb/ease-bootstrap5": "*",
     "league/oauth2-client": "dev-master",
-    "deb/csas-accountsapi": "*"
+    "deb/csas-accountsapi": "*",
+    "kint-php/kint": "^5.0"
   },
   "license": "MIT",
   "authors": [

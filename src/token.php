@@ -15,6 +15,8 @@ declare(strict_types=1);
 
 namespace SpojeNet\CSas\Ui;
 
+use Kint\Kint;
+
 require_once '../vendor/autoload.php';
 
 require_once './init.php';
@@ -89,10 +91,22 @@ if ($action === 'test') {
 
         $result = $apiInstance->getAccounts();
 
-        WebPage::singleton()->container->addItem(new \Ease\Html\PreTag(nl2br(print_r($result, true))));
+        // Uložení výstupu Kint do proměnné
+
+        ob_clean();
+        Kint::$enabled_mode = true;
+        Kint::$expanded = true; // Expand the dump by default
+        ob_start();
+        Kint::dump($result, true);
+        $kintOutput = ob_get_clean();
+
     } catch (\Exception $e) {
-        WebPage::singleton()->container->addItem('Exception when calling DefaultApi->getAccounts: ', $e->getMessage());
+        $kintOutput = 'Exception when calling DefaultApi->getAccounts: ' . $e->getMessage();
     }
+}
+
+if (isset($kintOutput)) {
+    WebPage::singleton()->container->addItem($kintOutput);
 }
 
 WebPage::singleton()->addItem(new PageBottom());
