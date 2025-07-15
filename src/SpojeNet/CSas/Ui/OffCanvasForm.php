@@ -24,6 +24,8 @@ use Ease\TWB5\SubmitButton;
  * Description of OffCanvasForm.
  *
  * @author Vitex <info@vitexsoftware.cz>
+ *
+ * @no-named-arguments
  */
 class OffCanvasForm extends EngineForm
 {

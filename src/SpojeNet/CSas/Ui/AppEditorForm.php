@@ -23,6 +23,8 @@ use Ease\TWB5\SubmitButton;
  * Description of RegisterAppForm.
  *
  * Author: vitex
+ *
+ * @no-named-arguments
  */
 class AppEditorForm extends EngineForm
 {

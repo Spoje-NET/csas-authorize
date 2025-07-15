@@ -19,6 +19,8 @@ namespace SpojeNet\CSas\Ui;
  * Description of WebPage.
  *
  * @author vitex
+ *
+ * @no-named-arguments
  */
 class WebPage extends \Ease\TWB5\WebPage
 {

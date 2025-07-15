@@ -18,11 +18,21 @@ namespace SpojeNet\CSas\Ui;
 require_once '../vendor/autoload.php';
 
 require_once './init.php';
-
 WebPage::singleton()->addItem(new PageTop(_('CSAS')));
+
+// Basic Auth check
+if (!isset($_SERVER['PHP_AUTH_USER'])) {
+    WebPage::singleton()->container->addItem(
+        new \Ease\TWB5\Alert(
+            'danger',
+            _('🚨 This page is not protected! At least Basic Auth is recommended.'),
+        ),
+    );
+}
 
 WebPage::singleton()->container->addItem(new \Ease\Html\ImgTag('images/csas-authorize.svg', _('CSAS Authorize'), ['align' => 'right']));
 WebPage::singleton()->container->addItem(new \Ease\Html\H1Tag(_('CSAS Authorize')));
+
 WebPage::singleton()->container->addItem(new \Ease\TWB5\LinkButton('application.php', _('Application'), 'primary'));
 
 WebPage::singleton()->container->addItem(new \SpojeNet\CSas\Ui\AppTable(new \SpojeNet\CSas\Application()));

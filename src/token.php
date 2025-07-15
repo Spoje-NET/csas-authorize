@@ -99,9 +99,8 @@ if ($action === 'test') {
         ob_start();
         Kint::dump($result, true);
         $kintOutput = ob_get_clean();
-
     } catch (\Exception $e) {
-        $kintOutput = 'Exception when calling DefaultApi->getAccounts: ' . $e->getMessage();
+        $kintOutput = 'Exception when calling DefaultApi->getAccounts: '.$e->getMessage();
     }
 }
 

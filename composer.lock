@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "342091121cef81f2ff0158af0949f2c1",
+    "content-hash": "22b20c2379eea8401e3bfd8a0367f8db",
     "packages": [
         {
             "name": "cakephp/chronos",
@@ -1559,16 +1559,16 @@
         },
         {
             "name": "robmorgan/phinx",
-            "version": "0.x-dev",
+            "version": "0.16.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cakephp/phinx.git",
-                "reference": "693ace8b66ddf50be26199948afa5a23d0c17317"
+                "reference": "83f83ec105e55e3abba7acc23c0272b5fcf66929"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cakephp/phinx/zipball/693ace8b66ddf50be26199948afa5a23d0c17317",
-                "reference": "693ace8b66ddf50be26199948afa5a23d0c17317",
+                "url": "https://api.github.com/repos/cakephp/phinx/zipball/83f83ec105e55e3abba7acc23c0272b5fcf66929",
+                "reference": "83f83ec105e55e3abba7acc23c0272b5fcf66929",
                 "shasum": ""
             },
             "require": {
@@ -1592,7 +1592,6 @@
                 "ext-pdo": "PDO extension is needed",
                 "symfony/yaml": "Install if using YAML configuration format"
             },
-            "default-branch": true,
             "bin": [
                 "bin/phinx"
             ],
@@ -1641,9 +1640,9 @@
             ],
             "support": {
                 "issues": "https://github.com/cakephp/phinx/issues",
-                "source": "https://github.com/cakephp/phinx/tree/0.x"
+                "source": "https://github.com/cakephp/phinx/tree/0.16.10"
             },
-            "time": "2025-07-08T18:55:47+00:00"
+            "time": "2025-07-08T18:55:28+00:00"
         },
         {
             "name": "spojenet/csas-accountsapi",
@@ -2639,28 +2638,29 @@
         },
         {
             "name": "vitexsoftware/ease-html",
-            "version": "1.40.2",
+            "version": "dev-main",
             "source": {
                 "type": "git",
                 "url": "https://github.com/VitexSoftware/php-ease-html.git",
-                "reference": "6d3445a0e4359fb22ec6d9e97393f3383f67e1fe"
+                "reference": "f4b9ac91588ad8030a20b98aa6e9b70836b5dbd0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/VitexSoftware/php-ease-html/zipball/6d3445a0e4359fb22ec6d9e97393f3383f67e1fe",
-                "reference": "6d3445a0e4359fb22ec6d9e97393f3383f67e1fe",
+                "url": "https://api.github.com/repos/VitexSoftware/php-ease-html/zipball/f4b9ac91588ad8030a20b98aa6e9b70836b5dbd0",
+                "reference": "f4b9ac91588ad8030a20b98aa6e9b70836b5dbd0",
                 "shasum": ""
             },
             "require": {
-                "vitexsoftware/ease-core": "^1.45"
+                "vitexsoftware/ease-core": "^1.47"
             },
             "require-dev": {
-                "ergebnis/composer-normalize": "^2.43",
-                "ergebnis/php-cs-fixer-config": "^6.34",
-                "friendsofphp/php-cs-fixer": "^3.61",
+                "ergebnis/composer-normalize": "^2.45",
+                "ergebnis/php-cs-fixer-config": "^6.39",
+                "friendsofphp/php-cs-fixer": "^3.65",
                 "phpstan/phpstan": "*",
                 "phpunit/phpunit": "*"
             },
+            "default-branch": true,
             "type": "library",
             "autoload": {
                 "psr-4": {
@@ -2681,7 +2681,7 @@
             "description": "Set of HTML rendering objects",
             "support": {
                 "issues": "https://github.com/VitexSoftware/php-ease-html/issues",
-                "source": "https://github.com/VitexSoftware/php-ease-html/tree/1.40.2"
+                "source": "https://github.com/VitexSoftware/php-ease-html/tree/main"
             },
             "funding": [
                 {
@@ -2689,24 +2689,24 @@
                     "type": "patreon"
                 }
             ],
-            "time": "2024-11-27T11:04:45+00:00"
+            "time": "2025-07-08T18:29:49+00:00"
         },
         {
             "name": "vitexsoftware/ease-html-widgets",
-            "version": "1.1.1",
+            "version": "1.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/VitexSoftware/php-vitexsoftware-ease-html-widgets.git",
-                "reference": "70ea81e111234fb856be67d0002a17136752ddf6"
+                "reference": "7c888c87ec20997adb6994e339f3b2a3fee2f3b3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/VitexSoftware/php-vitexsoftware-ease-html-widgets/zipball/70ea81e111234fb856be67d0002a17136752ddf6",
-                "reference": "70ea81e111234fb856be67d0002a17136752ddf6",
+                "url": "https://api.github.com/repos/VitexSoftware/php-vitexsoftware-ease-html-widgets/zipball/7c888c87ec20997adb6994e339f3b2a3fee2f3b3",
+                "reference": "7c888c87ec20997adb6994e339f3b2a3fee2f3b3",
                 "shasum": ""
             },
             "require": {
-                "vitexsoftware/ease-html": "^1.32"
+                "vitexsoftware/ease-html": "dev-main"
             },
             "replace": {
                 "vitexsoftware/ease-core-bricks": "*"
@@ -2714,7 +2714,7 @@
             "require-dev": {
                 "ergebnis/composer-normalize": "^2.43",
                 "ergebnis/php-cs-fixer-config": "^6.34",
-                "friendsofphp/php-cs-fixer": "^3.64",
+                "friendsofphp/php-cs-fixer": "^3.61",
                 "phpstan/phpstan": "*",
                 "phpunit/phpunit": "*"
             },
@@ -2739,26 +2739,26 @@
             "homepage": "https://github.com/VitexSoftware/php-vitexsoftware-ease-html-widgets",
             "support": {
                 "issues": "https://github.com/VitexSoftware/php-vitexsoftware-ease-html-widgets/issues",
-                "source": "https://github.com/VitexSoftware/php-vitexsoftware-ease-html-widgets/tree/1.1.1"
+                "source": "https://github.com/VitexSoftware/php-vitexsoftware-ease-html-widgets/tree/1.0.0"
             },
-            "time": "2024-11-16T14:25:43+00:00"
+            "time": "2024-10-19T10:47:33+00:00"
         },
         {
             "name": "vitexsoftware/ease-twbootstrap5",
-            "version": "dev-main",
+            "version": "1.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/VitexSoftware/php-ease-twbootstrap5.git",
-                "reference": "2342c66327ef53607a62887560135ace2f5ed3df"
+                "reference": "10f6a0b80f28989dc354a3af246d1d714f507c90"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/VitexSoftware/php-ease-twbootstrap5/zipball/2342c66327ef53607a62887560135ace2f5ed3df",
-                "reference": "2342c66327ef53607a62887560135ace2f5ed3df",
+                "url": "https://api.github.com/repos/VitexSoftware/php-ease-twbootstrap5/zipball/10f6a0b80f28989dc354a3af246d1d714f507c90",
+                "reference": "10f6a0b80f28989dc354a3af246d1d714f507c90",
                 "shasum": ""
             },
             "require": {
-                "vitexsoftware/ease-html": "^1.40"
+                "vitexsoftware/ease-html": ">= 1.40"
             },
             "require-dev": {
                 "ergebnis/composer-normalize": "^2.47",
@@ -2767,7 +2767,6 @@
                 "phpstan/phpstan": "^2.0",
                 "phpunit/phpunit": "*"
             },
-            "default-branch": true,
             "type": "library",
             "autoload": {
                 "psr-4": {
@@ -2787,9 +2786,9 @@
             "description": "Set of Twitter Bootstrap 5 rendering objects",
             "support": {
                 "issues": "https://github.com/VitexSoftware/php-ease-twbootstrap5/issues",
-                "source": "https://github.com/VitexSoftware/php-ease-twbootstrap5/tree/main"
+                "source": "https://github.com/VitexSoftware/php-ease-twbootstrap5/tree/v0.2.0"
             },
-            "time": "2025-06-05T15:32:36+00:00"
+            "time": "2025-06-05T14:32:47+00:00"
         }
     ],
     "packages-dev": [
@@ -4469,12 +4468,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "8a5e76f8954339476fd3a5117a80632946067542"
+                "reference": "816cf0b26a73196a0ce636bf0c43d95be7ed7dda"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/8a5e76f8954339476fd3a5117a80632946067542",
-                "reference": "8a5e76f8954339476fd3a5117a80632946067542",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/816cf0b26a73196a0ce636bf0c43d95be7ed7dda",
+                "reference": "816cf0b26a73196a0ce636bf0c43d95be7ed7dda",
                 "shasum": ""
             },
             "require": {
@@ -4520,7 +4519,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-07-14T14:26:03+00:00"
+            "time": "2025-07-15T05:27:40+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",
@@ -7255,9 +7254,7 @@
     "minimum-stability": "dev",
     "stability-flags": {
         "kint-php/kint": 20,
-        "league/oauth2-client": 20,
-        "robmorgan/phinx": 20,
-        "vitexsoftware/ease-twbootstrap5": 20
+        "league/oauth2-client": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

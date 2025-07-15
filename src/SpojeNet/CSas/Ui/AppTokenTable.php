@@ -19,6 +19,8 @@ namespace SpojeNet\CSas\Ui;
  * Description of TokenTable.
  *
  * Author: Vitex <info@vitexsoftware.cz>
+ *
+ * @no-named-arguments
  */
 class AppTokenTable extends \Ease\TWB5\Table
 {

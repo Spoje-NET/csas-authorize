@@ -21,6 +21,8 @@ use Ease\Functions as Fnc;
  * Description of Auth.
  *
  * @author Vitex <info@vitexsoftware.cz>
+ *
+ * @no-named-arguments
  */
 class Auth extends \League\OAuth2\Client\Provider\GenericProvider
 {

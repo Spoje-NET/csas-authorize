@@ -17,6 +17,8 @@ namespace SpojeNet\CSas\Ui;
 
 /**
  * Page TOP.
+ *
+ * @no-named-arguments
  */
 class PageTop extends \Ease\Html\DivTag
 {

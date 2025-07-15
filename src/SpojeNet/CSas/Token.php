@@ -22,6 +22,8 @@ use League\OAuth2\Client\Token\AccessToken;
  * Description of Token.
  *
  * Author: Vitex <info@vitexsoftware.cz>
+ *
+ * @no-named-arguments
  */
 class Token extends \Ease\SQL\Engine
 {

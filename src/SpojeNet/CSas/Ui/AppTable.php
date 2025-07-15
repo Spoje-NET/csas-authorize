@@ -19,6 +19,8 @@ namespace SpojeNet\CSas\Ui;
  * Description of AppTable.
  *
  * @author Vitex <info@vitexsoftware.cz>
+ *
+ * @no-named-arguments
  */
 class AppTable extends \Ease\TWB5\Table
 {

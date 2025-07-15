@@ -19,11 +19,13 @@ namespace SpojeNet\CSas\Ui;
  * Page Bottom.
  *
  * @author     Vitex <vitex@hippy.cz>
+ *
+ * @no-named-arguments
  */
 class PageBottom extends \Ease\Html\FooterTag
 {
-    
-    public function __construct() {
+    public function __construct()
+    {
         parent::__construct();
         $this->addItem('<hr>');
         $footrow = new \Ease\TWB5\Row();
@@ -38,6 +40,4 @@ class PageBottom extends \Ease\Html\FooterTag
 
         $this->addItem(new \Ease\TWB5\Container($footrow));
     }
-    
-    
 }

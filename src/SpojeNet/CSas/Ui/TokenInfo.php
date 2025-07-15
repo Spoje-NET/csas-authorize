@@ -19,6 +19,8 @@ namespace SpojeNet\CSas\Ui;
  * Description of TokenInfo.
  *
  * @author Vitex <info@vitexsoftware.cz>
+ *
+ * @no-named-arguments
  */
 class TokenInfo extends \Ease\Html\DivTag
 {

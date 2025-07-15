@@ -18,6 +18,9 @@ namespace SpojeNet\CSas\Ui;
 use Ease\Html\InputHiddenTag;
 use Ease\TWB5\Form;
 
+/**
+ * @no-named-arguments
+ */
 class EngineForm extends Form
 {
     public $engine;

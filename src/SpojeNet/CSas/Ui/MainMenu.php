@@ -19,6 +19,8 @@ namespace SpojeNet\CSas\Ui;
  * Description of MainMenu.
  *
  * @author vitex
+ *
+ * @no-named-arguments
  */
 class MainMenu extends \Ease\Html\NavTag
 {

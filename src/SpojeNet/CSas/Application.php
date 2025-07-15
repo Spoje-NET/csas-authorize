@@ -19,6 +19,8 @@ namespace SpojeNet\CSas;
  * Description of Application.
  *
  * @author Vitex <info@vitexsoftware.cz>
+ *
+ * @no-named-arguments
  */
 class Application extends \Ease\SQL\Engine
 {

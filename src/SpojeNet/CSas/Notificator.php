@@ -19,6 +19,8 @@ namespace SpojeNet\CSas;
  * Description of Notificator.
  *
  * Author: Vitex <info@vitexsoftware.cz>
+ *
+ * @no-named-arguments
  */
 class Notificator extends \Ease\HtmlMailer
 {

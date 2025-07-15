@@ -20,8 +20,8 @@
         "phpunit/phpunit": "*",
         "phpstan/phpstan": "*",
         "friendsofphp/php-cs-fixer": "^3.61",
-        "ergebnis/composer-normalize": "^2.43",
-        "ergebnis/php-cs-fixer-config": "^6.34",
+        "ergebnis/composer-normalize": "^2.47",
+        "ergebnis/php-cs-fixer-config": "^6.49",
         "kint-php/kint": "dev-master"
     },
     "config": {
@@ -30,10 +30,10 @@
         }
     },
     "require": {
-        "robmorgan/phinx": "0.x-dev",
-        "vitexsoftware/ease-twbootstrap5": "dev-main",
+        "robmorgan/phinx": "^0.16",
+        "vitexsoftware/ease-twbootstrap5": "^1.2",
         "league/oauth2-client": "dev-master",
-        "vitexsoftware/ease-core": "^1.47",
+        "vitexsoftware/ease-core": "^1.48",
         "vitexsoftware/ease-fluentpdo": "^1.4",
         "vitexsoftware/ease-html-widgets": "^1.0",
         "spojenet/csas-accountsapi": "^0.7"
