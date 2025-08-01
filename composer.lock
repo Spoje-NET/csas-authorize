@@ -2638,29 +2638,28 @@
         },
         {
             "name": "vitexsoftware/ease-html",
-            "version": "dev-main",
+            "version": "1.40.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/VitexSoftware/php-ease-html.git",
-                "reference": "f4b9ac91588ad8030a20b98aa6e9b70836b5dbd0"
+                "reference": "6d3445a0e4359fb22ec6d9e97393f3383f67e1fe"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/VitexSoftware/php-ease-html/zipball/f4b9ac91588ad8030a20b98aa6e9b70836b5dbd0",
-                "reference": "f4b9ac91588ad8030a20b98aa6e9b70836b5dbd0",
+                "url": "https://api.github.com/repos/VitexSoftware/php-ease-html/zipball/6d3445a0e4359fb22ec6d9e97393f3383f67e1fe",
+                "reference": "6d3445a0e4359fb22ec6d9e97393f3383f67e1fe",
                 "shasum": ""
             },
             "require": {
-                "vitexsoftware/ease-core": "^1.47"
+                "vitexsoftware/ease-core": "^1.45"
             },
             "require-dev": {
-                "ergebnis/composer-normalize": "^2.45",
-                "ergebnis/php-cs-fixer-config": "^6.39",
-                "friendsofphp/php-cs-fixer": "^3.65",
+                "ergebnis/composer-normalize": "^2.43",
+                "ergebnis/php-cs-fixer-config": "^6.34",
+                "friendsofphp/php-cs-fixer": "^3.61",
                 "phpstan/phpstan": "*",
                 "phpunit/phpunit": "*"
             },
-            "default-branch": true,
             "type": "library",
             "autoload": {
                 "psr-4": {
@@ -2681,7 +2680,7 @@
             "description": "Set of HTML rendering objects",
             "support": {
                 "issues": "https://github.com/VitexSoftware/php-ease-html/issues",
-                "source": "https://github.com/VitexSoftware/php-ease-html/tree/main"
+                "source": "https://github.com/VitexSoftware/php-ease-html/tree/1.40.2"
             },
             "funding": [
                 {
@@ -2689,24 +2688,24 @@
                     "type": "patreon"
                 }
             ],
-            "time": "2025-07-08T18:29:49+00:00"
+            "time": "2024-11-27T11:04:45+00:00"
         },
         {
             "name": "vitexsoftware/ease-html-widgets",
-            "version": "1.0.0",
+            "version": "1.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/VitexSoftware/php-vitexsoftware-ease-html-widgets.git",
-                "reference": "7c888c87ec20997adb6994e339f3b2a3fee2f3b3"
+                "reference": "70ea81e111234fb856be67d0002a17136752ddf6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/VitexSoftware/php-vitexsoftware-ease-html-widgets/zipball/7c888c87ec20997adb6994e339f3b2a3fee2f3b3",
-                "reference": "7c888c87ec20997adb6994e339f3b2a3fee2f3b3",
+                "url": "https://api.github.com/repos/VitexSoftware/php-vitexsoftware-ease-html-widgets/zipball/70ea81e111234fb856be67d0002a17136752ddf6",
+                "reference": "70ea81e111234fb856be67d0002a17136752ddf6",
                 "shasum": ""
             },
             "require": {
-                "vitexsoftware/ease-html": "dev-main"
+                "vitexsoftware/ease-html": "^1.32"
             },
             "replace": {
                 "vitexsoftware/ease-core-bricks": "*"
@@ -2714,7 +2713,7 @@
             "require-dev": {
                 "ergebnis/composer-normalize": "^2.43",
                 "ergebnis/php-cs-fixer-config": "^6.34",
-                "friendsofphp/php-cs-fixer": "^3.61",
+                "friendsofphp/php-cs-fixer": "^3.64",
                 "phpstan/phpstan": "*",
                 "phpunit/phpunit": "*"
             },
@@ -2739,9 +2738,9 @@
             "homepage": "https://github.com/VitexSoftware/php-vitexsoftware-ease-html-widgets",
             "support": {
                 "issues": "https://github.com/VitexSoftware/php-vitexsoftware-ease-html-widgets/issues",
-                "source": "https://github.com/VitexSoftware/php-vitexsoftware-ease-html-widgets/tree/1.0.0"
+                "source": "https://github.com/VitexSoftware/php-vitexsoftware-ease-html-widgets/tree/1.1.1"
             },
-            "time": "2024-10-19T10:47:33+00:00"
+            "time": "2024-11-16T14:25:43+00:00"
         },
         {
             "name": "vitexsoftware/ease-twbootstrap5",
