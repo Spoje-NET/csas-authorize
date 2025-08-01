@@ -58,7 +58,7 @@ class PageTop extends \Ease\Html\DivTag
 
 #smdrag { height: 8px;
           background-image:  url( images/slidehandle.png );
-          background-color: #ccc;
+          background-color: #aaa;
           background-repeat: no-repeat;
           background-position: top center;
           cursor: ns-resize;

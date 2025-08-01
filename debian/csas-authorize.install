@@ -1,4 +1,5 @@
 src/*.php                                 usr/share/csas-authorize
+src/js/*.js                                 usr/share/csas-authorize/js
 src/favicon.ico                           usr/share/csas-authorize
 src/images/*                              usr/share/csas-authorize/images
 db/migrations/*				  usr/lib/csas-authorize/db/migrations

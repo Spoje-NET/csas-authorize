@@ -7,7 +7,7 @@ Priority: optional
 Homepage: https://github.com/Spoje-NET/csas-authorize
 
 Package: csas-authorize
-Depends: ${misc:Depends}, composer-debian, php-intl,php-vitexsoftware-ease-bootstrap5, php-vitexsoftware-ease-html-widgets,php-vitexsoftware-ease-bootstrap5-widgets, php-vitexsoftware-ease-fluentpdo, php-spojenet-csas-accountsapi, php-robmorgan-phinx|php-cakephp-phinx, csas-authorize-sqlite|csas-authorize-mysql
+Depends: ${misc:Depends}, composer-debian, php-intl,php-vitexsoftware-ease-bootstrap5, php-vitexsoftware-ease-html-widgets (>=1.1.1),php-vitexsoftware-ease-bootstrap5-widgets, php-vitexsoftware-ease-fluentpdo, php-spojenet-csas-accountsapi, php-robmorgan-phinx|php-cakephp-phinx, csas-authorize-sqlite|csas-authorize-mysql
 Architecture: all
 Section: web
 Priority: optional
