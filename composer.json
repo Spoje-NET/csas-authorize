@@ -16,26 +16,26 @@
         }
     ],
     "minimum-stability": "dev",
+    "require": {
+        "vitexsoftware/ease-twbootstrap5": "^1.2",
+        "league/oauth2-client": "^2.8",
+        "vitexsoftware/ease-core": "^1.48",
+        "vitexsoftware/ease-fluentpdo": "^1.4",
+        "vitexsoftware/ease-html-widgets": "^1.0",
+        "spojenet/csas-accountsapi": "^0.7",
+        "kint-php/kint": "^4.0"
+    },
     "require-dev": {
+        "robmorgan/phinx": "^0.16",
         "phpunit/phpunit": "*",
         "phpstan/phpstan": "*",
-        "friendsofphp/php-cs-fixer": "^3.61",
+        "friendsofphp/php-cs-fixer": "^3.86",
         "ergebnis/composer-normalize": "^2.47",
         "ergebnis/php-cs-fixer-config": "^6.52",
-        "kint-php/kint": "dev-master"
     },
     "config": {
         "allow-plugins": {
             "ergebnis/composer-normalize": true
         }
-    },
-    "require": {
-        "robmorgan/phinx": "^0.16",
-        "vitexsoftware/ease-twbootstrap5": "^1.2",
-        "league/oauth2-client": "dev-master",
-        "vitexsoftware/ease-core": "^1.48",
-        "vitexsoftware/ease-fluentpdo": "^1.4",
-        "vitexsoftware/ease-html-widgets": "^1.0",
-        "spojenet/csas-accountsapi": "^0.7"
     }
 }
