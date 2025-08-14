@@ -102,8 +102,28 @@ if ($productionDisabled) {
     }
 }
 
-$opsCol->addItem(new \Ease\TWB5\LinkButton('auth.php?app='.$app->getMyKey().'&env=sandbox', 'Auth SandBox', 'primary'.($sandboxDisabled ? ' disabled' : '')));
-$opsCol->addItem(new \Ease\TWB5\LinkButton('auth.php?app='.$app->getMyKey().'&env=production', 'Auth Production', 'success'.($productionDisabled ? ' disabled' : '')));
+$opsCol->addItem(new \Ease\TWB5\LinkButton(
+    'auth.php?app='.$app->getMyKey().'&env=sandbox',
+    '🧪 '._('Auth SandBox'),
+    'primary'.($sandboxDisabled ? ' disabled' : ''),
+));
+$opsCol->addItem(new \Ease\TWB5\LinkButton(
+    'auth.php?app='.$app->getMyKey().'&env=production',
+    '🏭 '._('Auth Production'),
+    'success'.($productionDisabled ? ' disabled' : ''),
+));
+
+// Add buttons for sending authorization link by email
+$opsCol->addItem(new \Ease\TWB5\LinkButton(
+    'mailauth.php?app='.$app->getMyKey().'&env=sandbox',
+    '✉️ '._('Mail Auth Link SandBox'),
+    'info'.($sandboxDisabled ? ' disabled' : ''),
+));
+$opsCol->addItem(new \Ease\TWB5\LinkButton(
+    'mailauth.php?app='.$app->getMyKey().'&env=production',
+    '✉️ '._('Mail Auth Link Production'),
+    'info'.($productionDisabled ? ' disabled' : ''),
+));
 
 $appRow->addColumn(4, new AppEditorForm($app));
 
