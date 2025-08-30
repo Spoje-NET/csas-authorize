@@ -21,7 +21,7 @@
         "league/oauth2-client": "^2.8",
         "vitexsoftware/ease-core": "^1.49",
         "vitexsoftware/ease-fluentpdo": "^1.4",
-        "vitexsoftware/ease-html-widgets": "^1.0",
+        "vitexsoftware/ease-html-widgets": "^1.1",
         "spojenet/csas-accountsapi": "^0.7",
         "kint-php/kint": "^4.0"
     },
