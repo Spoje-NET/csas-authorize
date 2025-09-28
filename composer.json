@@ -37,5 +37,6 @@
         "allow-plugins": {
             "ergebnis/composer-normalize": true
         }
-    }
+    },
+    "version": "0.3.0"
 }

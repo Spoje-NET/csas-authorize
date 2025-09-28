@@ -1,0 +1,37 @@
+.TH import-from-portal 1 "September 2024" "import-from-portal"
+.SH NAME
+import-from-portal \- Import CSAS application data from Developer Portal format
+.SH SYNOPSIS
+.B import-from-portal
+[\fB--file\fR=\fIFILE\fR] [\fB--json\fR=\fIJSON_STRING\fR] [\fB--example\fR] [\fB--help\fR]
+.SH DESCRIPTION
+The \fBimport-from-portal\fR command imports CSAS application data from Developer Portal compatible JSON format into CSAS Authorize database.
+.SH OPTIONS
+.TP
+\fB--file\fR \fIFILE\fR
+Import data from JSON file.
+.TP
+\fB--json\fR \fIJSON_STRING\fR
+Import data from JSON string.
+.TP
+\fB--example\fR
+Show example JSON format.
+.TP
+\fB--help\fR, \fB-h\fR
+Show help message.
+.SH EXAMPLES
+.B import-from-portal --file ./example-import.json
+.br
+.B import-from-portal --json '{"name":"Test App", "id":"uuid", ...}'
+.br
+.B import-from-portal --example
+.SH JSON FORMAT
+The tool expects JSON data with application information including name, id, logoUrl, email, and optional sandbox/production environment configurations with clientId, clientSecret, apiKey, and redirectUri.
+.SH FILES
+.TP
+.I /usr/libexec/csas-authorize/import-from-portal.php
+The main import script executed by this command.
+.SH SEE ALSO
+.BR csas-access-token (1)
+.SH AUTHOR
+Vitex Software

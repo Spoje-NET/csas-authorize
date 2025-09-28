@@ -39,28 +39,36 @@ Refresh token is valid for 180 days and Access Token for 5 minutes.
 ## Command line usage
 
 ```shell
-Usage: php csas-access-token --tokenId=<TOKEN_ID> [--output=<OUTPUT_FILE>] [--environment=<ENVIRONMENT>] [--list] [--json]
-Options:
-  --tokenId, -t        The token ID (required)
-  --output, -o         The output file (optional)
+Usage: csas-access-token [options]
+
+Token Operations:
+  --tokenId, -t <ID>   The token ID (required for token operations)
+  --output, -o <FILE>  The output file (optional)
   --environment, -e    The environment file with DB_* fields (optional)
-  --list, -l           List available tokens (optional)
-  --json, -j           Export token data or token list in JSON format (optional)
+  --list, -l           List available tokens
+  --json, -j           Export token data in JSON format
   --accesTokenKey, -a  Specify custom Access Token key instead of CSAS_ACCESS_TOKEN
   --sandboxModeKey, -s Specify custom SandBox Mode key instead of CSAS_SANDBOX_MODE
 
-Example:
-  # Export token data in .env format
-  php csas-access-token -t71004963-e3d4-471f-96fc-1aef79d17ec1 -aCSAS_TOKEN -o.env
+Application Operations:
+  --export, -x <ID>    Export application data in Developer Portal format
+  --import, -i <JSON>  Import application data from JSON string
+  --file <FILE>        Import application data from JSON file
+  --example            Show example JSON format for import
 
-  # Export token data in JSON format
-  php csas-access-token -t71004963-e3d4-471f-96fc-1aef79d17ec1 --json
+General:
+  --help, -h           Show help message
 
-  # List all tokens in plain text format
-  php csas-access-token --list
+Examples:
+  # Token operations
+  csas-access-token -t 71004963-e3d4-471f-96fc-1aef79d17ec1 -o .env
+  csas-access-token --list --json
 
-  # List all tokens in JSON format
-  php csas-access-token --list --json
+  # Application export/import
+  csas-access-token --export=1 --output=backup.json
+  csas-access-token --file=backup.json
+  csas-access-token --import='{"name":"Test", "id":"uuid", ...}'
+  csas-access-token --example
 ```
 
 If there is no output file specified, the access token is printed to the standard output. Use the `--json` option to export token data or the token list in JSON format.
@@ -110,3 +118,82 @@ We use two SQL tables to store data. For production we use MariaDB and for devel
 | uuid           | char(36)                     | YES  |     | NULL                |                               |
 +----------------+------------------------------+------+-----+---------------------+-------------------------------+
 </pre>
+
+## Data Import/Export with Developer Portal
+
+CSAS Authorize supports bidirectional data flow with CSAS Developer Portal format for easy migration and backup.
+
+### Import from Developer Portal
+
+#### Web Interface
+
+1. Navigate to the main page and click "Import from Developer Portal"
+2. Upload a JSON file or paste JSON data directly
+3. The application will be automatically imported and saved
+
+#### Command Line
+
+```bash
+# Import from JSON file
+csas-access-token --file ./example-import.json
+
+# Import from JSON string  
+csas-access-token --import '{"name":"My App", "id":"uuid", ...}'
+
+# Show example JSON format
+csas-access-token --example
+```
+
+### Export to Developer Portal Format
+
+#### Command Line
+
+```bash
+# Export application by ID to stdout
+php libexec/csas-access-token.php --export=1
+
+# Export application by UUID to file
+php libexec/csas-access-token.php --export=71004963-e3d4-471f-96fc-1aef79d17ec1 --output=backup.json
+
+# Short form using -x option
+php libexec/csas-access-token.php -x 1 -o export.json
+```
+
+### JSON Format
+
+The import/export system uses a standardized JSON format compatible with Developer Portal data:
+
+```json
+{
+  "name": "Application Name",
+  "id": "application-uuid-from-portal",
+  "logoUrl": "https://example.com/logo.png",
+  "email": "developer@example.com",
+  "sandbox": {
+    "clientId": "sandbox-client-uuid",
+    "clientSecret": "sandbox-client-secret",
+    "apiKey": "sandbox-api-key-uuid",
+    "redirectUri": "https://myapp.example.com/sandbox/callback"
+  },
+  "production": {
+    "clientId": "production-client-uuid", 
+    "clientSecret": "production-client-secret",
+    "apiKey": "production-api-key-uuid",
+    "redirectUri": "https://myapp.example.com/production/callback"
+  }
+}
+```
+
+### Bidirectional Workflow
+
+```bash
+# Export from one instance
+csas-access-token --export=1 --output=backup.json
+
+# Import to another instance (or same instance)
+csas-access-token --file backup.json
+```
+
+For detailed documentation:
+- Import instructions: [DEVELOPER_PORTAL_IMPORT.md](DEVELOPER_PORTAL_IMPORT.md)
+- Export functionality: [docs/EXPORT_FUNCTIONALITY.md](docs/EXPORT_FUNCTIONALITY.md)

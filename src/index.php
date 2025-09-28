@@ -33,7 +33,10 @@ if (!isset($_SERVER['PHP_AUTH_USER'])) {
 WebPage::singleton()->container->addItem(new \Ease\Html\ImgTag('images/csas-authorize.svg', _('CSAS Authorize'), ['align' => 'right']));
 WebPage::singleton()->container->addItem(new \Ease\Html\H1Tag(_('CSAS Authorize')));
 
-WebPage::singleton()->container->addItem(new \Ease\TWB5\LinkButton('application.php', _('Application'), 'primary'));
+$buttonRow = new \Ease\TWB5\Row();
+$buttonRow->addColumn(6, new \Ease\TWB5\LinkButton('application.php', _('New Application'), 'primary'));
+$buttonRow->addColumn(6, new \Ease\TWB5\LinkButton('import.php', _('Import from Developer Portal'), 'success'));
+WebPage::singleton()->container->addItem($buttonRow);
 
 WebPage::singleton()->container->addItem(new \SpojeNet\CSas\Ui\AppTable(new \SpojeNet\CSas\Application()));
 

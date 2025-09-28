@@ -1,8 +1,20 @@
-csas-authorize (0.2.1) UNRELEASED; urgency=medium
+csas-authorize (0.3.0) noble; urgency=medium
 
+  * Unified csas-access-token tool with import functionality
+  * Added Developer Portal import/export capabilities
+  * Enhanced OAuth2 error handling for expired refresh tokens
+  * Comprehensive test suite implementation
+  * Bidirectional data flow between CSAS Authorize and Developer Portal
+  * Improved command-line interface and documentation
+
+ -- Vítězslav Vitex Dvořák <info@vitexsoftware.cz>  Sun, 29 Sep 2024 12:00:00 +0200
+
+csas-authorize (0.2.1) noble; urgency=medium
+
+  [ vitex ]
   * ui update
 
- -- vitex <info@vitexsoftware.cz>  Fri, 01 Aug 2025 11:55:51 +0200
+ -- Vítězslav Vitex Dvořák <info@vitexsoftware.cz>  Mon, 29 Sep 2025 00:28:19 +0200
 
 csas-authorize (0.2.0) unstable; urgency=medium
 

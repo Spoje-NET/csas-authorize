@@ -1,15 +1,15 @@
-.TH csas-access-token 1 "June 2024" "csas-access-token"
+.TH csas-access-token 1 "September 2024" "csas-access-token"
 .SH NAME
-csas-access-token \- Manage and export CSAS access tokens
+csas-access-token \- Unified CSAS token management and application import/export tool
 .SH SYNOPSIS
-.B php csas-access-token
-[\fB--tokenId\fR=\fITOKEN_ID\fR] [\fB--output\fR=\fIOUTPUT_FILE\fR] [\fB--environment\fR=\fIENVIRONMENT\fR] [\fB--list\fR] [\fB--json\fR] [\fB--accesTokenKey\fR=\fIKEY\fR] [\fB--sandboxModeKey\fR=\fIKEY\fR]
+.B csas-access-token
+[\fB--tokenId\fR=\fITOKEN_ID\fR] [\fB--output\fR=\fIOUTPUT_FILE\fR] [\fB--environment\fR=\fIENVIRONMENT\fR] [\fB--list\fR] [\fB--json\fR] [\fB--export\fR=\fIAPPLICATION_ID\fR] [\fB--import\fR=\fIJSON_STRING\fR] [\fB--file\fR=\fIJSON_FILE\fR] [\fB--example\fR] [\fB--help\fR]
 .SH DESCRIPTION
-The \fBcsas-access-token\fR command manages and exports CSAS access tokens.
+The \fBcsas-access-token\fR command is a unified tool for managing CSAS access tokens and importing/exporting application data in Developer Portal compatible format.
 .SH OPTIONS
 .TP
 \fB--tokenId\fR, \fB-t\fR
-The token ID (required).
+The token ID (required for token operations).
 .TP
 \fB--output\fR, \fB-o\fR
 The output file (optional).
@@ -23,6 +23,21 @@ List available tokens (optional).
 \fB--json\fR, \fB-j\fR
 Export token data in JSON format (optional).
 .TP
+\fB--export\fR, \fB-x\fR
+Export application data in Developer Portal format (requires APPLICATION_ID).
+.TP
+\fB--import\fR, \fB-i\fR
+Import application data from JSON string.
+.TP
+\fB--file\fR \fIFILE\fR
+Import application data from JSON file.
+.TP
+\fB--example\fR
+Show example JSON format for import.
+.TP
+\fB--help\fR, \fB-h\fR
+Show help message.
+.TP
 \fB--accesTokenKey\fR, \fB-a\fR
 Specify custom Access Token key instead of CSAS_ACCESS_TOKEN.
 .TP
@@ -30,5 +45,13 @@ Specify custom Access Token key instead of CSAS_ACCESS_TOKEN.
 Specify custom SandBox Mode key instead of CSAS_SANDBOX_MODE.
 .SH EXAMPLES
 .B csas-access-token -t71004963-e3d4-471f-96fc-1aef79d17ec1 -aCSAS_TOKEN -o.env
+.br
+.B csas-access-token --export=1 --output=backup.json
+.br
+.B csas-access-token --file=backup.json
+.br
+.B csas-access-token --import='{"name":"Test", ...}'
+.br
+.B csas-access-token --example
 .SH AUTHOR
 Vitex Software

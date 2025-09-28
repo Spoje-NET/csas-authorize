@@ -38,3 +38,18 @@ sysmigration: ## Run database migrations using system phinx
 .PHONY: newmigration
 newmigration: ## Prepare new Database Migration
 	read -p "Enter CamelCase migration name : " migname ; cd src ; ../vendor/bin/phinx create $$migname -c ../phinx-adapter.php ; cd ..
+
+usesqlite: ## Use SQLite database for tests
+	@echo "Updating .env to use a fresh SQLite database for tests..."
+	@sqlite_db="var/test_database.sqlite"
+	@rm -f "$$sqlite_db"
+	@touch "$$sqlite_db"
+	@if [ ! -f .env ]; then \
+		touch .env; \
+	fi
+	@sed -i.bak '/^DB_CONNECTION=/d;/^DB_DATABASE=/d;/^DB_USERNAME=/d;/^DB_PASSWORD=/d' .env
+	@echo "DB_CONNECTION=sqlite" >> .env
+	@echo "DB_DATABASE=$$sqlite_db" >> .env
+	@echo "DB_USERNAME=" >> .env
+	@echo "DB_PASSWORD=" >> .env
+	@echo "Successfully updated .env to use SQLite database: $$sqlite_db"
