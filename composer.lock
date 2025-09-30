@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "38025fd12dfac73046ffc4018bf586d6",
+    "content-hash": "1fc616e79e311fa2cd55f11a937c970d",
     "packages": [
         {
             "name": "fpdo/fluentpdo",
@@ -3444,8 +3444,8 @@
             "version": "2.1.x-dev",
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/0eb327e751d90cd80c06d9a4c3aea8161cbbd251",
-                "reference": "0eb327e751d90cd80c06d9a4c3aea8161cbbd251",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/3adc6259c666879a510d2e0aadc44e2c82f26123",
+                "reference": "3adc6259c666879a510d2e0aadc44e2c82f26123",
                 "shasum": ""
             },
             "require": {
@@ -3491,7 +3491,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-09-30T09:46:34+00:00"
+            "time": "2025-09-30T18:08:21+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",
@@ -5899,12 +5899,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/config.git",
-                "reference": "6f25aeaa8f416d251273e01e0f5b13c553746172"
+                "reference": "af7a2b937897eb1b3aabc482ce1e59031ac7f5c7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/config/zipball/6f25aeaa8f416d251273e01e0f5b13c553746172",
-                "reference": "6f25aeaa8f416d251273e01e0f5b13c553746172",
+                "url": "https://api.github.com/repos/symfony/config/zipball/af7a2b937897eb1b3aabc482ce1e59031ac7f5c7",
+                "reference": "af7a2b937897eb1b3aabc482ce1e59031ac7f5c7",
                 "shasum": ""
             },
             "require": {
@@ -5970,7 +5970,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2025-09-29T17:22:48+00:00"
+            "time": "2025-09-30T09:22:38+00:00"
         },
         {
             "name": "symfony/console",
@@ -7170,34 +7170,35 @@
         },
         {
             "name": "symfony/string",
-            "version": "8.0.x-dev",
+            "version": "7.4.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/string.git",
-                "reference": "f929eccf09531078c243df72398560e32fa4cf4f"
+                "reference": "bc7852160e1f18ce249c3daaba3b26cf5425a34d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/string/zipball/f929eccf09531078c243df72398560e32fa4cf4f",
-                "reference": "f929eccf09531078c243df72398560e32fa4cf4f",
+                "url": "https://api.github.com/repos/symfony/string/zipball/bc7852160e1f18ce249c3daaba3b26cf5425a34d",
+                "reference": "bc7852160e1f18ce249c3daaba3b26cf5425a34d",
                 "shasum": ""
             },
             "require": {
-                "php": ">=8.4",
-                "symfony/polyfill-ctype": "^1.8",
-                "symfony/polyfill-intl-grapheme": "^1.33",
-                "symfony/polyfill-intl-normalizer": "^1.0",
-                "symfony/polyfill-mbstring": "^1.0"
+                "php": ">=8.2",
+                "symfony/deprecation-contracts": "^2.5|^3.0",
+                "symfony/polyfill-ctype": "~1.8",
+                "symfony/polyfill-intl-grapheme": "~1.33",
+                "symfony/polyfill-intl-normalizer": "~1.0",
+                "symfony/polyfill-mbstring": "~1.0"
             },
             "conflict": {
                 "symfony/translation-contracts": "<2.5"
             },
             "require-dev": {
-                "symfony/emoji": "^7.4|^8.0",
-                "symfony/http-client": "^7.4|^8.0",
-                "symfony/intl": "^7.4|^8.0",
+                "symfony/emoji": "^7.1|^8.0",
+                "symfony/http-client": "^6.4|^7.0|^8.0",
+                "symfony/intl": "^6.4|^7.0|^8.0",
                 "symfony/translation-contracts": "^2.5|^3.0",
-                "symfony/var-exporter": "^7.4|^8.0"
+                "symfony/var-exporter": "^6.4|^7.0|^8.0"
             },
             "type": "library",
             "autoload": {
@@ -7236,7 +7237,7 @@
                 "utf8"
             ],
             "support": {
-                "source": "https://github.com/symfony/string/tree/8.0"
+                "source": "https://github.com/symfony/string/tree/7.4"
             },
             "funding": [
                 {
@@ -7256,7 +7257,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2025-09-11T14:37:55+00:00"
+            "time": "2025-09-11T14:37:11+00:00"
         },
         {
             "name": "theseer/tokenizer",
@@ -7311,10 +7312,10 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": {},
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
-    "platform": {},
-    "platform-dev": {},
+    "platform": [],
+    "platform-dev": [],
     "plugin-api-version": "2.6.0"
 }
