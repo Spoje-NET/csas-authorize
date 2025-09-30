@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /**
- * This file is part of the CSASAuthorize package
+ * This file is part of the CSASAuthorize  package
  *
  * https://github.com/Spoje-NET/csas-authorize
  *
@@ -16,8 +16,8 @@ declare(strict_types=1);
 namespace SpojeNet\CSas;
 
 /**
- * CSAS Developer Portal Data Importer
- * 
+ * CSAS Developer Portal Data Importer.
+ *
  * This class helps import application data from CSAS Developer Portal
  * to avoid manual data entry in CSAS Authorize.
  *
@@ -34,28 +34,32 @@ class DeveloperPortalImporter
 
     /**
      * Import application data from JSON export file.
-     * 
+     *
      * Expected JSON structure should contain application details
      * as they appear in CSAS Developer Portal.
      *
      * @param string $jsonFilePath Path to JSON export file
-     * @return bool Success status
+     *
      * @throws \RuntimeException When file cannot be read or parsed
+     *
+     * @return bool Success status
      */
     public function importFromJson(string $jsonFilePath): bool
     {
         if (!file_exists($jsonFilePath)) {
-            throw new \RuntimeException(_('Import file not found: ') . $jsonFilePath);
+            throw new \RuntimeException(_('Import file not found: ').$jsonFilePath);
         }
 
         $jsonContent = file_get_contents($jsonFilePath);
+
         if ($jsonContent === false) {
-            throw new \RuntimeException(_('Cannot read import file: ') . $jsonFilePath);
+            throw new \RuntimeException(_('Cannot read import file: ').$jsonFilePath);
         }
 
         $data = json_decode($jsonContent, true);
+
         if ($data === null) {
-            throw new \RuntimeException(_('Invalid JSON format in file: ') . $jsonFilePath);
+            throw new \RuntimeException(_('Invalid JSON format in file: ').$jsonFilePath);
         }
 
         return $this->processApplicationData($data);
@@ -65,6 +69,7 @@ class DeveloperPortalImporter
      * Import application data from array (e.g., from API response).
      *
      * @param array<string, mixed> $applicationData Application data array
+     *
      * @return bool Success status
      */
     public function importFromArray(array $applicationData): bool
@@ -73,16 +78,54 @@ class DeveloperPortalImporter
     }
 
     /**
+     * Generate example JSON structure for manual export from Developer Portal.
+     *
+     * @return string JSON example
+     */
+    public static function getJsonExample(): string
+    {
+        $example = [
+            'name' => 'My Application Name',
+            'id' => 'application-uuid-from-portal',
+            'logoUrl' => 'https://example.com/logo.png',
+            'email' => 'developer@example.com',
+            'sandbox' => [
+                'clientId' => 'sandbox-client-uuid',
+                'clientSecret' => 'sandbox-client-secret',
+                'apiKey' => 'sandbox-api-key-uuid',
+                'redirectUri' => 'https://myapp.example.com/sandbox/callback',
+            ],
+            'production' => [
+                'clientId' => 'production-client-uuid',
+                'clientSecret' => 'production-client-secret',
+                'apiKey' => 'production-api-key-uuid',
+                'redirectUri' => 'https://myapp.example.com/production/callback',
+            ],
+        ];
+
+        return json_encode($example, \JSON_PRETTY_PRINT | \JSON_UNESCAPED_SLASHES);
+    }
+
+    /**
+     * Get the imported application instance.
+     */
+    public function getApplication(): Application
+    {
+        return $this->application;
+    }
+
+    /**
      * Process and validate application data, then save to database.
      *
      * @param array<string, mixed> $data Raw application data
+     *
      * @return bool Success status
      */
     private function processApplicationData(array $data): bool
     {
         // Map CSAS Developer Portal fields to CSAS Authorize database fields
         $mappedData = $this->mapPortalFields($data);
-        
+
         // Validate required fields
         if (!$this->validateRequiredFields($mappedData)) {
             return false;
@@ -90,26 +133,29 @@ class DeveloperPortalImporter
 
         // Set the data and save
         $this->application->takeData($mappedData);
-        
+
         if ($this->application->saveToSQL()) {
             $this->application->addStatusMessage(
                 sprintf(_('Application "%s" imported successfully'), $mappedData['name']),
-                'success'
+                'success',
             );
+
             return true;
-        } else {
-            $this->application->addStatusMessage(
-                _('Failed to save imported application data'),
-                'error'
-            );
-            return false;
         }
+
+        $this->application->addStatusMessage(
+            _('Failed to save imported application data'),
+            'error',
+        );
+
+        return false;
     }
 
     /**
      * Map CSAS Developer Portal field names to CSAS Authorize field names.
      *
      * @param array<string, mixed> $portalData Data from Developer Portal
+     *
      * @return array<string, mixed> Mapped data for CSAS Authorize
      */
     private function mapPortalFields(array $portalData): array
@@ -147,7 +193,7 @@ class DeveloperPortalImporter
             $mapped['sandbox_client_secret'] = $portalData['sandboxClientSecret'] ?? $portalData['sandbox_client_secret'] ?? '';
             $mapped['sandbox_api_key'] = $portalData['sandboxApiKey'] ?? $portalData['sandbox_api_key'] ?? '';
             $mapped['sandbox_redirect_uri'] = $portalData['sandboxRedirectUri'] ?? $portalData['sandbox_redirect_uri'] ?? '';
-            
+
             $mapped['production_client_id'] = $portalData['productionClientId'] ?? $portalData['production_client_id'] ?? '';
             $mapped['production_client_secret'] = $portalData['productionClientSecret'] ?? $portalData['production_client_secret'] ?? '';
             $mapped['production_api_key'] = $portalData['productionApiKey'] ?? $portalData['production_api_key'] ?? '';
@@ -155,7 +201,7 @@ class DeveloperPortalImporter
         }
 
         // Remove empty values to avoid overwriting existing data
-        return array_filter($mapped, function($value) {
+        return array_filter($mapped, static function ($value) {
             return !empty($value);
         });
     }
@@ -164,18 +210,20 @@ class DeveloperPortalImporter
      * Validate that required fields are present in mapped data.
      *
      * @param array<string, mixed> $data Mapped application data
+     *
      * @return bool Validation result
      */
     private function validateRequiredFields(array $data): bool
     {
         $requiredFields = ['name', 'uuid'];
-        
+
         foreach ($requiredFields as $field) {
             if (empty($data[$field])) {
                 $this->application->addStatusMessage(
                     sprintf(_('Required field "%s" is missing or empty'), $field),
-                    'error'
+                    'error',
                 );
+
                 return false;
             }
         }
@@ -187,50 +235,12 @@ class DeveloperPortalImporter
         if (!$hasSandbox && !$hasProduction) {
             $this->application->addStatusMessage(
                 _('At least one environment (sandbox or production) must have complete credentials'),
-                'error'
+                'error',
             );
+
             return false;
         }
 
         return true;
-    }
-
-    /**
-     * Generate example JSON structure for manual export from Developer Portal.
-     *
-     * @return string JSON example
-     */
-    public static function getJsonExample(): string
-    {
-        $example = [
-            'name' => 'My Application Name',
-            'id' => 'application-uuid-from-portal',
-            'logoUrl' => 'https://example.com/logo.png',
-            'email' => 'developer@example.com',
-            'sandbox' => [
-                'clientId' => 'sandbox-client-uuid',
-                'clientSecret' => 'sandbox-client-secret',
-                'apiKey' => 'sandbox-api-key-uuid',
-                'redirectUri' => 'https://myapp.example.com/sandbox/callback'
-            ],
-            'production' => [
-                'clientId' => 'production-client-uuid',
-                'clientSecret' => 'production-client-secret',
-                'apiKey' => 'production-api-key-uuid',
-                'redirectUri' => 'https://myapp.example.com/production/callback'
-            ]
-        ];
-
-        return json_encode($example, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
-    }
-
-    /**
-     * Get the imported application instance.
-     *
-     * @return Application
-     */
-    public function getApplication(): Application
-    {
-        return $this->application;
     }
 }

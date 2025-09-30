@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /**
- * This file is part of the CSASAuthorize package
+ * This file is part of the CSASAuthorize  package
  *
  * https://github.com/Spoje-NET/csas-authorize
  *
@@ -13,11 +13,11 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-require_once dirname(__DIR__) . '/vendor/autoload.php';
+require_once \dirname(__DIR__).'/vendor/autoload.php';
 
 // Initialize environment for testing
-if (!defined('EASE_APPNAME')) {
-    define('EASE_APPNAME', 'CSASAuthorizeTest');
+if (!\defined('EASE_APPNAME')) {
+    \define('EASE_APPNAME', 'CSASAuthorizeTest');
 }
 
 require_once \dirname(__DIR__).'/vendor/autoload.php';

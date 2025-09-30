@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /**
- * This file is part of the CSASAuthorize package
+ * This file is part of the CSASAuthorize  package
  *
  * https://github.com/Spoje-NET/csas-authorize
  *
@@ -16,6 +16,7 @@ declare(strict_types=1);
 namespace SpojeNet\CSas\Ui;
 
 require_once '../vendor/autoload.php';
+
 require_once './init.php';
 
 use SpojeNet\CSas\DeveloperPortalImporter;
@@ -24,14 +25,15 @@ use SpojeNet\CSas\DeveloperPortalImporter;
 if (\Ease\WebPage::isPosted()) {
     $importer = new DeveloperPortalImporter();
     $success = false;
-    
+
     // Check if JSON file was uploaded
-    if (isset($_FILES['json_file']) && $_FILES['json_file']['error'] === UPLOAD_ERR_OK) {
+    if (isset($_FILES['json_file']) && $_FILES['json_file']['error'] === \UPLOAD_ERR_OK) {
         try {
             $success = $importer->importFromJson($_FILES['json_file']['tmp_name']);
+
             if ($success) {
                 $app = $importer->getApplication();
-                WebPage::singleton()->redirect('application.php?id=' . $app->getMyKey());
+                WebPage::singleton()->redirect('application.php?id='.$app->getMyKey());
             }
         } catch (\RuntimeException $e) {
             WebPage::singleton()->addStatusMessage($e->getMessage(), 'error');
@@ -41,14 +43,16 @@ if (\Ease\WebPage::isPosted()) {
     elseif (!empty($_POST['json_data'])) {
         try {
             $jsonData = json_decode($_POST['json_data'], true);
+
             if ($jsonData === null) {
                 throw new \RuntimeException(_('Invalid JSON format'));
             }
-            
+
             $success = $importer->importFromArray($jsonData);
+
             if ($success) {
                 $app = $importer->getApplication();
-                WebPage::singleton()->redirect('application.php?id=' . $app->getMyKey());
+                WebPage::singleton()->redirect('application.php?id='.$app->getMyKey());
             }
         } catch (\RuntimeException $e) {
             WebPage::singleton()->addStatusMessage($e->getMessage(), 'error');
@@ -68,7 +72,7 @@ $breadcrumb = new \Ease\TWB5\Row();
 $breadcrumb->addColumn(12, [
     new \Ease\Html\ATag('index.php', _('Applications'), ['class' => 'btn btn-outline-primary btn-sm']),
     ' → ',
-    _('Import from Developer Portal')
+    _('Import from Developer Portal'),
 ]);
 $container->addItem($breadcrumb);
 
@@ -84,10 +88,12 @@ $guide = new \Ease\Html\DivTag();
 $guide->addItem(new \Ease\Html\PTag(_('Currently, CSAS Developer Portal does not provide automated export functionality. To import your application data:')));
 
 $steps = new \Ease\Html\OlTag([
-    new \Ease\Html\LiTag(_('Visit your application in CSAS Developer Portal: ') . 
-        new \Ease\Html\ATag('https://developers.erstegroup.com/portal/organizations/vitezslav-dvorak/applications', 
+    new \Ease\Html\LiTag(_('Visit your application in CSAS Developer Portal: ').
+        new \Ease\Html\ATag(
             'https://developers.erstegroup.com/portal/organizations/vitezslav-dvorak/applications',
-            ['target' => '_blank', 'class' => 'text-primary'])),
+            'https://developers.erstegroup.com/portal/organizations/vitezslav-dvorak/applications',
+            ['target' => '_blank', 'class' => 'text-primary'],
+        )),
     new \Ease\Html\LiTag(_('Copy the following information from each application:')),
     new \Ease\Html\UlTag([
         new \Ease\Html\LiTag(_('Application Name')),
@@ -99,10 +105,10 @@ $steps = new \Ease\Html\OlTag([
         new \Ease\Html\LiTag(_('Production Client ID')),
         new \Ease\Html\LiTag(_('Production Client Secret')),
         new \Ease\Html\LiTag(_('Production API Key')),
-        new \Ease\Html\LiTag(_('Redirect URIs for both environments'))
+        new \Ease\Html\LiTag(_('Redirect URIs for both environments')),
     ]),
     new \Ease\Html\LiTag(_('Format the data according to the JSON structure shown above')),
-    new \Ease\Html\LiTag(_('Use the import form to add the application to CSAS Authorize'))
+    new \Ease\Html\LiTag(_('Use the import form to add the application to CSAS Authorize')),
 ]);
 
 $guide->addItem($steps);

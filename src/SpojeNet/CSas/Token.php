@@ -116,18 +116,18 @@ class Token extends \Ease\SQL\Engine
             $errorData = $exception->getResponseBody();
             $errorMessage = $errorData['error_description'] ?? $exception->getMessage();
             $errorCode = $errorData['error_code'] ?? null;
-            
+
             // Clear the expired refresh token
             $this->setDataValue('refresh_token', null);
             $this->dbSync();
-            
+
             $this->addStatusMessage(sprintf(_('Token refresh failed: %s'), $errorMessage), 'error');
-            
+
             // Check if this is specifically a refresh token expiration error
-            if ($errorCode === '7109' || strpos($errorMessage, 'expired') !== false) {
+            if ($errorCode === '7109' || str_contains($errorMessage, 'expired')) {
                 throw new \RuntimeException(_('Refresh token has expired'), 24, $exception);
             }
-            
+
             // For other OAuth2 errors, throw a different exception
             throw new \RuntimeException(sprintf(_('OAuth2 error: %s'), $errorMessage), 25, $exception);
         }
@@ -213,16 +213,17 @@ class Token extends \Ease\SQL\Engine
     public function isRefreshTokenExpired(): bool
     {
         $createdAt = $this->getDataValue('created_at');
+
         if (empty($createdAt)) {
             return true; // Assume expired if no creation date
         }
-        
-        $created = is_numeric($createdAt) 
+
+        $created = is_numeric($createdAt)
             ? (new \DateTime())->setTimestamp($createdAt)
             : new \DateTime($createdAt);
-            
+
         $expireDate = $created->modify('+180 days');
-        
+
         return new \DateTime() > $expireDate;
     }
 
@@ -240,50 +241,51 @@ class Token extends \Ease\SQL\Engine
     public function getTokenStatus(): array
     {
         $status = [];
-        
+
         if ($this->isExpired()) {
             $status['access_token'] = [
                 'status' => 'expired',
                 'message' => _('Access token has expired'),
-                'class' => 'danger'
+                'class' => 'danger',
             ];
         } elseif ($this->tokenValiditySeconds() < 300) { // Less than 5 minutes
             $status['access_token'] = [
                 'status' => 'expiring_soon',
                 'message' => sprintf(_('Access token expires in %d seconds'), $this->tokenValiditySeconds()),
-                'class' => 'warning'
+                'class' => 'warning',
             ];
         } else {
             $status['access_token'] = [
                 'status' => 'valid',
                 'message' => sprintf(_('Access token valid for %d seconds'), $this->tokenValiditySeconds()),
-                'class' => 'success'
+                'class' => 'success',
             ];
         }
-        
+
         if ($this->isRefreshTokenExpired()) {
             $status['refresh_token'] = [
                 'status' => 'expired',
                 'message' => _('Refresh token has expired - re-authorization required'),
-                'class' => 'danger'
+                'class' => 'danger',
             ];
         } else {
             $renewDays = $this->tokenRenewInDays();
+
             if ($renewDays < 7) {
                 $status['refresh_token'] = [
                     'status' => 'expiring_soon',
                     'message' => sprintf(_('Refresh token expires in %d days'), $renewDays),
-                    'class' => 'warning'
+                    'class' => 'warning',
                 ];
             } else {
                 $status['refresh_token'] = [
                     'status' => 'valid',
                     'message' => sprintf(_('Refresh token valid for %d days'), $renewDays),
-                    'class' => 'success'
+                    'class' => 'success',
                 ];
             }
         }
-        
+
         return $status;
     }
 }

@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /**
- * This file is part of the CSASAuthorize package
+ * This file is part of the CSASAuthorize  package
  *
  * https://github.com/Spoje-NET/csas-authorize
  *
@@ -20,19 +20,12 @@ use SpojeNet\CSas\Notificator;
 use SpojeNet\CSas\Token;
 
 /**
- * Notificator Test Class
+ * Notificator Test Class.
  *
  * @author Vitex <info@vitexsoftware.cz>
  */
 class NotificatorTest extends TestCase
 {
-    private function createMockToken(array $dataMap): Token
-    {
-        $mockToken = $this->createMock(Token::class);
-        $mockToken->method('getDataValue')->willReturnMap($dataMap);
-        return $mockToken;
-    }
-
     public function testConstructorWithValidToken(): void
     {
         $mockToken = $this->createMock(Token::class);
@@ -45,11 +38,11 @@ class NotificatorTest extends TestCase
             ['created_at', '2025-01-01 12:00:00'],
             ['id', '123'],
             ['application_id', '456'],
-            ['email', 'test@example.com']
+            ['email', 'test@example.com'],
         ]);
 
         $notificator = new Notificator($mockToken);
-        
+
         $this->assertInstanceOf(Notificator::class, $notificator);
         $this->assertInstanceOf(\Ease\HtmlMailer::class, $notificator);
     }
@@ -65,11 +58,11 @@ class NotificatorTest extends TestCase
             ['created_at', '2025-01-01 12:00:00'],
             ['id', '123'],
             ['application_id', '456'],
-            ['email', 'sandbox@example.com']
+            ['email', 'sandbox@example.com'],
         ]);
 
         $notificator = new Notificator($mockToken);
-        
+
         $this->assertInstanceOf(Notificator::class, $notificator);
     }
 
@@ -83,11 +76,11 @@ class NotificatorTest extends TestCase
             ['created_at', '2025-01-01 12:00:00'],
             ['id', '123'],
             ['application_id', '456'],
-            ['email', 'production@example.com']
+            ['email', 'production@example.com'],
         ]);
 
         $notificator = new Notificator($mockToken);
-        
+
         $this->assertInstanceOf(Notificator::class, $notificator);
     }
 
@@ -101,11 +94,11 @@ class NotificatorTest extends TestCase
             ['created_at', '2025-01-01 12:00:00'],
             ['id', '123'],
             ['application_id', '456'],
-            ['email', 'test@example.com']
+            ['email', 'test@example.com'],
         ]);
 
         $notificator = new Notificator($this->token);
-        
+
         // The constructor should replace welcomeback.php with auth.php in the renewal link
         $this->assertInstanceOf(Notificator::class, $notificator);
     }
@@ -114,7 +107,7 @@ class NotificatorTest extends TestCase
     {
         // Create a token that was created recently (should have more remaining time)
         $recentDate = (new \DateTime())->modify('-30 days')->format('Y-m-d H:i:s');
-        
+
         $this->token->method('getDataValue')->willReturnMap([
             ['name', 'Recent Token'],
             ['environment', 'sandbox'],
@@ -123,11 +116,11 @@ class NotificatorTest extends TestCase
             ['created_at', $recentDate],
             ['id', '123'],
             ['application_id', '456'],
-            ['email', 'recent@example.com']
+            ['email', 'recent@example.com'],
         ]);
 
         $notificator = new Notificator($this->token);
-        
+
         $this->assertInstanceOf(Notificator::class, $notificator);
     }
 
@@ -135,7 +128,7 @@ class NotificatorTest extends TestCase
     {
         // Create a token that was created long ago (should have less remaining time)
         $oldDate = (new \DateTime())->modify('-150 days')->format('Y-m-d H:i:s');
-        
+
         $this->token->method('getDataValue')->willReturnMap([
             ['name', 'Old Token'],
             ['environment', 'production'],
@@ -144,11 +137,11 @@ class NotificatorTest extends TestCase
             ['created_at', $oldDate],
             ['id', '123'],
             ['application_id', '456'],
-            ['email', 'old@example.com']
+            ['email', 'old@example.com'],
         ]);
 
         $notificator = new Notificator($this->token);
-        
+
         $this->assertInstanceOf(Notificator::class, $notificator);
     }
 
@@ -162,11 +155,11 @@ class NotificatorTest extends TestCase
             ['created_at', '2025-01-01 12:00:00'],
             ['id', '123'],
             ['application_id', '456'],
-            ['email', 'test@example.com']
+            ['email', 'test@example.com'],
         ]);
 
         $notificator = new Notificator($this->token);
-        
+
         $this->assertInstanceOf(\Ease\HtmlMailer::class, $notificator);
     }
 
@@ -180,11 +173,11 @@ class NotificatorTest extends TestCase
             ['created_at', '2025-01-01 12:00:00'],
             ['id', '123'],
             ['application_id', '456'],
-            ['email', null] // No email set
+            ['email', null], // No email set
         ]);
 
         $notificator = new Notificator($this->token);
-        
+
         $this->assertInstanceOf(Notificator::class, $notificator);
     }
 
@@ -192,7 +185,7 @@ class NotificatorTest extends TestCase
     {
         // Test with a specific date to verify 180 days calculation
         $createdDate = '2025-01-01 00:00:00';
-        
+
         $this->token->method('getDataValue')->willReturnMap([
             ['name', 'Date Test Token'],
             ['environment', 'sandbox'],
@@ -201,13 +194,20 @@ class NotificatorTest extends TestCase
             ['created_at', $createdDate],
             ['id', '123'],
             ['application_id', '456'],
-            ['email', 'datetest@example.com']
+            ['email', 'datetest@example.com'],
         ]);
 
         $notificator = new Notificator($this->token);
-        
+
         // Verify that the notificator was created successfully
         // The actual date calculation happens in the constructor
         $this->assertInstanceOf(Notificator::class, $notificator);
+    }
+    private function createMockToken(array $dataMap): Token
+    {
+        $mockToken = $this->createMock(Token::class);
+        $mockToken->method('getDataValue')->willReturnMap($dataMap);
+
+        return $mockToken;
     }
 }

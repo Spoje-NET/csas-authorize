@@ -47,7 +47,7 @@ if ($action === 'refresh') {
         if ($exception->getCode() === 24) {
             // Refresh token has expired, redirect to re-authorization
             $token->addStatusMessage(_('Refresh token has expired. Please re-authorize the application.'), 'warning');
-            WebPage::singleton()->redirect('auth.php?id=' . $app->getMyKey());
+            WebPage::singleton()->redirect('auth.php?id='.$app->getMyKey());
         } else {
             // Other runtime exception, re-throw it
             throw $exception;

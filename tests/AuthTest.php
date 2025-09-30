@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /**
- * This file is part of the CSASAuthorize package
+ * This file is part of the CSASAuthorize  package
  *
  * https://github.com/Spoje-NET/csas-authorize
  *
@@ -21,7 +21,7 @@ use SpojeNet\CSas\Auth;
 use SpojeNet\CSas\Token;
 
 /**
- * Auth Test Class
+ * Auth Test Class.
  *
  * @author Vitex <info@vitexsoftware.cz>
  */
@@ -35,17 +35,17 @@ class AuthTest extends TestCase
     {
         $mockApplication = $this->createMock(Application::class);
         $mockToken = $this->createMock(Token::class);
-        
+
         // Set up mock application with required methods
         $mockApplication->method('sandboxMode')->willReturn(true);
         $mockApplication->method('getClientId')->willReturn('test-client-id');
         $mockApplication->method('getClientSecret')->willReturn('test-client-secret');
         $mockApplication->method('getRedirectUri')->willReturn('https://example.com/callback');
         $mockApplication->method('getToken')->willReturn($mockToken);
-        
+
         // Set up mock token
         $mockToken->method('getNextTokenUuid')->willReturn('test-token-uuid-123');
-        
+
         $this->application = $mockApplication;
         $this->token = $mockToken;
         $this->auth = new Auth($this->application);
@@ -58,9 +58,9 @@ class AuthTest extends TestCase
         $sandboxApplication->method('getClientId')->willReturn('sandbox-client-id');
         $sandboxApplication->method('getClientSecret')->willReturn('sandbox-client-secret');
         $sandboxApplication->method('getRedirectUri')->willReturn('https://sandbox.example.com/callback');
-        
+
         $sandboxAuth = new Auth($sandboxApplication);
-        
+
         $this->assertInstanceOf(Auth::class, $sandboxAuth);
     }
 
@@ -71,9 +71,9 @@ class AuthTest extends TestCase
         $productionApplication->method('getClientId')->willReturn('prod-client-id');
         $productionApplication->method('getClientSecret')->willReturn('prod-client-secret');
         $productionApplication->method('getRedirectUri')->willReturn('https://prod.example.com/callback');
-        
+
         $productionAuth = new Auth($productionApplication);
-        
+
         $this->assertInstanceOf(Auth::class, $productionAuth);
     }
 
@@ -92,10 +92,10 @@ class AuthTest extends TestCase
     public function testGetIdpUriWithSandboxMode(): void
     {
         $idpUri = $this->auth->getIdpUri();
-        
+
         // Verify the base URL is sandbox
         $this->assertStringContainsString(Auth::SANDBOX_SITE, $idpUri);
-        
+
         // Verify required parameters are present
         $this->assertStringContainsString('client_id=test-client-id', $idpUri);
         $this->assertStringContainsString('response_type=code', $idpUri);
@@ -108,21 +108,21 @@ class AuthTest extends TestCase
     {
         $productionApplication = $this->createMock(Application::class);
         $productionToken = $this->createMock(Token::class);
-        
+
         $productionApplication->method('sandboxMode')->willReturn(false);
         $productionApplication->method('getClientId')->willReturn('prod-client-id');
         $productionApplication->method('getClientSecret')->willReturn('prod-client-secret');
         $productionApplication->method('getRedirectUri')->willReturn('https://prod.example.com/callback');
         $productionApplication->method('getToken')->willReturn($productionToken);
-        
+
         $productionToken->method('getNextTokenUuid')->willReturn('prod-token-uuid-456');
-        
+
         $productionAuth = new Auth($productionApplication);
         $idpUri = $productionAuth->getIdpUri();
-        
+
         // Verify the base URL is production
         $this->assertStringContainsString(Auth::PRODUCTION_SITE, $idpUri);
-        
+
         // Verify required parameters are present
         $this->assertStringContainsString('client_id=prod-client-id', $idpUri);
         $this->assertStringContainsString('state=prod-token-uuid-456', $idpUri);
@@ -131,11 +131,11 @@ class AuthTest extends TestCase
     public function testGetIdpUriParameters(): void
     {
         $idpUri = $this->auth->getIdpUri();
-        
+
         // Parse URL to check parameters
         $parsedUrl = parse_url($idpUri);
         parse_str($parsedUrl['query'], $params);
-        
+
         $this->assertEquals('test-client-id', $params['client_id']);
         $this->assertEquals('code', $params['response_type']);
         $this->assertEquals('https://example.com/callback', $params['redirect_uri']);
@@ -151,7 +151,7 @@ class AuthTest extends TestCase
     public function testAuthPathInUri(): void
     {
         $idpUri = $this->auth->getIdpUri();
-        
+
         // Verify the auth endpoint path is correct
         $this->assertStringContainsString('/auth?', $idpUri);
     }
@@ -160,18 +160,18 @@ class AuthTest extends TestCase
     {
         $applicationWithSpecialChars = $this->createMock(Application::class);
         $tokenWithSpecialChars = $this->createMock(Token::class);
-        
+
         $applicationWithSpecialChars->method('sandboxMode')->willReturn(true);
         $applicationWithSpecialChars->method('getClientId')->willReturn('test-client-id');
         $applicationWithSpecialChars->method('getClientSecret')->willReturn('test-client-secret');
         $applicationWithSpecialChars->method('getRedirectUri')->willReturn('https://example.com/callback?param=value&other=test');
         $applicationWithSpecialChars->method('getToken')->willReturn($tokenWithSpecialChars);
-        
+
         $tokenWithSpecialChars->method('getNextTokenUuid')->willReturn('test-uuid');
-        
+
         $authWithSpecialChars = new Auth($applicationWithSpecialChars);
         $idpUri = $authWithSpecialChars->getIdpUri();
-        
+
         // The URL should be properly encoded
         $this->assertStringContainsString('redirect_uri=', $idpUri);
     }

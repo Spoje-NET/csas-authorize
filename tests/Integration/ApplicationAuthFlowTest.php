@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /**
- * This file is part of the CSASAuthorize package
+ * This file is part of the CSASAuthorize  package
  *
  * https://github.com/Spoje-NET/csas-authorize
  *
@@ -21,7 +21,7 @@ use SpojeNet\CSas\Auth;
 use SpojeNet\CSas\Token;
 
 /**
- * Integration Test Class for Application-Auth-Token workflow
+ * Integration Test Class for Application-Auth-Token workflow.
  *
  * @author Vitex <info@vitexsoftware.cz>
  */
@@ -83,17 +83,17 @@ class ApplicationAuthFlowTest extends TestCase
     public function testTokenStatusMethods(): void
     {
         $token = new Token();
-        
+
         // Test with expired access token
         $token->setDataValue('expires_in', time() - 3600);
         $this->assertTrue($token->isExpired());
         $this->assertTrue($token->needsRefresh());
-        
+
         // Test with valid access token
         $token->setDataValue('expires_in', time() + 3600);
         $this->assertFalse($token->isExpired());
         $this->assertFalse($token->needsRefresh());
-        
+
         // Test with soon-expiring token (less than 60 seconds)
         $token->setDataValue('expires_in', time() + 30);
         $this->assertFalse($token->isExpired());
@@ -105,17 +105,17 @@ class ApplicationAuthFlowTest extends TestCase
         $token = new Token();
         $token->setDataValue('expires_in', time() + 300); // 5 minutes
         $token->setDataValue('created_at', (new \DateTime())->modify('-30 days')->format('Y-m-d H:i:s'));
-        
+
         $status = $token->getTokenStatus();
-        
+
         $this->assertIsArray($status);
         $this->assertArrayHasKey('access_token', $status);
         $this->assertArrayHasKey('refresh_token', $status);
-        
+
         // Access token should be expiring soon (less than 5 minutes)
         $this->assertEquals('expiring_soon', $status['access_token']['status']);
         $this->assertEquals('warning', $status['access_token']['class']);
-        
+
         // Refresh token should be valid (30 days old, expires after 180 days)
         $this->assertEquals('valid', $status['refresh_token']['status']);
         $this->assertEquals('success', $status['refresh_token']['class']);
@@ -124,17 +124,17 @@ class ApplicationAuthFlowTest extends TestCase
     public function testRefreshTokenExpiration(): void
     {
         $token = new Token();
-        
+
         // Test with old refresh token (more than 180 days)
         $oldDate = (new \DateTime())->modify('-200 days')->format('Y-m-d H:i:s');
         $token->setDataValue('created_at', $oldDate);
-        
+
         $this->assertTrue($token->isRefreshTokenExpired());
-        
+
         // Test with recent refresh token
         $recentDate = (new \DateTime())->modify('-30 days')->format('Y-m-d H:i:s');
         $token->setDataValue('created_at', $recentDate);
-        
+
         $this->assertFalse($token->isRefreshTokenExpired());
     }
 
@@ -142,25 +142,25 @@ class ApplicationAuthFlowTest extends TestCase
     {
         $uuid = 'test-app-uuid-123';
         $expectedUrl = 'https://webapi.developers.erstegroup.com/api/v1/file-manager/files2/test-app-uuid-123/image/small';
-        
+
         $this->assertEquals($expectedUrl, Application::getImage($uuid));
     }
 
     public function testApplicationRedirectUriValidation(): void
     {
         $application = new Application();
-        
+
         // Test with empty URIs
         $application->setDataValue('sandbox_redirect_uri', '');
         $application->setDataValue('production_redirect_uri', '');
-        
+
         $this->assertFalse($application->hasSandboxRedirectUri());
         $this->assertFalse($application->hasProductionRedirectUri());
-        
+
         // Test with valid URIs
         $application->setDataValue('sandbox_redirect_uri', 'https://sandbox.example.com/callback');
         $application->setDataValue('production_redirect_uri', 'https://prod.example.com/callback');
-        
+
         $this->assertTrue($application->hasSandboxRedirectUri());
         $this->assertTrue($application->hasProductionRedirectUri());
     }

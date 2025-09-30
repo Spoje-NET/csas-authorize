@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /**
- * This file is part of the CSASAuthorize package
+ * This file is part of the CSASAuthorize  package
  *
  * https://github.com/Spoje-NET/csas-authorize
  *
@@ -20,11 +20,11 @@ use SpojeNet\CSas\Notificator;
 use SpojeNet\CSas\Token;
 
 /**
- * Notificator Test Class
+ * Notificator Test Class.
  *
  * @author Vitex <info@vitexsoftware.cz>
  */
-class NotificatorTest extends TestCase
+class NotificatorTestFixed extends TestCase
 {
     public function testConstructorWithValidToken(): void
     {
@@ -37,11 +37,11 @@ class NotificatorTest extends TestCase
             ['created_at', '2025-01-01 12:00:00'],
             ['id', '123'],
             ['application_id', '456'],
-            ['email', 'test@example.com']
+            ['email', 'test@example.com'],
         ]);
 
         $notificator = new Notificator($mockToken);
-        
+
         $this->assertInstanceOf(Notificator::class, $notificator);
         $this->assertInstanceOf(\Ease\HtmlMailer::class, $notificator);
     }
@@ -57,11 +57,11 @@ class NotificatorTest extends TestCase
             ['created_at', '2025-01-01 12:00:00'],
             ['id', '123'],
             ['application_id', '456'],
-            ['email', 'sandbox@example.com']
+            ['email', 'sandbox@example.com'],
         ]);
 
         $notificator = new Notificator($mockToken);
-        
+
         $this->assertInstanceOf(Notificator::class, $notificator);
     }
 
@@ -76,11 +76,11 @@ class NotificatorTest extends TestCase
             ['created_at', '2025-01-01 12:00:00'],
             ['id', '123'],
             ['application_id', '456'],
-            ['email', 'production@example.com']
+            ['email', 'production@example.com'],
         ]);
 
         $notificator = new Notificator($mockToken);
-        
+
         $this->assertInstanceOf(Notificator::class, $notificator);
     }
 
@@ -95,11 +95,11 @@ class NotificatorTest extends TestCase
             ['created_at', '2025-01-01 12:00:00'],
             ['id', '123'],
             ['application_id', '456'],
-            ['email', 'test@example.com']
+            ['email', 'test@example.com'],
         ]);
 
         $notificator = new Notificator($mockToken);
-        
+
         $this->assertInstanceOf(\Ease\HtmlMailer::class, $notificator);
     }
 }

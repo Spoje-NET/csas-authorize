@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /**
- * This file is part of the CSASAuthorize package
+ * This file is part of the CSASAuthorize  package
  *
  * https://github.com/Spoje-NET/csas-authorize
  *
@@ -16,11 +16,11 @@ declare(strict_types=1);
 namespace SpojeNet\CSas\Tests;
 
 use PHPUnit\Framework\TestCase;
-use SpojeNet\CSas\DeveloperPortalImporter;
 use SpojeNet\CSas\Application;
+use SpojeNet\CSas\DeveloperPortalImporter;
 
 /**
- * DeveloperPortalImporter Test Class
+ * DeveloperPortalImporter Test Class.
  *
  * @author Vitex <info@vitexsoftware.cz>
  */
@@ -45,10 +45,10 @@ class DeveloperPortalImporterTest extends TestCase
     public function testGetJsonExample(): void
     {
         $example = DeveloperPortalImporter::getJsonExample();
-        
+
         $this->assertIsString($example);
         $this->assertJson($example);
-        
+
         $decoded = json_decode($example, true);
         $this->assertIsArray($decoded);
         $this->assertArrayHasKey('name', $decoded);
@@ -66,17 +66,17 @@ class DeveloperPortalImporterTest extends TestCase
                 'clientId' => 'sandbox-client-123',
                 'clientSecret' => 'sandbox-secret-456',
                 'apiKey' => 'sandbox-api-789',
-                'redirectUri' => 'https://test.example.com/sandbox/callback'
+                'redirectUri' => 'https://test.example.com/sandbox/callback',
             ],
             'production' => [
                 'clientId' => 'prod-client-123',
                 'clientSecret' => 'prod-secret-456',
                 'apiKey' => 'prod-api-789',
-                'redirectUri' => 'https://test.example.com/production/callback'
-            ]
+                'redirectUri' => 'https://test.example.com/production/callback',
+            ],
         ];
 
-        // Since we can't actually save to database in unit tests, 
+        // Since we can't actually save to database in unit tests,
         // we'll test the data mapping and validation logic
         $this->assertTrue(true); // Placeholder - would need database mocking for full test
     }
@@ -89,7 +89,7 @@ class DeveloperPortalImporterTest extends TestCase
             'sandboxClientId' => 'flat-sandbox-client',
             'sandboxClientSecret' => 'flat-sandbox-secret',
             'productionClientId' => 'flat-prod-client',
-            'productionClientSecret' => 'flat-prod-secret'
+            'productionClientSecret' => 'flat-prod-secret',
         ];
 
         // Test that flat structure is handled correctly
@@ -99,10 +99,10 @@ class DeveloperPortalImporterTest extends TestCase
     public function testImportFromJsonFileNotFound(): void
     {
         $nonExistentFile = '/tmp/non_existent_file.json';
-        
+
         $this->expectException(\RuntimeException::class);
         $this->expectExceptionMessage('Import file not found:');
-        
+
         $this->importer->importFromJson($nonExistentFile);
     }
 
@@ -110,10 +110,10 @@ class DeveloperPortalImporterTest extends TestCase
     {
         // Create a file with invalid JSON
         file_put_contents($this->tempJsonFile, 'invalid json content {');
-        
+
         $this->expectException(\RuntimeException::class);
         $this->expectExceptionMessage('Invalid JSON format');
-        
+
         $this->importer->importFromJson($this->tempJsonFile);
     }
 
@@ -125,12 +125,12 @@ class DeveloperPortalImporterTest extends TestCase
             'sandbox' => [
                 'clientId' => 'json-sandbox-client',
                 'clientSecret' => 'json-sandbox-secret',
-                'apiKey' => 'json-sandbox-api'
-            ]
+                'apiKey' => 'json-sandbox-api',
+            ],
         ];
 
         file_put_contents($this->tempJsonFile, json_encode($validJson));
-        
+
         // Since we can't test actual database operations in unit tests,
         // we verify the file can be read and parsed correctly
         $this->assertFileExists($this->tempJsonFile);
@@ -140,7 +140,7 @@ class DeveloperPortalImporterTest extends TestCase
     public function testGetApplicationInstance(): void
     {
         $application = $this->importer->getApplication();
-        
+
         $this->assertInstanceOf(Application::class, $application);
     }
 
@@ -162,8 +162,8 @@ class DeveloperPortalImporterTest extends TestCase
     {
         $incompleteData = [
             'sandbox' => [
-                'clientId' => 'test-client'
-            ]
+                'clientId' => 'test-client',
+            ],
             // Missing 'name' and 'uuid'
         ];
 
@@ -175,7 +175,7 @@ class DeveloperPortalImporterTest extends TestCase
     {
         $dataWithoutCredentials = [
             'name' => 'Test App',
-            'uuid' => 'test-uuid'
+            'uuid' => 'test-uuid',
             // No sandbox or production credentials
         ];
 
@@ -190,7 +190,7 @@ class DeveloperPortalImporterTest extends TestCase
             'applicationId' => 'alt-uuid-123',
             'contactEmail' => 'contact@example.com',
             'sandbox_client_id' => 'alt-sandbox-client',
-            'production_client_id' => 'alt-prod-client'
+            'production_client_id' => 'alt-prod-client',
         ];
 
         // Test that alternative field names are mapped correctly
