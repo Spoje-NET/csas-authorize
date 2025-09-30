@@ -35,7 +35,17 @@ class TokenTest extends TestCase
     protected function setUp(): void
     {
         $this->application = $this->createMock(Application::class);
-        $this->token = new Token();
+        $this->application->method('getMyKey')->willReturn(1);
+        
+        // Create a partial mock that doesn't interact with the database
+        $this->token = $this->getMockBuilder(Token::class)
+            ->onlyMethods(['dbSync', 'addStatusMessage'])
+            ->getMock();
+            
+        // Mock database operations to avoid constraint violations
+        $this->token->expects($this->any())->method('dbSync')->willReturn(true);
+        $this->token->expects($this->any())->method('addStatusMessage')->willReturn(null);
+        
         $this->token->setApplication($this->application);
     }
 
@@ -73,6 +83,32 @@ class TokenTest extends TestCase
         
         $this->expectException(\RuntimeException::class);
         $this->expectExceptionMessage('Refresh token has expired');
+        $this->expectExceptionCode(24);
+        
+        $this->token->refreshToken($mockProvider);
+    }
+
+    public function testRefreshTokenWithError7109(): void
+    {
+        $mockProvider = $this->createMock(Auth::class);
+        
+        $exception = new IdentityProviderException(
+            'request_error',
+            400,
+            [
+                'error' => 'request_error',
+                'error_code' => '7109',
+                'error_description' => 'Refresh token has expired'
+            ]
+        );
+        
+        $mockProvider->method('getAccessToken')->willThrowException($exception);
+        
+        $this->token->setDataValue('refresh_token', 'expired_refresh_token');
+        
+        $this->expectException(\RuntimeException::class);
+        $this->expectExceptionMessage('Refresh token has expired');
+        $this->expectExceptionCode(24);
         
         $this->token->refreshToken($mockProvider);
     }

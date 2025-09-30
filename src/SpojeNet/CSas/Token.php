@@ -115,6 +115,7 @@ class Token extends \Ease\SQL\Engine
         } catch (\League\OAuth2\Client\Provider\Exception\IdentityProviderException $exception) {
             $errorData = $exception->getResponseBody();
             $errorMessage = $errorData['error_description'] ?? $exception->getMessage();
+            $errorCode = $errorData['error_code'] ?? null;
             
             // Clear the expired refresh token
             $this->setDataValue('refresh_token', null);
@@ -122,7 +123,13 @@ class Token extends \Ease\SQL\Engine
             
             $this->addStatusMessage(sprintf(_('Token refresh failed: %s'), $errorMessage), 'error');
             
-            throw new \RuntimeException(_('Refresh token has expired'), 24, $exception);
+            // Check if this is specifically a refresh token expiration error
+            if ($errorCode === '7109' || strpos($errorMessage, 'expired') !== false) {
+                throw new \RuntimeException(_('Refresh token has expired'), 24, $exception);
+            }
+            
+            // For other OAuth2 errors, throw a different exception
+            throw new \RuntimeException(sprintf(_('OAuth2 error: %s'), $errorMessage), 25, $exception);
         }
     }
 

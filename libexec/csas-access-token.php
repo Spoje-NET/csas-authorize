@@ -240,7 +240,29 @@ if (!empty($tokenId)) {
 
         if ($expiresAt < $expiresSoon) {
             // Refresh the token if it is expired or will expire soon
-            $token->refreshToken(new \SpojeNet\CSas\Auth($token->getApplication()));
+            try {
+                $token->refreshToken(new \SpojeNet\CSas\Auth($token->getApplication()));
+            } catch (\RuntimeException $exception) {
+                if ($exception->getCode() === 24) {
+                    // Refresh token has expired
+                    if (isset($options['json']) || isset($options['j'])) {
+                        echo json_encode([
+                            'error' => 'refresh_token_expired',
+                            'error_description' => _('Refresh token has expired. Please re-authorize the application.'),
+                            'uuid' => $token->getDataValue('uuid'),
+                            'application_id' => $token->getDataValue('application_id')
+                        ], JSON_PRETTY_PRINT);
+                    } else {
+                        echo _('Error: Refresh token has expired. Please re-authorize the application.') . "\n";
+                        echo 'Token UUID: ' . $token->getDataValue('uuid') . "\n";
+                        echo 'Application ID: ' . $token->getDataValue('application_id') . "\n";
+                    }
+                    exit(1);
+                } else {
+                    // Other runtime exception, re-throw it
+                    throw $exception;
+                }
+            }
         }
 
         if (isset($options['json']) || isset($options['j'])) {

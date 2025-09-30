@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1fc616e79e311fa2cd55f11a937c970d",
+    "content-hash": "38025fd12dfac73046ffc4018bf586d6",
     "packages": [
         {
             "name": "fpdo/fluentpdo",
@@ -2047,12 +2047,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ergebnis/composer-normalize.git",
-                "reference": "d03d8d4ac3026bde50780035adaad3d087f95fef"
+                "reference": "411e8b4dc91411fe5238ef2ac72ceb0cc54e731a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ergebnis/composer-normalize/zipball/d03d8d4ac3026bde50780035adaad3d087f95fef",
-                "reference": "d03d8d4ac3026bde50780035adaad3d087f95fef",
+                "url": "https://api.github.com/repos/ergebnis/composer-normalize/zipball/411e8b4dc91411fe5238ef2ac72ceb0cc54e731a",
+                "reference": "411e8b4dc91411fe5238ef2ac72ceb0cc54e731a",
                 "shasum": ""
             },
             "require": {
@@ -2074,7 +2074,7 @@
                 "fakerphp/faker": "^1.24.1",
                 "infection/infection": "~0.26.6",
                 "phpstan/extension-installer": "^1.4.3",
-                "phpstan/phpstan": "^2.1.28",
+                "phpstan/phpstan": "^2.1.29",
                 "phpstan/phpstan-deprecation-rules": "^2.0.3",
                 "phpstan/phpstan-phpunit": "^2.0.7",
                 "phpstan/phpstan-strict-rules": "^2.0.6",
@@ -2124,7 +2124,7 @@
                 "security": "https://github.com/ergebnis/composer-normalize/blob/main/.github/SECURITY.md",
                 "source": "https://github.com/ergebnis/composer-normalize"
             },
-            "time": "2025-09-22T22:02:48+00:00"
+            "time": "2025-09-30T01:16:23+00:00"
         },
         {
             "name": "ergebnis/json",
@@ -2132,12 +2132,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ergebnis/json.git",
-                "reference": "2cefb281b7e098a80d9340ecf4afb9323882bd95"
+                "reference": "e78b01a70bbe04fbb149b120a2d75dab9d8cdf48"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ergebnis/json/zipball/2cefb281b7e098a80d9340ecf4afb9323882bd95",
-                "reference": "2cefb281b7e098a80d9340ecf4afb9323882bd95",
+                "url": "https://api.github.com/repos/ergebnis/json/zipball/e78b01a70bbe04fbb149b120a2d75dab9d8cdf48",
+                "reference": "e78b01a70bbe04fbb149b120a2d75dab9d8cdf48",
                 "shasum": ""
             },
             "require": {
@@ -2198,7 +2198,7 @@
                 "security": "https://github.com/ergebnis/json/blob/main/.github/SECURITY.md",
                 "source": "https://github.com/ergebnis/json"
             },
-            "time": "2025-09-22T06:08:04+00:00"
+            "time": "2025-09-29T07:02:50+00:00"
         },
         {
             "name": "ergebnis/json-normalizer",
@@ -2206,12 +2206,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ergebnis/json-normalizer.git",
-                "reference": "cac7c242590658855af135d5bf5c4d7404e2a54a"
+                "reference": "ad6cd7130a4b46bb36fc60e5c8115ab5a424bfc8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ergebnis/json-normalizer/zipball/cac7c242590658855af135d5bf5c4d7404e2a54a",
-                "reference": "cac7c242590658855af135d5bf5c4d7404e2a54a",
+                "url": "https://api.github.com/repos/ergebnis/json-normalizer/zipball/ad6cd7130a4b46bb36fc60e5c8115ab5a424bfc8",
+                "reference": "ad6cd7130a4b46bb36fc60e5c8115ab5a424bfc8",
                 "shasum": ""
             },
             "require": {
@@ -2281,7 +2281,7 @@
                 "security": "https://github.com/ergebnis/json-normalizer/blob/main/.github/SECURITY.md",
                 "source": "https://github.com/ergebnis/json-normalizer"
             },
-            "time": "2025-09-22T20:02:58+00:00"
+            "time": "2025-09-29T23:31:47+00:00"
         },
         {
             "name": "ergebnis/json-pointer",
@@ -2289,12 +2289,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ergebnis/json-pointer.git",
-                "reference": "bff589d773c7995daf085b7f5ad781c4289d4fa9"
+                "reference": "4d165fc77c67e96e2df928be24468135e0a7e976"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ergebnis/json-pointer/zipball/bff589d773c7995daf085b7f5ad781c4289d4fa9",
-                "reference": "bff589d773c7995daf085b7f5ad781c4289d4fa9",
+                "url": "https://api.github.com/repos/ergebnis/json-pointer/zipball/4d165fc77c67e96e2df928be24468135e0a7e976",
+                "reference": "4d165fc77c67e96e2df928be24468135e0a7e976",
                 "shasum": ""
             },
             "require": {
@@ -2355,7 +2355,7 @@
                 "security": "https://github.com/ergebnis/json-pointer/blob/main/.github/SECURITY.md",
                 "source": "https://github.com/ergebnis/json-pointer"
             },
-            "time": "2025-09-22T15:03:40+00:00"
+            "time": "2025-09-29T18:46:21+00:00"
         },
         {
             "name": "ergebnis/json-printer",
@@ -2363,12 +2363,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ergebnis/json-printer.git",
-                "reference": "530b82888cabd2798763dbf007e671a3c5ffb26c"
+                "reference": "8966374214b90498e2c8e90d50e87d012f255461"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ergebnis/json-printer/zipball/530b82888cabd2798763dbf007e671a3c5ffb26c",
-                "reference": "530b82888cabd2798763dbf007e671a3c5ffb26c",
+                "url": "https://api.github.com/repos/ergebnis/json-printer/zipball/8966374214b90498e2c8e90d50e87d012f255461",
+                "reference": "8966374214b90498e2c8e90d50e87d012f255461",
                 "shasum": ""
             },
             "require": {
@@ -2431,7 +2431,7 @@
                 "security": "https://github.com/ergebnis/json-printer/blob/main/.github/SECURITY.md",
                 "source": "https://github.com/ergebnis/json-printer"
             },
-            "time": "2025-09-22T08:13:39+00:00"
+            "time": "2025-09-29T09:24:19+00:00"
         },
         {
             "name": "ergebnis/json-schema-validator",
@@ -2439,12 +2439,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ergebnis/json-schema-validator.git",
-                "reference": "1606c228e9f39f25d513caa4f92839bc4806d2e1"
+                "reference": "78f2adea03953605e3019063ca7c49495ba4be67"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ergebnis/json-schema-validator/zipball/1606c228e9f39f25d513caa4f92839bc4806d2e1",
-                "reference": "1606c228e9f39f25d513caa4f92839bc4806d2e1",
+                "url": "https://api.github.com/repos/ergebnis/json-schema-validator/zipball/78f2adea03953605e3019063ca7c49495ba4be67",
+                "reference": "78f2adea03953605e3019063ca7c49495ba4be67",
                 "shasum": ""
             },
             "require": {
@@ -2509,7 +2509,7 @@
                 "security": "https://github.com/ergebnis/json-schema-validator/blob/main/.github/SECURITY.md",
                 "source": "https://github.com/ergebnis/json-schema-validator"
             },
-            "time": "2025-09-22T22:02:27+00:00"
+            "time": "2025-09-29T22:56:51+00:00"
         },
         {
             "name": "ergebnis/php-cs-fixer-config",
@@ -3442,15 +3442,10 @@
         {
             "name": "phpstan/phpstan",
             "version": "2.1.x-dev",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/phpstan/phpstan-phar-composer-source.git",
-                "reference": "git"
-            },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/e93ad8d75fcdea8437fb953563a7d89f5072a456",
-                "reference": "e93ad8d75fcdea8437fb953563a7d89f5072a456",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/0eb327e751d90cd80c06d9a4c3aea8161cbbd251",
+                "reference": "0eb327e751d90cd80c06d9a4c3aea8161cbbd251",
                 "shasum": ""
             },
             "require": {
@@ -3496,7 +3491,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-09-24T15:47:22+00:00"
+            "time": "2025-09-30T09:46:34+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",
@@ -5904,12 +5899,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/config.git",
-                "reference": "3a4138903f5283f422626439dd317157b9363fbb"
+                "reference": "6f25aeaa8f416d251273e01e0f5b13c553746172"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/config/zipball/3a4138903f5283f422626439dd317157b9363fbb",
-                "reference": "3a4138903f5283f422626439dd317157b9363fbb",
+                "url": "https://api.github.com/repos/symfony/config/zipball/6f25aeaa8f416d251273e01e0f5b13c553746172",
+                "reference": "6f25aeaa8f416d251273e01e0f5b13c553746172",
                 "shasum": ""
             },
             "require": {
@@ -5975,7 +5970,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2025-09-23T06:13:50+00:00"
+            "time": "2025-09-29T17:22:48+00:00"
         },
         {
             "name": "symfony/console",
@@ -7175,35 +7170,34 @@
         },
         {
             "name": "symfony/string",
-            "version": "7.4.x-dev",
+            "version": "8.0.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/string.git",
-                "reference": "bc7852160e1f18ce249c3daaba3b26cf5425a34d"
+                "reference": "f929eccf09531078c243df72398560e32fa4cf4f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/string/zipball/bc7852160e1f18ce249c3daaba3b26cf5425a34d",
-                "reference": "bc7852160e1f18ce249c3daaba3b26cf5425a34d",
+                "url": "https://api.github.com/repos/symfony/string/zipball/f929eccf09531078c243df72398560e32fa4cf4f",
+                "reference": "f929eccf09531078c243df72398560e32fa4cf4f",
                 "shasum": ""
             },
             "require": {
-                "php": ">=8.2",
-                "symfony/deprecation-contracts": "^2.5|^3.0",
-                "symfony/polyfill-ctype": "~1.8",
-                "symfony/polyfill-intl-grapheme": "~1.33",
-                "symfony/polyfill-intl-normalizer": "~1.0",
-                "symfony/polyfill-mbstring": "~1.0"
+                "php": ">=8.4",
+                "symfony/polyfill-ctype": "^1.8",
+                "symfony/polyfill-intl-grapheme": "^1.33",
+                "symfony/polyfill-intl-normalizer": "^1.0",
+                "symfony/polyfill-mbstring": "^1.0"
             },
             "conflict": {
                 "symfony/translation-contracts": "<2.5"
             },
             "require-dev": {
-                "symfony/emoji": "^7.1|^8.0",
-                "symfony/http-client": "^6.4|^7.0|^8.0",
-                "symfony/intl": "^6.4|^7.0|^8.0",
+                "symfony/emoji": "^7.4|^8.0",
+                "symfony/http-client": "^7.4|^8.0",
+                "symfony/intl": "^7.4|^8.0",
                 "symfony/translation-contracts": "^2.5|^3.0",
-                "symfony/var-exporter": "^6.4|^7.0|^8.0"
+                "symfony/var-exporter": "^7.4|^8.0"
             },
             "type": "library",
             "autoload": {
@@ -7242,7 +7236,7 @@
                 "utf8"
             ],
             "support": {
-                "source": "https://github.com/symfony/string/tree/7.4"
+                "source": "https://github.com/symfony/string/tree/8.0"
             },
             "funding": [
                 {
@@ -7262,7 +7256,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2025-09-11T14:37:11+00:00"
+            "time": "2025-09-11T14:37:55+00:00"
         },
         {
             "name": "theseer/tokenizer",
@@ -7317,10 +7311,10 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": [],
+    "stability-flags": {},
     "prefer-stable": false,
     "prefer-lowest": false,
-    "platform": [],
-    "platform-dev": [],
+    "platform": {},
+    "platform-dev": {},
     "plugin-api-version": "2.6.0"
 }
