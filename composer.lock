@@ -7170,6 +7170,7 @@
         },
         {
             "name": "symfony/string",
+<<<<<<< HEAD
             "version": "7.4.x-dev",
             "source": {
                 "type": "git",
@@ -7189,16 +7190,44 @@
                 "symfony/polyfill-intl-grapheme": "~1.33",
                 "symfony/polyfill-intl-normalizer": "~1.0",
                 "symfony/polyfill-mbstring": "~1.0"
+=======
+            "version": "8.0.x-dev",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/string.git",
+                "reference": "f929eccf09531078c243df72398560e32fa4cf4f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/string/zipball/f929eccf09531078c243df72398560e32fa4cf4f",
+                "reference": "f929eccf09531078c243df72398560e32fa4cf4f",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.4",
+                "symfony/polyfill-ctype": "^1.8",
+                "symfony/polyfill-intl-grapheme": "^1.33",
+                "symfony/polyfill-intl-normalizer": "^1.0",
+                "symfony/polyfill-mbstring": "^1.0"
+>>>>>>> 6e8b810 (Update instructions, add .gitignore entry, and lock dependencies)
             },
             "conflict": {
                 "symfony/translation-contracts": "<2.5"
             },
             "require-dev": {
+<<<<<<< HEAD
                 "symfony/emoji": "^7.1|^8.0",
                 "symfony/http-client": "^6.4|^7.0|^8.0",
                 "symfony/intl": "^6.4|^7.0|^8.0",
                 "symfony/translation-contracts": "^2.5|^3.0",
                 "symfony/var-exporter": "^6.4|^7.0|^8.0"
+=======
+                "symfony/emoji": "^7.4|^8.0",
+                "symfony/http-client": "^7.4|^8.0",
+                "symfony/intl": "^7.4|^8.0",
+                "symfony/translation-contracts": "^2.5|^3.0",
+                "symfony/var-exporter": "^7.4|^8.0"
+>>>>>>> 6e8b810 (Update instructions, add .gitignore entry, and lock dependencies)
             },
             "type": "library",
             "autoload": {
@@ -7237,7 +7266,11 @@
                 "utf8"
             ],
             "support": {
+<<<<<<< HEAD
                 "source": "https://github.com/symfony/string/tree/7.4"
+=======
+                "source": "https://github.com/symfony/string/tree/8.0"
+>>>>>>> 6e8b810 (Update instructions, add .gitignore entry, and lock dependencies)
             },
             "funding": [
                 {
@@ -7257,7 +7290,11 @@
                     "type": "tidelift"
                 }
             ],
+<<<<<<< HEAD
             "time": "2025-09-11T14:37:11+00:00"
+=======
+            "time": "2025-09-11T14:37:55+00:00"
+>>>>>>> 6e8b810 (Update instructions, add .gitignore entry, and lock dependencies)
         },
         {
             "name": "theseer/tokenizer",
@@ -7312,10 +7349,18 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
+<<<<<<< HEAD
     "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": [],
     "platform-dev": [],
+=======
+    "stability-flags": {},
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": {},
+    "platform-dev": {},
+>>>>>>> 6e8b810 (Update instructions, add .gitignore entry, and lock dependencies)
     "plugin-api-version": "2.6.0"
 }

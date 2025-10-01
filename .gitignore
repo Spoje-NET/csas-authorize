@@ -22,3 +22,4 @@
 /debian/csas-authorize-mysql.postrm.debhelper
 /debian/csas-authorize-sqlite.postrm.debhelper
 .phpunit.cache/test-results
+/src/php_errors.log

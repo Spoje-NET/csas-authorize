@@ -18,6 +18,7 @@ override_dh_install:
 	touch debian/csas-authorize-sqlite/var/lib/dbconfig-common/sqlite3/csas-authorize/csas-authorize
 	sed -i -e 's/..\/vendor/\/var\/lib\/composer\/csas-authorize/g' debian/csas-authorize/usr/*/csas-authorize/*.php
 	sed -i -e 's/\.\.\/\.env/\/etc\/csas-authorize\/csas-authorize\.env/g' debian/csas-authorize/usr/*/csas-authorize/*.php
+	sed -i -e 's/\.\.\/src\/init\.php/\/usr\/share\/csas-authorize\/init\.php/g' debian/csas-authorize/usr/*/csas-authorize/*.php
 	sed -i -e 's/..\/i18n/\/usr\/share\/locale/g' debian/csas-authorize/usr/share/csas-authorize/init.php
 
 override_dh_clean:
