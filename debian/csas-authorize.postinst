@@ -7,7 +7,6 @@ set -e
 
 
 if [ -f /usr/share/dbconfig-common/dpkg/postinst ]; then
-    composer-debian csas-authorize
 
     echo "############################"
     cat /etc/csas-authorize/csas-authorize.env
@@ -60,7 +59,6 @@ apache_install() {
 
 . /usr/share/debconf/confmodule
 
-composer-debian csas-authorize
 
 echo csas-authorize postinst action $1
 
