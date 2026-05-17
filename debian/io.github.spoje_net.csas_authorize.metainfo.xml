@@ -1,30 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<component type="desktop-application">
+<component type="web-application">
   <id>io.github.spoje_net.csas_authorize</id>
-  
-  <name>CSAS Authorize</name>
-  <summary> Obtain Access Key from CSAS/Erste</summary>
-  
   <metadata_license>MIT</metadata_license>
   <project_license>MIT</project_license>
-  
+  <name>CSAS Authorize</name>
+  <summary>Obtain Access Key from CSAS/Erste</summary>
   <description>
     <p>
-      This application provides a simple way to authorize your application with CSAS API.
+      Web application providing an OAuth2 callback endpoint for CSAS/Erste bank APIs.
+      Manages obtaining, renewing and storing access tokens for your Erste/CSAS applications.
     </p>
   </description>
-  
-  <launchable type="desktop-id">io.github.spoje_net.csas_authorize.desktop</launchable>
+  <icon type="stock">network-transmit-receive</icon>
+  <launchable type="url">http://localhost/csas-authorize/</launchable>
   <screenshots>
     <screenshot type="default">
-      <image>https://github.com/Spoje-NET/csas-authorize/apps-screenshot.png?raw=true</image>
+      <caption>Application overview</caption>
+      <image>https://github.com/Spoje-NET/csas-authorize/raw/main/apps-screenshot.png</image>
     </screenshot>
     <screenshot>
-      <image>https://github.com/Spoje-NET/csas-authorize/app-screenshot.png?raw=true</image>
+      <caption>Single application view</caption>
+      <image>https://github.com/Spoje-NET/csas-authorize/raw/main/app-screenshot.png</image>
     </screenshot>
     <screenshot>
-      <image>https://github.com/Spoje-NET/csas-authorize/token-screenshot.png?raw=true</image>
+      <caption>Token management</caption>
+      <image>https://github.com/Spoje-NET/csas-authorize/raw/main/token-screenshot.png</image>
     </screenshot>
   </screenshots>
+  <categories>
+    <category>Network</category>
+    <category>Finance</category>
+  </categories>
+  <url type="homepage">https://github.com/Spoje-NET/csas-authorize</url>
+  <url type="bugtracker">https://github.com/Spoje-NET/csas-authorize/issues</url>
+  <developer id="cz.vitexsoftware">
+    <name>VitexSoftware</name>
+  </developer>
+  <content_rating type="oars-1.1"/>
 </component>
-

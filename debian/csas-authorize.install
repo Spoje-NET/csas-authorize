@@ -5,7 +5,6 @@ src/images/*                              usr/share/csas-authorize/images
 db/migrations/*				  usr/lib/csas-authorize/db/migrations
 #db/seeds/*				  usr/lib/csas-authorize/db/seeds
 libexec/*.php				  usr/libexec/csas-authorize
-debian/tmp/composer.json                  usr/lib/csas-authorize
 debian/conf/phinx-adapter.php	          usr/lib/csas-authorize
 
 
