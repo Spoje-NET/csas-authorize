@@ -8,11 +8,13 @@ require_once '/usr/share/php/EaseTWB5/autoload.php';
 require_once '/usr/share/php/EaseHtml/autoload.php';
 require_once '/usr/share/php/EaseHtmlWidgets/autoload.php';
 require_once '/usr/share/php/EaseFluentPDO/autoload.php';
+require_once '/usr/share/php/GuzzleHttp/autoload.php';
+require_once '/usr/share/php/Psr/Http/Message/autoload.php';
+require_once '/usr/share/php/Psr/Http/Message/factory-autoload.php';
 
-// Bundled vendor helpers (files autoload)
+// Bundled vendor helpers (no Debian package available)
 require_once '/usr/lib/csas-authorize/vendor/getallheaders.php';
 require_once '/usr/lib/csas-authorize/vendor/kint_init.php';
-require_once '/usr/lib/csas-authorize/vendor/GuzzleHttp/functions_include.php';
 
 // System CSasAccounts library (SpojeNet\CSas\Accounts\*, SpojeNet\CSas\Modes\*, etc.)
 spl_autoload_register(function (string $class): void {
@@ -36,16 +38,11 @@ spl_autoload_register(function (string $class): void {
     }
 });
 
-// Bundled vendor packages
+// Bundled vendor packages (no Debian equivalent)
 spl_autoload_register(function (string $class): void {
     $map = [
-        'League\\OAuth2\\Client\\'  => '/usr/lib/csas-authorize/vendor/League/OAuth2/Client/',
-        'GuzzleHttp\\Psr7\\'        => '/usr/lib/csas-authorize/vendor/GuzzleHttp/Psr7/',
-        'GuzzleHttp\\Promise\\'     => '/usr/lib/csas-authorize/vendor/GuzzleHttp/Promise/',
-        'GuzzleHttp\\'              => '/usr/lib/csas-authorize/vendor/GuzzleHttp/',
-        'Psr\\Http\\Client\\'       => '/usr/lib/csas-authorize/vendor/Psr/Http/Client/',
-        'Psr\\Http\\Message\\'      => '/usr/lib/csas-authorize/vendor/Psr/Http/Message/',
-        'Kint\\'                    => '/usr/lib/csas-authorize/vendor/Kint/',
+        'League\\OAuth2\\Client\\' => '/usr/lib/csas-authorize/vendor/League/OAuth2/Client/',
+        'Kint\\'                   => '/usr/lib/csas-authorize/vendor/Kint/',
     ];
     foreach ($map as $prefix => $base) {
         if (str_starts_with($class, $prefix)) {

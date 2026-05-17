@@ -14,14 +14,6 @@ override_dh_install:
 	# Bundle vendor packages that have no Debian equivalent
 	install -d $(BUNDLED)/League/OAuth2
 	cp -r vendor/league/oauth2-client/src           $(BUNDLED)/League/OAuth2/Client
-	cp -r vendor/guzzlehttp/guzzle/src              $(BUNDLED)/GuzzleHttp
-	cp -r vendor/guzzlehttp/psr7/src                $(BUNDLED)/GuzzleHttp/Psr7
-	cp -r vendor/guzzlehttp/promises/src            $(BUNDLED)/GuzzleHttp/Promise
-	install -d $(BUNDLED)/Psr/Http
-	cp -r vendor/psr/http-message/src               $(BUNDLED)/Psr/Http/Message
-	cp vendor/psr/http-factory/src/*.php            $(BUNDLED)/Psr/Http/Message/
-	install -d $(BUNDLED)/Psr/Http/Client
-	cp vendor/psr/http-client/src/*.php             $(BUNDLED)/Psr/Http/Client/
 	cp vendor/ralouphie/getallheaders/src/getallheaders.php  $(BUNDLED)/getallheaders.php
 	cp -r vendor/kint-php/kint/src                  $(BUNDLED)/Kint
 	cp vendor/kint-php/kint/init.php                $(BUNDLED)/kint_init.php
