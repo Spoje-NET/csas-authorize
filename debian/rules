@@ -4,17 +4,11 @@ PKG_VERSION := $(shell dpkg-parsechangelog -S Version | sed 's/~.*//')
 PKG_SOURCE  := $(shell jq -r '.name' composer.json)
 PKG_TYPE    := $(shell jq -r '.type' composer.json)
 
-BUNDLED := debian/csas-authorize/usr/lib/csas-authorize/vendor
-
 %:
 	dh $@
 
 override_dh_install:
 	dh_install
-	# Bundle vendor packages that have no Debian equivalent
-	install -d $(BUNDLED)
-	cp -r vendor/kint-php/kint/src                  $(BUNDLED)/Kint
-	cp vendor/kint-php/kint/init.php                $(BUNDLED)/kint_init.php
 	# Install static autoloader
 	install -m 644 debian/autoload.php \
 	    debian/csas-authorize/usr/share/csas-authorize/autoload.php
