@@ -22,6 +22,7 @@ Depends:
  php-vitexsoftware-ease-bootstrap5-widgets,
  php-vitexsoftware-ease-fluentpdo,
  php-spojenet-csas-accountsapi,
+ php-league-oauth2-client,
  php-guzzlehttp-guzzle,
  php-guzzlehttp-promises,
  php-guzzlehttp-psr7,

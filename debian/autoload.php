@@ -11,9 +11,9 @@ require_once '/usr/share/php/EaseFluentPDO/autoload.php';
 require_once '/usr/share/php/GuzzleHttp/autoload.php';
 require_once '/usr/share/php/Psr/Http/Message/autoload.php';
 require_once '/usr/share/php/Psr/Http/Message/factory-autoload.php';
+require_once '/usr/share/php/League/OAuth2/Client/autoload.php';
 
 // Bundled vendor helpers (no Debian package available)
-require_once '/usr/lib/csas-authorize/vendor/getallheaders.php';
 require_once '/usr/lib/csas-authorize/vendor/kint_init.php';
 
 // System CSasAccounts library (SpojeNet\CSas\Accounts\*, SpojeNet\CSas\Modes\*, etc.)
@@ -40,17 +40,11 @@ spl_autoload_register(function (string $class): void {
 
 // Bundled vendor packages (no Debian equivalent)
 spl_autoload_register(function (string $class): void {
-    $map = [
-        'League\\OAuth2\\Client\\' => '/usr/lib/csas-authorize/vendor/League/OAuth2/Client/',
-        'Kint\\'                   => '/usr/lib/csas-authorize/vendor/Kint/',
-    ];
-    foreach ($map as $prefix => $base) {
-        if (str_starts_with($class, $prefix)) {
-            $file = $base . str_replace('\\', '/', substr($class, strlen($prefix))) . '.php';
-            if (file_exists($file)) {
-                require $file;
-            }
-            return;
+    if (str_starts_with($class, 'Kint\\')) {
+        $file = '/usr/lib/csas-authorize/vendor/Kint/'
+            . str_replace('\\', '/', substr($class, 5)) . '.php';
+        if (file_exists($file)) {
+            require $file;
         }
     }
 });

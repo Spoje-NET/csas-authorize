@@ -12,9 +12,7 @@ BUNDLED := debian/csas-authorize/usr/lib/csas-authorize/vendor
 override_dh_install:
 	dh_install
 	# Bundle vendor packages that have no Debian equivalent
-	install -d $(BUNDLED)/League/OAuth2
-	cp -r vendor/league/oauth2-client/src           $(BUNDLED)/League/OAuth2/Client
-	cp vendor/ralouphie/getallheaders/src/getallheaders.php  $(BUNDLED)/getallheaders.php
+	install -d $(BUNDLED)
 	cp -r vendor/kint-php/kint/src                  $(BUNDLED)/Kint
 	cp vendor/kint-php/kint/init.php                $(BUNDLED)/kint_init.php
 	# Install static autoloader
