@@ -7,29 +7,7 @@
  * @copyright  2021-2024 Vitex Software
  */
 
-include_once '/usr/share/php/EaseCore/Atom.php';
-include_once '/usr/share/php/EaseCore/Shared.php';
-include_once '/usr/share/php/EaseCore/Molecule.php';
-include_once '/usr/share/php/EaseCore/Logger/Logging.php';
-include_once '/usr/share/php/EaseCore/Sand.php';
-include_once '/usr/share/php/EaseCore/Functions.php';
-include_once '/usr/share/php/EaseCore/Logger/Message.php';
-include_once '/usr/share/php/EaseCore/Logger/Loggingable.php';
-include_once '/usr/share/php/EaseCore/Logger/Loggingable.php';
-include_once '/usr/share/php/EaseCore/Logger/ToMemory.php';
-include_once '/usr/share/php/EaseCore/recordkey.php';
-include_once '/usr/share/php/EaseCore/Brick.php';
-include_once '/usr/share/php/EaseCore/Person.php';
-include_once '/usr/share/php/EaseCore/Anonym.php';
-include_once '/usr/share/php/EaseCore/User.php';
-include_once '/usr/share/php/EaseCore/Logger/ToStd.php';
-include_once '/usr/share/php/EaseCore/Logger/ToSyslog.php';
-include_once '/usr/share/php/EaseCore/Logger/ToConsole.php';
-include_once '/usr/share/php/EaseCore/Logger/Regent.php';
-include_once '/usr/share/php/EaseCore/Logger/ToMemory.php';
-include_once '/usr/share/php/EaseCore/Exception.php';
-include_once '/usr/share/php/EaseFluentPDO/Orm.php';
-include_once '/usr/share/php/EaseFluentPDO/Engine.php';
+require_once '/usr/share/csas-authorize/autoload.php';
 
 if (file_exists('/etc/csas-authorize/csas-authorize.env')) {
     \Ease\Shared::instanced()->loadConfig('/etc/csas-authorize/csas-authorize.env', true);

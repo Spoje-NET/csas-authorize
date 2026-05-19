@@ -5,18 +5,23 @@
     "license": "MIT",
     "autoload": {
         "psr-4": {
-            "SpojeNet\\CSas\\": "src/SpojeNet/CSas",
-            "SpojeNet\\CSas\\Ui\\": "src/SpojeNet/CSas/Ui"
+            "SpojeNet\\CSas\\": "src/SpojeNet/CSas"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "SpojeNet\\CSas\\Tests\\": "tests/"
         }
     },
     "authors": [
         {
-            "name": "CyberVitexus",
+            "name": "Vítězslav Dvořák",
             "email": "info@vitexsoftware.cz"
         }
     ],
     "minimum-stability": "dev",
     "require": {
+        "php": ">=8.1",
         "vitexsoftware/ease-twbootstrap5": "^1.2",
         "league/oauth2-client": "^2.8",
         "vitexsoftware/ease-core": "^1.49",
@@ -27,11 +32,12 @@
     },
     "require-dev": {
         "robmorgan/phinx": "^0.16",
-        "phpunit/phpunit": "*",
+        "phpunit/phpunit": "^12.3",
         "phpstan/phpstan": "*",
-        "friendsofphp/php-cs-fixer": "^3.87",
-        "ergebnis/composer-normalize": "^2.48",
-        "ergebnis/php-cs-fixer-config": "^6.54"
+        "phpstan/phpstan-phpunit": "^2.0",
+        "friendsofphp/php-cs-fixer": "^3.92",
+        "ergebnis/composer-normalize": "^2.50",
+        "ergebnis/php-cs-fixer-config": "^6.60"
     },
     "config": {
         "allow-plugins": {

@@ -1,42 +1,70 @@
 Source: csas-authorize
-Build-Depends: debhelper-compat (= 13), po-debconf, jq, composer, appstream
-Standards-Version: 3.8.4
+Section: php
+Priority: optional
 Maintainer: Vítězslav Dvořák <info@vitexsoftware.cz>
 Uploaders: Vitex <vitex@hippy.cz>
-Priority: optional
+Build-Depends: debhelper-compat (= 13), po-debconf, jq, composer, appstream
+Standards-Version: 4.7.0
+Rules-Requires-Root: no
 Homepage: https://github.com/Spoje-NET/csas-authorize
+Vcs-Git: https://github.com/Spoje-NET/csas-authorize.git
+Vcs-Browser: https://github.com/Spoje-NET/csas-authorize
 
 Package: csas-authorize
-Depends: ${misc:Depends}, composer, php-intl, php-vitexsoftware-ease-bootstrap5, php-vitexsoftware-ease-html-widgets (>= 1.1.1), php-vitexsoftware-ease-bootstrap5-widgets, php-vitexsoftware-ease-fluentpdo, php-spojenet-csas-accountsapi, php-guzzlehttp-guzzle, php-guzzlehttp-promises, php-guzzlehttp-psr7, php-psr-http-client, php-psr-http-factory, php-psr-http-message, php-robmorgan-phinx | php-cakephp-phinx, csas-authorize-sqlite | csas-authorize-mysql
 Architecture: all
 Section: web
 Priority: optional
+Depends:
+ ${misc:Depends},
+ php-intl,
+ php-vitexsoftware-ease-bootstrap5,
+ php-vitexsoftware-ease-html-widgets (>= 1.1.1),
+ php-vitexsoftware-ease-bootstrap5-widgets,
+ php-vitexsoftware-ease-fluentpdo,
+ php-spojenet-csas-accountsapi,
+ php-guzzlehttp-guzzle,
+ php-guzzlehttp-promises,
+ php-guzzlehttp-psr7,
+ php-psr-http-client,
+ php-psr-http-factory,
+ php-psr-http-message,
+ php-robmorgan-phinx | php-cakephp-phinx,
+ csas-authorize-sqlite | csas-authorize-mysql
 Description: CSas/Erste Access Token obtainer
  Manage Renew/Access tokens for your Erste/Csas Apps
 
 Package: csas-authorize-sqlite
-Multi-Arch: foreign
-Depends: ${misc:Depends},dbconfig-sqlite3, php-sqlite3, sqlite3
-Conflicts: csas-authorize-mysql
 Architecture: all
-Description: sqlite support for multiabraflexi setup
+Multi-Arch: foreign
+Depends:
+ ${misc:Depends},
+ dbconfig-sqlite3,
+ php-sqlite3,
+ sqlite3
+Conflicts: csas-authorize-mysql
+Description: sqlite support for csas-authorize setup
  Mandatory dependencies for use CSas Authorize with SQLite database
 
 Package: csas-authorize-mysql
+Architecture: all
 Multi-Arch: foreign
-Depends: ${misc:Depends},dbconfig-mysql, php-mysql
+Depends:
+ ${misc:Depends},
+ dbconfig-mysql,
+ php-mysql
 Conflicts: csas-authorize-sqlite
 Suggests: mariadb-server
-Architecture: all
-Description: mariadb support for multiabraflexi setup
- Mandatory dependencies for use CSas authorize setup with MySQL/MariaDB databas
-
+Description: mariadb support for csas-authorize setup
+ Mandatory dependencies for use CSas authorize setup with MySQL/MariaDB database
 
 Package: multiflexi-csas-authorize
-Depends: multiflexi, csas-authorize
 Architecture: all
 Section: web
 Priority: optional
+Depends:
+ ${misc:Depends},
+ multiflexi-cli,
+ csas-authorize
 Description: Access Csas/Erste APIs from MultiFlexi
  Into MultiFlexi add Credential type for Erste/Csas
  able to obtain fresh API access token
