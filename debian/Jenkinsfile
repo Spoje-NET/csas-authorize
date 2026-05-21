@@ -77,6 +77,10 @@ distributions.each { distro ->
                         artifacts.each { deb_file ->
                             if (deb_file.endsWith('.deb')) {
                                 def pkgName = deb_file.tokenize('/')[-1].replaceFirst(/_.*/, '')
+                                if (pkgName.contains('mysql') || pkgName.contains('pgsql') || pkgName.contains('postgresql')) {
+                                    sh 'echo -e "${YELLOW} skipping db-specific package ' + pkgName + ' ${ENDCOLOR}"'
+                                    return
+                                }
                                 sh 'echo -e "${GREEN} installing ' + pkgName + ' on `lsb_release -sc` ${ENDCOLOR} "'
                                 sh 'sudo DEBIAN_FRONTEND=noninteractive DEBCONF_DEBUG=' + debconf_debug + ' apt-get -y install ' + pkgName + ' || sudo apt-get -y -f install'
                             }
