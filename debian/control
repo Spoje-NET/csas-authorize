@@ -30,7 +30,7 @@ Depends:
  php-psr-http-client,
  php-psr-http-factory,
  php-psr-http-message,
- php-robmorgan-phinx | php-cakephp-phinx,
+ php-cakephp-phinx,
  csas-authorize-sqlite | csas-authorize-mysql
 Description: CSas/Erste Access Token obtainer
  Manage Renew/Access tokens for your Erste/Csas Apps
