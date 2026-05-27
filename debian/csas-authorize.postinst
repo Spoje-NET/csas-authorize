@@ -6,7 +6,7 @@ set -e
 . /usr/share/debconf/confmodule
 
 
-if [ -f /usr/share/dbconfig-common/dpkg/postinst ]; then
+if [ -f /usr/share/dbconfig-common/dpkg/postinst ] && [ -f /etc/csas-authorize/csas-authorize.env ]; then
 
     phinx migrate -c /usr/lib/csas-authorize/phinx-adapter.php
 
