@@ -24,8 +24,6 @@ override_dh_install:
 	sed -i -e 's/\.\.\/src\/init\.php/\/usr\/share\/csas-authorize\/init\.php/g' \
 	    debian/csas-authorize/usr/libexec/csas-authorize/*.php
 	# Inject APP_NAME, APP_VERSION and InstalledVersions at build time
-	sed -i "1a defined('APP_NAME') || define('APP_NAME', '$(PKG_SOURCE)');" \
-	    debian/csas-authorize/usr/share/csas-authorize/autoload.php
 	sed -i "s|'unknown'|'$(PKG_SOURCE)'|" \
 	    debian/csas-authorize/usr/share/csas-authorize/autoload.php
 	sed -i "s|'0.0.0'|'$(PKG_VERSION)'|" \

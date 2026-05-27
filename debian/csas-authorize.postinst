@@ -8,11 +8,6 @@ set -e
 
 if [ -f /usr/share/dbconfig-common/dpkg/postinst ]; then
 
-    echo "############################"
-    cat /etc/csas-authorize/csas-authorize.env
-    echo "############################"
-
-
     phinx migrate -c /usr/lib/csas-authorize/phinx-adapter.php
 
 fi
