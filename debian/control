@@ -17,7 +17,7 @@ Priority: optional
 Depends:
  ${misc:Depends},
  php-intl,
- php-vitexsoftware-ease-bootstrap5,
+ php-vitexsoftware-ease-twbootstrap5,
  php-vitexsoftware-ease-html-widgets (>= 1.1.1),
  php-vitexsoftware-ease-bootstrap5-widgets,
  php-vitexsoftware-ease-fluentpdo,
