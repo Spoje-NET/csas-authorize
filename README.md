@@ -2,6 +2,8 @@
 
 ![CSAS Auhorize Logo](src/images/csas-authorize.svg?raw=true)
 ![GitHub](https://img.shields.io/github/license/Spoje-Net/csas-authorize)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+![Packaging: deb](https://img.shields.io/badge/packaging-.deb-red?logo=debian&logoColor=white)
 
 
 This application provides a simple way to authorize your application with CSAS API.
