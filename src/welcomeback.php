@@ -22,9 +22,9 @@ $code = WebPage::getRequestValue('code');
 $token = new \SpojeNet\CSas\Token(null, ['keyColumn' => 'uuid']);
 $token->loadFromSQL($state);
 
-\Ease\TWB5\WebPage::singleton(new \Ease\TWB5\WebPage(_('CSAS Authorize')));
-\Ease\TWB5\WebPage::singleton()->addItem(new \Ease\Html\ImgTag('images/csas-authorize.svg', _('CSAS Authorize'), ['align' => 'right']));
-\Ease\TWB5\WebPage::singleton()->addItem(new \Ease\Html\H1Tag(_('CSAS Authorize')));
+WebPage::singleton()->addItem(new PageTop(_('CSAS Authorize')));
+WebPage::singleton()->container->addItem(new \Ease\Html\ImgTag('images/csas-authorize.svg', _('CSAS Authorize'), ['align' => 'right']));
+WebPage::singleton()->container->addItem(new \Ease\Html\H1Tag(_('CSAS Authorize')));
 
 if ($token->getMyKey()) {
     $app = new \SpojeNet\CSas\Application($token->getDataValue('application_id'), ['autoload' => true]);
@@ -60,22 +60,29 @@ if ($token->getMyKey()) {
 
         $token->store($tokens);
 
-        \Ease\TWB5\WebPage::singleton()->addItem(_('Success'));
-
         $secondsToExpire = \max(0, $tokens->getExpires() - \time());
 
-        \Ease\TWB5\WebPage::singleton()->addItem(
+        WebPage::singleton()->container->addItem(
             new \Ease\Html\DivTag(
-                sprintf(_('Access token will expire in %d minutes. Refresh token is valid for 180 days.'), (int) \floor($secondsToExpire / 60)),
-                ['class' => 'alert alert-info'],
+                _('Success').': '.sprintf(_('Access token will expire in %d minutes. Refresh token is valid for 180 days.'), (int) \floor($secondsToExpire / 60)),
+                ['class' => 'alert alert-success'],
             ),
         );
+
+        WebPage::singleton()->container->addItem(new \Ease\Html\DivTag([
+            new \Ease\TWB5\LinkButton('token.php?id='.$token->getMyKey(), '🔑 '._('Token'), 'success'),
+            ' ',
+            new \Ease\TWB5\LinkButton('application.php?id='.$app->getMyKey(), '🏷 '._('Application'), 'primary'),
+            ' ',
+            new \Ease\TWB5\LinkButton('index.php', '🏠 '._('Applications'), 'secondary'),
+        ]));
     } catch (\League\OAuth2\Client\Provider\Exception\IdentityProviderException $e) {
         // Failed to get the access token or user details.
         exit($e->getMessage());
     }
 
-    \Ease\TWB5\WebPage::singleton()->draw();
+    WebPage::singleton()->addItem(new PageBottom());
+    WebPage::singleton()->draw();
 } else {
     header('Location: index.php');
 }
