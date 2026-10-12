@@ -48,6 +48,7 @@ zabbix_export:
               key: 'csas.authorize.token.refresh_days[{#TOKEN_UUID}]'
               delay: 1h
               history: 90d
+              value_type: FLOAT
               units: d
               description: 'Days until the refresh token expires; -1 means the refresh token is missing'
               tags:
@@ -58,6 +59,7 @@ zabbix_export:
               key: 'csas.authorize.token.access_seconds[{#TOKEN_UUID}]'
               delay: 10m
               history: 7d
+              value_type: FLOAT
               units: s
               description: 'Informational: the access token is renewed automatically from the refresh token'
               tags:
