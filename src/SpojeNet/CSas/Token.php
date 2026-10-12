@@ -177,6 +177,67 @@ class Token extends \Ease\SQL\Engine
         return (int) \floor(($refreshExpiresAt->getTimestamp() - \time()) / 86400);
     }
 
+    /**
+     * Flag the other tokens of the same application and environment.
+     *
+     * A token is "usable" while its refresh token is present and still valid.
+     *
+     * @param array<int, array<string, mixed>> $rows   token table rows
+     * @param int                              $keepId id of the token to keep (the current one)
+     * @param null|int                         $now    current timestamp (for tests)
+     *
+     * @return array<int, array<string, mixed>> rows of the other tokens with the added `usable` key
+     */
+    public static function markObsolete(array $rows, int $keepId, ?int $now = null): array
+    {
+        $obsolete = [];
+
+        foreach ($rows as $row) {
+            if ((int) $row['id'] === $keepId) {
+                continue;
+            }
+
+            $row['usable'] = ZabbixMonitor::refreshDays($row, $now) > 0;
+            $obsolete[] = $row;
+        }
+
+        return $obsolete;
+    }
+
+    /**
+     * Older tokens of the same application and environment as this token.
+     *
+     * @return array<int, array<string, mixed>>
+     */
+    public function getObsoleteTokens(): array
+    {
+        $rows = $this->listingQuery()->where([
+            'application_id' => $this->getDataValue('application_id'),
+            'environment' => $this->getDataValue('environment'),
+        ])->fetchAll();
+
+        return self::markObsolete($rows, (int) $this->getMyKey());
+    }
+
+    /**
+     * Remove the other tokens of this application and environment which cannot be used any more.
+     *
+     * @return int number of removed tokens
+     */
+    public function purgeUnusable(): int
+    {
+        $removed = 0;
+        $eraser = new self();
+
+        foreach ($this->getObsoleteTokens() as $row) {
+            if ($row['usable'] === false && $eraser->deleteFromSQL(['id' => $row['id']])) {
+                ++$removed;
+            }
+        }
+
+        return $removed;
+    }
+
     public function getTokensCloseToExpire(): array
     {
         $tokens = $this->listingQuery()

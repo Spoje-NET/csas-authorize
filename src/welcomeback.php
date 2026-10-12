@@ -76,6 +76,34 @@ if ($token->getMyKey()) {
             ' ',
             new \Ease\TWB5\LinkButton('index.php', '🏠 '._('Applications'), 'secondary'),
         ]));
+
+        // Offer removal of the tokens replaced by this authorization
+        $obsoleteTokens = $token->getObsoleteTokens();
+
+        if ($obsoleteTokens) {
+            $oldTable = new \Ease\TWB5\Table();
+            $oldTable->addRowHeaderColumns([_('Token'), _('Created'), _('Refresh Token'), _('Status'), '']);
+            $unusable = 0;
+
+            foreach ($obsoleteTokens as $old) {
+                $unusable += $old['usable'] ? 0 : 1;
+                $oldTable->addRowColumns([
+                    new \Ease\Html\ATag('token.php?id='.$old['id'], $old['uuid']),
+                    $old['created_at'],
+                    empty($old['refresh_token']) ? '❌' : '✅',
+                    $old['usable'] ? _('still valid') : _('unusable'),
+                    new \Ease\TWB5\LinkButton('token.php?id='.$old['id'].'&action=delete', '🗑 '._('Remove'), 'danger btn-sm', ['onclick' => "return confirm('".addslashes(_('Remove this token?'))."')"]),
+                ]);
+            }
+
+            WebPage::singleton()->container->addItem(new \Ease\Html\H3Tag(_('Previous tokens of this application')));
+            WebPage::singleton()->container->addItem(new \Ease\Html\DivTag(_('The new token replaces the older ones. Remove those which are not needed any more; a token which is still valid may be used by an integration.'), ['class' => 'alert alert-warning']));
+            WebPage::singleton()->container->addItem($oldTable);
+
+            if ($unusable) {
+                WebPage::singleton()->container->addItem(new \Ease\TWB5\LinkButton('token.php?id='.$token->getMyKey().'&action=purge', '🧹 '.sprintf(_('Remove all %d unusable tokens'), $unusable), 'danger', ['onclick' => "return confirm('".addslashes(_('Remove all unusable tokens?'))."')"]));
+            }
+        }
     } catch (\League\OAuth2\Client\Provider\Exception\IdentityProviderException $e) {
         // Failed to get the access token or user details.
         exit($e->getMessage());

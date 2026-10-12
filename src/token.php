@@ -40,6 +40,11 @@ if ($action === 'delete') {
     WebPage::singleton()->redirect('application.php?id='.$app->getMyKey());
 }
 
+if ($action === 'purge') {
+    $removed = $token->purgeUnusable();
+    $token->addStatusMessage(sprintf(_('%d obsolete tokens removed'), $removed), 'success');
+}
+
 if ($action === 'refresh') {
     try {
         $newToken = $token->refreshToken(new \SpojeNet\CSas\Auth($app));

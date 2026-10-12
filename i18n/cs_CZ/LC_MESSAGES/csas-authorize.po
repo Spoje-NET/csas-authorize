@@ -932,6 +932,33 @@ msgstr "Expiruje během %d dní"
 #~ msgid "Periodical Tasks"
 #~ msgstr "Opakované úlohy"
 
+msgid "Previous tokens of this application"
+msgstr "Předchozí tokeny této aplikace"
+
+msgid "The new token replaces the older ones. Remove those which are not needed any more; a token which is still valid may be used by an integration."
+msgstr "Nový token nahrazuje starší. Odstraňte ty, které již nejsou potřeba; stále platný token může používat nějaká integrace."
+
+msgid "still valid"
+msgstr "stále platný"
+
+msgid "unusable"
+msgstr "nepoužitelný"
+
+msgid "Remove this token?"
+msgstr "Odstranit tento token?"
+
+msgid "Remove all %d unusable tokens"
+msgstr "Odstranit všech %d nepoužitelných tokenů"
+
+msgid "Remove all unusable tokens?"
+msgstr "Odstranit všechny nepoužitelné tokeny?"
+
+msgid "%d obsolete tokens removed"
+msgstr "Odstraněno zastaralých tokenů: %d"
+
+msgid "Refresh token is missing or has expired. Please re-authorize the application."
+msgstr "Chybí refresh token nebo vypršel. Autorizujte aplikaci znovu."
+
 #, fuzzy
 #~| msgid "Launch after"
 #~ msgid "Launch wizard"
