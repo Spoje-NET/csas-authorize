@@ -1,0 +1,84 @@
+zabbix_export:
+  version: '7.2'
+  template_groups:
+    - uuid: 6a57662a2cbe471592fd43cd380bea20
+      name: Templates/Bank/CSas
+  templates:
+    - uuid: cda004b3ae3d45f5a57742328c9d88a4
+      template: Template CSAS Authorize Tokens
+      name: Template CSAS Authorize Tokens
+      description: >
+        Expiration of CSAS (Ceska sporitelna) OAuth tokens managed by csas-authorize.
+        Needs package csas-authorize-zabbix on the monitored host (Zabbix agent2).
+        The refresh token is valid 180 days; after that a person must reauthorize the application in the bank.
+      groups:
+        - name: Templates/Bank/CSas
+      macros:
+        - macro: '{$CSAS.TOKEN.WARN_DAYS}'
+          value: '14'
+          description: 'Warning when the refresh token expires in less days'
+        - macro: '{$CSAS.TOKEN.HIGH_DAYS}'
+          value: '7'
+          description: 'Average severity when the refresh token expires in less days'
+        - macro: '{$CSAS_AUTHORIZE_URL}'
+          value: 'https://{HOST.CONN}/csas-authorize/'
+          description: 'Where to reauthorize'
+      items:
+        - uuid: bc7a4f9896ed49da9ec44c1c14c64329
+          name: CSAS tokens count
+          key: csas.authorize.token.count
+          delay: 1h
+          history: 30d
+          description: 'Number of tokens stored in csas-authorize'
+          triggers:
+            - uuid: 74c49c7c73dd4817a2b24b8a6f852972
+              expression: 'last(/Template CSAS Authorize Tokens/csas.authorize.token.count)=0'
+              name: 'CSAS authorize: no token is configured on {HOST.NAME}'
+              priority: WARNING
+              manual_close: 'YES'
+      discovery_rules:
+        - uuid: 149cfb0ef81449b2a725b8e6723b2dcb
+          name: CSAS tokens discovery
+          key: csas.authorize.token.lld
+          delay: 1h
+          description: 'Discovers tokens stored in csas-authorize'
+          item_prototypes:
+            - uuid: 23cc2af9c8204a50ac86317c0254916c
+              name: 'CSAS refresh token days left [{#APP_NAME} {#ENV}]'
+              key: 'csas.authorize.token.refresh_days[{#TOKEN_UUID}]'
+              delay: 1h
+              history: 90d
+              units: d
+              description: 'Days until the refresh token expires; -1 means the refresh token is missing'
+              tags:
+                - tag: component
+                  value: csas-token
+            - uuid: 378f73e14b454971abf08ed29c5e62a4
+              name: 'CSAS access token seconds left [{#APP_NAME} {#ENV}]'
+              key: 'csas.authorize.token.access_seconds[{#TOKEN_UUID}]'
+              delay: 10m
+              history: 7d
+              units: s
+              description: 'Informational: the access token is renewed automatically from the refresh token'
+              tags:
+                - tag: component
+                  value: csas-token
+          trigger_prototypes:
+            - uuid: 79ed682b8bf0476baf448b7b68bce64e
+              expression: 'last(/Template CSAS Authorize Tokens/csas.authorize.token.refresh_days[{#TOKEN_UUID}])<=0'
+              name: 'CSAS token {#APP_NAME} ({#ENV}) expired or refresh token missing - reauthorize'
+              priority: HIGH
+              description: 'Reauthorize the application in the bank: {$CSAS_AUTHORIZE_URL}'
+              manual_close: 'YES'
+            - uuid: b2c9328ca7e54d98903f3213d9514866
+              expression: 'last(/Template CSAS Authorize Tokens/csas.authorize.token.refresh_days[{#TOKEN_UUID}])<{$CSAS.TOKEN.HIGH_DAYS} and last(/Template CSAS Authorize Tokens/csas.authorize.token.refresh_days[{#TOKEN_UUID}])>0'
+              name: 'CSAS token {#APP_NAME} ({#ENV}) expires in less than {$CSAS.TOKEN.HIGH_DAYS} days'
+              priority: AVERAGE
+              description: 'Reauthorize the application in the bank: {$CSAS_AUTHORIZE_URL}'
+              manual_close: 'YES'
+            - uuid: 30e85fd293df4c3096ff753c608be842
+              expression: 'last(/Template CSAS Authorize Tokens/csas.authorize.token.refresh_days[{#TOKEN_UUID}])<{$CSAS.TOKEN.WARN_DAYS} and last(/Template CSAS Authorize Tokens/csas.authorize.token.refresh_days[{#TOKEN_UUID}])>={$CSAS.TOKEN.HIGH_DAYS}'
+              name: 'CSAS token {#APP_NAME} ({#ENV}) expires in less than {$CSAS.TOKEN.WARN_DAYS} days'
+              priority: WARNING
+              description: 'Reauthorize the application in the bank: {$CSAS_AUTHORIZE_URL}'
+              manual_close: 'YES'

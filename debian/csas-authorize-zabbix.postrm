@@ -1,0 +1,12 @@
+#!/bin/sh
+set -e
+
+#DEBHELPER#
+
+if [ "$1" = "remove" ] || [ "$1" = "purge" ]; then
+    if [ -d /run/systemd/system ]; then
+        deb-systemd-invoke try-restart zabbix-agent2.service >/dev/null 2>&1 || true
+    fi
+fi
+
+exit 0

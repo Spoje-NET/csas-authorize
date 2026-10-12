@@ -1,6 +1,6 @@
 [Unit]
 Description=Send notification when CSAS access token is about to expire
-After=multi-user.target
+After=multi-user.target network.target mysql.service mariadb.service
 
 [Service]
 User=csas-authorize
@@ -9,6 +9,8 @@ EnvironmentFile=/etc/csas-authorize/csas-authorize.env
 ExecStart=/usr/bin/csas-authorize
 LimitNOFILE=8192:16384
 Type=simple
+Restart=on-failure
+RestartSec=60
 
 [Install]
 WantedBy=multi-user.target

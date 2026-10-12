@@ -35,6 +35,16 @@ Depends:
 Description: CSas/Erste Access Token obtainer
  Manage Renew/Access tokens for your Erste/Csas Apps
 
+Package: csas-authorize-zabbix
+Architecture: all
+Depends:
+ ${misc:Depends},
+ csas-authorize (= ${binary:Version}),
+ zabbix-agent2
+Description: Zabbix monitoring of CSas Authorize token expiration
+ Zabbix agent2 user parameters, discovery helper and a template which alert
+ on approaching or already expired Erste/Csas refresh tokens.
+
 Package: csas-authorize-sqlite
 Architecture: all
 Multi-Arch: foreign

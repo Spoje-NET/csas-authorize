@@ -1,0 +1,10 @@
+#!/bin/sh
+set -e
+
+#DEBHELPER#
+
+if [ "$1" = "configure" ] && [ -d /run/systemd/system ]; then
+    deb-systemd-invoke try-restart zabbix-agent2.service >/dev/null 2>&1 || true
+fi
+
+exit 0

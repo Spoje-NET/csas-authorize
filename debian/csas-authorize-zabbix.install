@@ -1,0 +1,5 @@
+zabbix/csas-zabbix-token                 usr/bin
+zabbix/csas-zabbix-token.php             usr/libexec/csas-authorize
+zabbix/csas-authorize.conf               etc/zabbix/zabbix_agent2.d
+zabbix/csas_authorize_template.yaml      usr/share/csas-authorize/zabbix
+zabbix/README.md                         usr/share/csas-authorize/zabbix
