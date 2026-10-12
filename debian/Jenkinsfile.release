@@ -70,6 +70,18 @@ distributions.each { distro ->
                         def debconf_debug = 0 //Set to "5" or "developer" to debug debconf
                         sh 'cd $WORKSPACE/dist/debian/ ; dpkg-scanpackages . /dev/null | gzip -9c > Packages.gz; cd $WORKSPACE'
                         sh 'echo "deb [trusted=yes] file://///$WORKSPACE/dist/debian/ ./" | sudo tee /etc/apt/sources.list.d/local.list'
+                        // zabbix-agent2 (dependency of csas-authorize-zabbix) is not in the distribution archive:
+                        // add the official Zabbix repository inside the test container
+                        sh '''
+                            if grep -q 'zabbix-agent2' debian/control; then
+                              . /etc/os-release
+                              ZBX_DEB="zabbix-release_latest_7.4+${ID}${VERSION_ID}_all.deb"
+                              ZBX_URL="https://repo.zabbix.com/zabbix/7.4/release/${ID}/pool/main/z/zabbix-release/${ZBX_DEB}"
+                              (curl -fsSL -o "/tmp/${ZBX_DEB}" "${ZBX_URL}" || wget -q -O "/tmp/${ZBX_DEB}" "${ZBX_URL}")
+                              sudo dpkg -i "/tmp/${ZBX_DEB}"
+                              rm -f "/tmp/${ZBX_DEB}"
+                            fi
+                        '''
                         sh 'sudo apt-get update --allow-releaseinfo-change'
                         sh 'echo "INSTALATION"'
                         artifacts.each { deb_file ->
