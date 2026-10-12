@@ -7,6 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.4.0] - 2026-10-12
+
+### Added
+- Package `csas-authorize-zabbix`: Zabbix agent2 monitoring of CSAS token expiration (discovery of tokens, days left of the refresh token, access token validity, Zabbix 7.2 template)
+
+### Fixed
+- `token.php?action=refresh` returned HTTP 500 when the refresh token was missing; the user is now redirected to reauthorization
+- `welcomeback.php` shows the main menu and buttons leading back to the token and the application
+- Refresh token expiry (180 days) calculation and the "close to expire" notification
+- `csas-authorize.service` is restarted on failure and starts after the database
+- Removed composer from the Debian build dependencies
+
 ## [0.3.0] - 2024-09-29
 
 ### Added

@@ -1,3 +1,16 @@
+csas-authorize (0.4.0) noble; urgency=medium
+
+  * New package csas-authorize-zabbix: Zabbix agent2 monitoring of token
+    expiration (LLD discovery, refresh token days left, template included)
+  * token.php: missing refresh token no longer ends with HTTP 500, user is
+    redirected to reauthorization
+  * welcomeback.php: main menu and buttons back to the token and application
+  * Fixed refresh token expiry calculation and expiring tokens notification
+  * csas-authorize.service restarts on failure and waits for the database
+  * Static debian autoloader only, composer removed from Build-Depends
+
+ -- Vítězslav Vitex Dvořák <info@vitexsoftware.cz>  Mon, 12 Oct 2026 15:03:45 +0200
+
 csas-authorize (0.3.0) noble; urgency=medium
 
   * Unified csas-access-token tool with import functionality
