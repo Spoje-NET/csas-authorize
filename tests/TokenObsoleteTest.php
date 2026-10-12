@@ -41,4 +41,18 @@ class TokenObsoleteTest extends TestCase
     {
         $this->assertSame([], Token::markObsolete([['id' => 7, 'refresh_token' => 'r', 'created_at' => self::NOW]], 7, self::NOW));
     }
+
+    public function testCsrfToken(): void
+    {
+        $_SESSION = [];
+        $csrf = Token::csrfToken();
+
+        $this->assertSame(32, \strlen($csrf));
+        $this->assertSame($csrf, Token::csrfToken());
+        $this->assertTrue(Token::csrfValid($csrf));
+        $this->assertFalse(Token::csrfValid('wrong'));
+        $this->assertFalse(Token::csrfValid(null));
+        $_SESSION = [];
+        $this->assertFalse(Token::csrfValid($csrf));
+    }
 }

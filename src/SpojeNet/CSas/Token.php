@@ -178,6 +178,23 @@ class Token extends \Ease\SQL\Engine
     }
 
     /**
+     * Session bound token protecting state changing links against CSRF.
+     */
+    public static function csrfToken(): string
+    {
+        if (empty($_SESSION['csrf'])) {
+            $_SESSION['csrf'] = bin2hex(random_bytes(16));
+        }
+
+        return $_SESSION['csrf'];
+    }
+
+    public static function csrfValid(mixed $given): bool
+    {
+        return !empty($_SESSION['csrf']) && \is_string($given) && hash_equals($_SESSION['csrf'], $given);
+    }
+
+    /**
      * Flag the other tokens of the same application and environment.
      *
      * A token is "usable" while its refresh token is present and still valid.

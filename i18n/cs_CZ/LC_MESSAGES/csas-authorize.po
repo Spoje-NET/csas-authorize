@@ -959,6 +959,9 @@ msgstr "Odstraněno zastaralých tokenů: %d"
 msgid "Refresh token is missing or has expired. Please re-authorize the application."
 msgstr "Chybí refresh token nebo vypršel. Autorizujte aplikaci znovu."
 
+msgid "Invalid or missing security token, the action was not performed."
+msgstr "Neplatný nebo chybějící bezpečnostní token, akce nebyla provedena."
+
 #, fuzzy
 #~| msgid "Launch after"
 #~ msgid "Launch wizard"

@@ -92,7 +92,7 @@ if ($token->getMyKey()) {
                     $old['created_at'],
                     empty($old['refresh_token']) ? '❌' : '✅',
                     $old['usable'] ? _('still valid') : _('unusable'),
-                    new \Ease\TWB5\LinkButton('token.php?id='.$old['id'].'&action=delete', '🗑 '._('Remove'), 'danger btn-sm', ['onclick' => "return confirm('".addslashes(_('Remove this token?'))."')"]),
+                    new \Ease\TWB5\LinkButton('token.php?id='.$old['id'].'&action=delete&csrf='.\SpojeNet\CSas\Token::csrfToken(), '🗑 '._('Remove'), 'danger btn-sm', ['onclick' => "return confirm('".addslashes(_('Remove this token?'))."')"]),
                 ]);
             }
 
@@ -101,7 +101,7 @@ if ($token->getMyKey()) {
             WebPage::singleton()->container->addItem($oldTable);
 
             if ($unusable) {
-                WebPage::singleton()->container->addItem(new \Ease\TWB5\LinkButton('token.php?id='.$token->getMyKey().'&action=purge', '🧹 '.sprintf(_('Remove all %d unusable tokens'), $unusable), 'danger', ['onclick' => "return confirm('".addslashes(_('Remove all unusable tokens?'))."')"]));
+                WebPage::singleton()->container->addItem(new \Ease\TWB5\LinkButton('token.php?id='.$token->getMyKey().'&action=purge&csrf='.\SpojeNet\CSas\Token::csrfToken(), '🧹 '.sprintf(_('Remove all %d unusable tokens'), $unusable), 'danger', ['onclick' => "return confirm('".addslashes(_('Remove all unusable tokens?'))."')"]));
             }
         }
     } catch (\League\OAuth2\Client\Provider\Exception\IdentityProviderException $e) {
