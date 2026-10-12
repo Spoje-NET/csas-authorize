@@ -3,8 +3,17 @@ set -e
 
 #DEBHELPER#
 
-if [ "$1" = "configure" ] && [ -d /run/systemd/system ]; then
-    deb-systemd-invoke try-restart zabbix-agent2.service >/dev/null 2>&1 || true
+if [ "$1" = "configure" ]; then
+    # SQLite database directory is writable only for group www-data,
+    # the zabbix agent has to be able to read it.
+    if grep -qs '^DB_CONNECTION=sqlite' /etc/csas-authorize/csas-authorize.env \
+        && getent passwd zabbix >/dev/null && getent group www-data >/dev/null; then
+        adduser --quiet zabbix www-data || true
+    fi
+
+    if [ -d /run/systemd/system ]; then
+        deb-systemd-invoke try-restart zabbix-agent2.service >/dev/null 2>&1 || true
+    fi
 fi
 
 exit 0
