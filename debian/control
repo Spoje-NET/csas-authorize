@@ -3,7 +3,7 @@ Section: php
 Priority: optional
 Maintainer: Vítězslav Dvořák <info@vitexsoftware.cz>
 Uploaders: Vitex <vitex@hippy.cz>
-Build-Depends: debhelper-compat (= 13), po-debconf, jq, composer, appstream
+Build-Depends: debhelper-compat (= 13), po-debconf, jq, appstream
 Standards-Version: 4.7.0
 Rules-Requires-Root: no
 Homepage: https://github.com/Spoje-NET/csas-authorize

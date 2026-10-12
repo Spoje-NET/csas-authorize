@@ -14,16 +14,7 @@ require_once '/usr/share/php/Psr/Http/Message/factory-autoload.php';
 require_once '/usr/share/php/League/OAuth2/Client/autoload.php';
 require_once '/usr/share/php/Kint/autoload.php';
 
-// System CSasAccounts library (SpojeNet\CSas\Accounts\*, SpojeNet\CSas\Modes\*, etc.)
-spl_autoload_register(function (string $class): void {
-    $prefix = 'SpojeNet\\CSas\\';
-    if (str_starts_with($class, $prefix)) {
-        $file = '/usr/share/php/CSasAccounts/' . str_replace('\\', '/', substr($class, strlen($prefix))) . '.php';
-        if (file_exists($file)) {
-            require $file;
-        }
-    }
-});
+require_once '/usr/share/php/CSasAccounts/autoload.php';
 
 // Project's own CSas application classes
 spl_autoload_register(function (string $class): void {
