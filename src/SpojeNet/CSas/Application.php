@@ -41,7 +41,7 @@ class Application extends \Ease\SQL\Engine
 
     public function getUuid(): string
     {
-        return $this->getDataValue('');
+        return $this->getDataValue('uuid');
     }
 
     public function sandboxMode(?bool $enabled = null): bool
@@ -53,22 +53,22 @@ class Application extends \Ease\SQL\Engine
         return $this->sandboxed;
     }
 
-    public function getApiKey(): string
+    public function getApiKey(): ?string
     {
         return $this->getDataValue($this->sandboxed ? 'sandbox_api_key' : 'production_api_key');
     }
 
-    public function getClientId(): string
+    public function getClientId(): ?string
     {
         return $this->getDataValue($this->sandboxed ? 'sandbox_client_id' : 'production_client_id');
     }
 
-    public function getClientSecret(): string
+    public function getClientSecret(): ?string
     {
         return $this->getDataValue($this->sandboxed ? 'sandbox_client_secret' : 'production_client_secret');
     }
 
-    public function getRedirectUri(): string
+    public function getRedirectUri(): ?string
     {
         return $this->getDataValue($this->sandboxed ? 'sandbox_redirect_uri' : 'production_redirect_uri');
     }
@@ -85,7 +85,7 @@ class Application extends \Ease\SQL\Engine
     {
         $tokens = new Token();
 
-        foreach ($tokens->listingQuery()->where(['application_id' => $this->getMyKey(), 'expire_at < '.time()]) as $tokenData) {
+        foreach ($tokens->listingQuery()->where(['application_id' => $this->getMyKey(), 'expires_in < '.time()]) as $tokenData) {
             $tokens->addStatusMessage('🧹 '._('Removing  Expired Token').$tokenData['id'], 'info');
             $tokens->deleteFromSQL(['id' => $tokenData['id']]);
         }

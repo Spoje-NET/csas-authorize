@@ -64,10 +64,15 @@ class ApplicationAuthFlowTest extends TestCase
 
     public function testAuthUrlGeneration(): void
     {
-        $application = new Application();
-        $application->setDataValue('sandbox_client_id', 'test-client-123');
-        $application->setDataValue('sandbox_redirect_uri', 'https://test.example.com/callback');
-        $application->sandboxMode(true);
+        $application = $this->createMock(Application::class);
+        $application->method('sandboxMode')->willReturn(true);
+        $application->method('getClientId')->willReturn('test-client-123');
+        $application->method('getClientSecret')->willReturn(null);
+        $application->method('getRedirectUri')->willReturn('https://test.example.com/callback');
+
+        $token = $this->createMock(Token::class);
+        $token->method('getNextTokenUuid')->willReturn('generated-state-uuid');
+        $application->method('getToken')->willReturn($token);
 
         $auth = new Auth($application);
         $idpUri = $auth->getIdpUri();
@@ -78,6 +83,7 @@ class ApplicationAuthFlowTest extends TestCase
         $this->assertStringContainsString('client_id=test-client-123', $idpUri);
         $this->assertStringContainsString('response_type=code', $idpUri);
         $this->assertStringContainsString('access_type=offline', $idpUri);
+        $this->assertStringContainsString('state=generated-state-uuid', $idpUri);
     }
 
     public function testTokenStatusMethods(): void

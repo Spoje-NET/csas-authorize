@@ -42,14 +42,43 @@ class Notificator extends \Ease\HtmlMailer
         $mailBody->addItem(new \Ease\Html\PTag(sprintf(_('Token expiration date: %s'), $expirationDate->format('Y-m-d H:i:s'))));
         $mailBody->addItem(new \Ease\Html\PTag(sprintf(_('Remaining time: %d days, %d hours, %d minutes'), $remainingTime->days, $remainingTime->h, $remainingTime->i)));
 
-        $tokenId = $token->getDataValue('id');
-        $renewalLink = str_replace('welcomeback.php', 'auth.php?app='.$token->getDataValue('application_id').'&env='.$token->getDataValue('environment'), $redirectUri);
+        $renewalLink = $this->buildRenewalLink($redirectUri, (int) $token->getDataValue('application_id'), (string) $token->getDataValue('environment'));
 
         $mailBody->addItem(new \Ease\Html\ATag($renewalLink, '♻️ '._('Renew'), ['style' => 'font-size: xxx-large;']));
 
         $hostname = gethostname();
         $username = get_current_user();
         $fromEmail = \Ease\Shared::cfg('EMAIL_FROM', "{$username}@{$hostname}");
-        parent::__construct($token->getDataValue('email'), sprintf(_('%s token renew'), $token->getDataValue('name')), (string) $mailBody, ['From' => $fromEmail]);
+        parent::__construct((string) ($token->getDataValue('email') ?? ''), sprintf(_('%s token renew'), $token->getDataValue('name')), (string) $mailBody, ['From' => $fromEmail]);
+    }
+
+    /**
+     * Build token renewal link from the application redirect URI.
+     *
+     * Replaces the callback script in the redirect URI with auth.php
+     * regardless of the actual callback filename or path depth.
+     *
+     * @param string $redirectUri   Registered OAuth2 redirect URI (points to welcomeback.php)
+     * @param int    $applicationId Application database ID
+     * @param string $environment  sandbox|production
+     *
+     * @return string Renewal link pointing to auth.php on the same host
+     */
+    private function buildRenewalLink(string $redirectUri, int $applicationId, string $environment): string
+    {
+        $urlParts = \parse_url($redirectUri);
+
+        if (empty($urlParts['host'])) {
+            return $redirectUri;
+        }
+
+        $path = $urlParts['path'] ?? '/welcomeback.php';
+        $baseDir = \rtrim(\dirname($path), '/');
+
+        $query = \http_build_query(['app' => $applicationId, 'env' => $environment]);
+
+        return ($urlParts['scheme'] ?? 'https').'://'.$urlParts['host']
+            .(isset($urlParts['port']) ? ':'.$urlParts['port'] : '')
+            .$baseDir.'/auth.php?'.$query;
     }
 }

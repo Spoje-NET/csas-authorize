@@ -26,6 +26,13 @@ use SpojeNet\CSas\Token;
  */
 class NotificatorTest extends TestCase
 {
+    private Token $token;
+
+    protected function setUp(): void
+    {
+        $this->token = $this->createMock(Token::class);
+    }
+
     public function testConstructorWithValidToken(): void
     {
         $mockToken = $this->createMock(Token::class);

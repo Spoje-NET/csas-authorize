@@ -60,22 +60,13 @@ if ($token->getMyKey()) {
 
         $token->store($tokens);
 
-        $tokens = $provider->getAccessToken('refresh_token', [
-            'refresh_token' => $tokens->getRefreshToken(),
-        ]);
-
-        // WebPage::singleton()->container->addItem(new \Ease\TWB5\LinkButton('token.php?id='.$token->getDataValue('id'), '🔑'._('Token'), 'success'));
-
         \Ease\TWB5\WebPage::singleton()->addItem(_('Success'));
 
-        $expiresAt = $tokens->getExpires();
-        $currentDate = new \DateTime();
-        $expirationDate = (new \DateTime())->setTimestamp($expiresAt);
-        $interval = $currentDate->diff($expirationDate);
+        $secondsToExpire = \max(0, $tokens->getExpires() - \time());
 
         \Ease\TWB5\WebPage::singleton()->addItem(
             new \Ease\Html\DivTag(
-                sprintf(_('Token will expire in %d days'), $interval->days),
+                sprintf(_('Access token will expire in %d minutes. Refresh token is valid for 180 days.'), (int) \floor($secondsToExpire / 60)),
                 ['class' => 'alert alert-info'],
             ),
         );

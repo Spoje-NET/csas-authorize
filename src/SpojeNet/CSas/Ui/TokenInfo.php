@@ -29,9 +29,10 @@ class TokenInfo extends \Ease\Html\DivTag
         parent::__construct(new \Ease\Html\H3Tag($token->getDataValue('uuid')));
         $this->addItem(new \Ease\Html\DivTag($token->getDataValue('environment')));
 
+        $now = new \DateTime();
+
         if ($token->getDataValue('expires_in')) {
             $expiresAt = (new \DateTime())->setTimestamp($token->getDataValue('expires_in'));
-            $now = new \DateTime();
             $interval = $now->diff($expiresAt);
 
             if ($expiresAt < $now) {

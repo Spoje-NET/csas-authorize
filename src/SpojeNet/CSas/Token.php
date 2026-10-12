@@ -158,19 +158,55 @@ class Token extends \Ease\SQL\Engine
 
     /**
      * Validity od refresh token is 180 days only.
+     *
+     * @return int Days until the refresh token expires
      */
     public function tokenRenewInDays(): int
     {
-        return $this->daysToExpire('created_at');
+        $createdAt = $this->getDataValue('created_at');
+
+        if (empty($createdAt)) {
+            return 0;
+        }
+
+        $created = \is_numeric($createdAt)
+            ? (new \DateTime())->setTimestamp((int) $createdAt)
+            : new \DateTime($createdAt);
+        $refreshExpiresAt = $created->modify('+180 days');
+
+        return (int) \floor(($refreshExpiresAt->getTimestamp() - \time()) / 86400);
     }
 
-    public function getTokensCloseToExpire()
+    public function getTokensCloseToExpire(): array
     {
-        $oneWeekFromNow = (new \DateTime())->modify('+1 week')->getTimestamp();
-
-        return $this->listingQuery()->select(['application.name', 'application.email', 'production_redirect_uri', 'sandbox_redirect_uri'])->leftJoin('application ON application.id = token.application_id')
-            ->where('expires_in', '<'.$oneWeekFromNow)
+        $tokens = $this->listingQuery()
+            ->select(['application.name', 'application.email', 'production_redirect_uri', 'sandbox_redirect_uri'])
+            ->leftJoin('application ON application.id = token.application_id')
             ->fetchAll();
+
+        $tokensCloseToExpire = [];
+        $now = new \DateTime();
+        $oneWeekFromNow = (clone $now)->modify('+1 week');
+
+        foreach ($tokens as $tokenData) {
+            $createdAt = $tokenData['created_at'] ?? null;
+
+            if (empty($createdAt)) {
+                continue;
+            }
+
+            $created = \is_numeric($createdAt)
+                ? (new \DateTime())->setTimestamp((int) $createdAt)
+                : new \DateTime($createdAt);
+            $refreshExpiresAt = $created->modify('+180 days');
+
+            // Refresh token not expired yet, but expires within a week
+            if ($refreshExpiresAt > $now && $refreshExpiresAt < $oneWeekFromNow) {
+                $tokensCloseToExpire[] = $tokenData;
+            }
+        }
+
+        return $tokensCloseToExpire;
     }
 
     /**
@@ -248,7 +284,7 @@ class Token extends \Ease\SQL\Engine
                 'message' => _('Access token has expired'),
                 'class' => 'danger',
             ];
-        } elseif ($this->tokenValiditySeconds() < 300) { // Less than 5 minutes
+        } elseif ($this->tokenValiditySeconds() <= 300) { // Less than 5 minutes
             $status['access_token'] = [
                 'status' => 'expiring_soon',
                 'message' => sprintf(_('Access token expires in %d seconds'), $this->tokenValiditySeconds()),

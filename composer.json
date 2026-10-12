@@ -43,5 +43,8 @@
         "allow-plugins": {
             "ergebnis/composer-normalize": true
         }
+    },
+    "scripts": {
+        "test": "phpunit"
     }
 }
