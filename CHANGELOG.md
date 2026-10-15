@@ -7,6 +7,33 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.5.0] - 2026-10-15
+
+### Added
+- Older tokens listed in `welcomeback.php` with individual Remove buttons and a bulk action removing all unusable tokens (`token.php?action=purge`)
+- Czech translation of new messages
+- Tests for `TokenObsolete` and CSRF helpers
+
+### Security
+- Token actions in `token.php` and `welcomeback.php` are protected by a CSRF token
+
+### Changed
+- Debian Test stage installs the Zabbix repository
+
+## [0.4.0] - 2026-10-12
+
+### Added
+- New package `csas-authorize-zabbix`: Zabbix agent2 monitoring of token expiration (LLD discovery, refresh token days left, template included)
+- `csas-authorize.service` restarts on failure and waits for the database
+
+### Fixed
+- `token.php`: missing refresh token no longer ends with HTTP 500, user is redirected to reauthorization
+- Refresh token expiry calculation and expiring tokens notification
+- `welcomeback.php`: main menu and buttons back to the token and application
+
+### Changed
+- Static Debian autoloader only, composer removed from Build-Depends
+
 ## [0.3.0] - 2024-09-29
 
 ### Added
