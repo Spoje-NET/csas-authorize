@@ -1,3 +1,13 @@
+csas-authorize (0.5.0) noble; urgency=medium
+
+  * Token actions in token.php and welcomeback.php are protected by CSRF token
+  * welcomeback.php lists older tokens with Remove buttons and a bulk
+    "remove all unusable tokens" action (token.php?action=purge)
+  * Czech translation of new messages
+  * Test stage installs the Zabbix repository
+
+ -- Vítězslav Vitex Dvořák <info@vitexsoftware.cz>  Thu, 15 Oct 2026 15:38:07 +0200
+
 csas-authorize (0.4.0) noble; urgency=medium
 
   * New package csas-authorize-zabbix: Zabbix agent2 monitoring of token

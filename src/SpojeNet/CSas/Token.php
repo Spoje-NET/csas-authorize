@@ -114,17 +114,16 @@ class Token extends \Ease\SQL\Engine
             return $newToken;
         } catch (\League\OAuth2\Client\Provider\Exception\IdentityProviderException $exception) {
             $errorData = $exception->getResponseBody();
+            $errorData = \is_array($errorData) ? $errorData : [];
             $errorMessage = $errorData['error_description'] ?? $exception->getMessage();
-            $errorCode = $errorData['error_code'] ?? null;
-
-            // Clear the expired refresh token
-            $this->setDataValue('refresh_token', null);
-            $this->dbSync();
 
             $this->addStatusMessage(sprintf(_('Token refresh failed: %s'), $errorMessage), 'error');
 
-            // Check if this is specifically a refresh token expiration error
-            if ($errorCode === '7109' || str_contains($errorMessage, 'expired')) {
+            if (self::isRefreshTokenRejected($errorData, $errorMessage)) {
+                // The refresh token is definitely unusable; transient IDP errors keep it for a retry
+                $this->setDataValue('refresh_token', null);
+                $this->dbSync();
+
                 throw new \RuntimeException(_('Refresh token has expired'), 24, $exception);
             }
 
@@ -133,15 +132,61 @@ class Token extends \Ease\SQL\Engine
         }
     }
 
+    /**
+     * Does the IDP error response say the refresh token itself is invalid or expired?
+     *
+     * Errors like server_error or temporarily_unavailable are transient and must not cost the token.
+     *
+     * @param array<string, mixed> $errorData IDP error response body
+     */
+    public static function isRefreshTokenRejected(array $errorData, string $errorMessage): bool
+    {
+        return ($errorData['error'] ?? null) === 'invalid_grant'
+            || (string) ($errorData['error_code'] ?? '') === '7109'
+            || str_contains($errorMessage, 'expired');
+    }
+
+    /**
+     * Revoke the refresh token (and with it the access token) at the IDP.
+     *
+     * @see https://developers.erstegroup.com/docs/tutorial/csas-how-to-call-api Token revocation
+     *
+     * @return bool true when revoked or there was nothing to revoke
+     */
+    public function revoke(Auth $auth): bool
+    {
+        $refreshToken = $this->getDataValue('refresh_token');
+        $token = empty($refreshToken) ? $this->getDataValue('access_token') : $refreshToken;
+
+        if (empty($token)) {
+            return true;
+        }
+
+        try {
+            $auth->revokeToken($token, empty($refreshToken) ? 'access_token' : 'refresh_token');
+            $this->addStatusMessage(sprintf(_('Token %s revoked at the bank'), $this->getDataValue('uuid')), 'success');
+
+            return true;
+        } catch (\Throwable $exception) {
+            $this->addStatusMessage(sprintf(_('Token revocation failed: %s'), $exception->getMessage()), 'warning');
+
+            return false;
+        }
+    }
+
     public function secondsToExpire(string $columnName): int
     {
         /**
-         * @var int|string Time can be in seconds or SQL datetime
+         * @var null|int|string Time can be in seconds or SQL datetime, null for unfinished authorization
          */
         $expiresRaw = $this->getDataValue($columnName);
 
+        if ($expiresRaw === null || $expiresRaw === '') {
+            return 0; // Unfinished authorization: expiry unknown
+        }
+
         if (is_numeric($expiresRaw)) {
-            $expiresAt = (new \DateTime())->setTimestamp($expiresRaw);
+            $expiresAt = (new \DateTime())->setTimestamp((int) $expiresRaw);
         } else {
             $expiresAt = new \DateTime($expiresRaw);
         }
@@ -177,6 +222,84 @@ class Token extends \Ease\SQL\Engine
         return (int) \floor(($refreshExpiresAt->getTimestamp() - \time()) / 86400);
     }
 
+    /**
+     * Session bound token protecting state changing links against CSRF.
+     */
+    public static function csrfToken(): string
+    {
+        if (empty($_SESSION['csrf'])) {
+            $_SESSION['csrf'] = bin2hex(random_bytes(16));
+        }
+
+        return $_SESSION['csrf'];
+    }
+
+    public static function csrfValid(mixed $given): bool
+    {
+        return !empty($_SESSION['csrf']) && \is_string($given) && hash_equals($_SESSION['csrf'], $given);
+    }
+
+    /**
+     * Flag the other tokens of the same application and environment.
+     *
+     * A token is "usable" while its refresh token is present and still valid.
+     *
+     * @param array<int, array<string, mixed>> $rows   token table rows
+     * @param int                              $keepId id of the token to keep (the current one)
+     * @param null|int                         $now    current timestamp (for tests)
+     *
+     * @return array<int, array<string, mixed>> rows of the other tokens with the added `usable` key
+     */
+    public static function markObsolete(array $rows, int $keepId, ?int $now = null): array
+    {
+        $obsolete = [];
+
+        foreach ($rows as $row) {
+            if ((int) $row['id'] === $keepId) {
+                continue;
+            }
+
+            $row['usable'] = ZabbixMonitor::refreshDays($row, $now) > 0;
+            $obsolete[] = $row;
+        }
+
+        return $obsolete;
+    }
+
+    /**
+     * Older tokens of the same application and environment as this token.
+     *
+     * @return array<int, array<string, mixed>>
+     */
+    public function getObsoleteTokens(): array
+    {
+        $rows = $this->listingQuery()->where([
+            'application_id' => $this->getDataValue('application_id'),
+            'environment' => $this->getDataValue('environment'),
+        ])->fetchAll();
+
+        return self::markObsolete($rows, (int) $this->getMyKey());
+    }
+
+    /**
+     * Remove the other tokens of this application and environment which cannot be used any more.
+     *
+     * @return int number of removed tokens
+     */
+    public function purgeUnusable(): int
+    {
+        $removed = 0;
+        $eraser = new self();
+
+        foreach ($this->getObsoleteTokens() as $row) {
+            if ($row['usable'] === false && $eraser->deleteFromSQL(['id' => $row['id']])) {
+                ++$removed;
+            }
+        }
+
+        return $removed;
+    }
+
     public function getTokensCloseToExpire(): array
     {
         $tokens = $this->listingQuery()
@@ -207,6 +330,34 @@ class Token extends \Ease\SQL\Engine
         }
 
         return $tokensCloseToExpire;
+    }
+
+    /**
+     * Is it time to (re)send the expiration notification for this token row?
+     *
+     * @param array<string, mixed> $row      token table row
+     * @param int                  $interval minimal seconds between two notifications
+     * @param null|int             $now      current timestamp (for tests)
+     */
+    public static function notificationDue(array $row, int $interval, ?int $now = null): bool
+    {
+        $notifiedAt = $row['notified_at'] ?? null;
+
+        if (empty($notifiedAt)) {
+            return true;
+        }
+
+        $notified = is_numeric($notifiedAt) ? (int) $notifiedAt : (int) strtotime((string) $notifiedAt);
+
+        return ($now ?? time()) - $notified >= $interval;
+    }
+
+    /**
+     * Remember the expiration notification was sent now.
+     */
+    public function markNotified(int $tokenId): bool
+    {
+        return (bool) $this->updateToSQL(['id' => $tokenId, 'notified_at' => date('Y-m-d H:i:s')]);
     }
 
     /**

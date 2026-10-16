@@ -24,6 +24,7 @@ $appId = WebPage::getRequestValue('app', 'int');
 if ($appId) {
     $app = new \SpojeNet\CSas\Application($appId, ['autoload' => true]);
     $app->sandboxMode(WebPage::getRequestValue('env') === 'sandbox');
+    $recipientEmail = $app->getAuthorizationRecipient();
 
     if ($app->sendAuthorizationLinkByEmail()) {
         WebPage::singleton()->addStatusMessage(_('Authorization link has been sent to: ').$recipientEmail, 'success');

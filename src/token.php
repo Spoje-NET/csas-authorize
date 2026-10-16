@@ -34,10 +34,21 @@ $app = $token->getApplication();
 
 $action = \Ease\WebPage::getRequestValue('action');
 
+if (\in_array($action, ['delete', 'purge', 'refresh'], true) && !\SpojeNet\CSas\Token::csrfValid(\Ease\WebPage::getRequestValue('csrf'))) {
+    $token->addStatusMessage(_('Invalid or missing security token, the action was not performed.'), 'error');
+    $action = null;
+}
+
 if ($action === 'delete') {
+    $token->revoke(new \SpojeNet\CSas\Auth($app));
     $token->deleteFromSQL();
     $token->addStatusMessage(sprintf(_('Token %s removal'), $token->getMyKey()), 'success');
     WebPage::singleton()->redirect('application.php?id='.$app->getMyKey());
+}
+
+if ($action === 'purge') {
+    $removed = $token->purgeUnusable();
+    $token->addStatusMessage(sprintf(_('%d obsolete tokens removed'), $removed), 'success');
 }
 
 if ($action === 'refresh') {
@@ -47,7 +58,7 @@ if ($action === 'refresh') {
         if (\in_array($exception->getCode(), [23, 24], true)) {
             // Refresh token is missing (23) or has expired (24), redirect to re-authorization
             $token->addStatusMessage(_('Refresh token is missing or has expired. Please re-authorize the application.'), 'warning');
-            WebPage::singleton()->redirect('auth.php?id='.$app->getMyKey());
+            WebPage::singleton()->redirect('auth.php?'.http_build_query(['app' => $app->getMyKey(), 'env' => $token->getDataValue('environment')]));
         } else {
             // Other runtime exception, re-throw it
             throw $exception;
@@ -65,12 +76,12 @@ $opsCol = $tokenRow->addColumn(6, [
 ]);
 
 if ($token->isExpired()) {
-    $opsCol->addItem(new \Ease\TWB5\LinkButton('token.php?id='.$tokenId.'&action=delete', '🗑 ️'._('Remove'), 'danger'));
+    $opsCol->addItem(new \Ease\TWB5\LinkButton('token.php?id='.$tokenId.'&action=delete&csrf='.\SpojeNet\CSas\Token::csrfToken(), '🗑 ️'._('Remove'), 'danger'));
 } else {
     $opsCol->addItem(new \Ease\TWB5\LinkButton('', '🗑 ️'._('Remove'), 'danger disabled'));
 }
 
-$opsCol->addItem(new \Ease\TWB5\LinkButton('token.php?id='.$tokenId.'&action=refresh', '♻️ ️'._('Refresh'), $token->tokenValiditySeconds() < 0 ? 'success' : 'secondary'));
+$opsCol->addItem(new \Ease\TWB5\LinkButton('token.php?id='.$tokenId.'&action=refresh&csrf='.\SpojeNet\CSas\Token::csrfToken(), '♻️ ️'._('Refresh'), $token->tokenValiditySeconds() < 0 ? 'success' : 'secondary'));
 
 $tokenRow->addColumn(6, new TokenInfo($token));
 

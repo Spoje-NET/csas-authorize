@@ -5,13 +5,6 @@ set -e
 
 . /usr/share/debconf/confmodule
 
-
-if [ -f /usr/share/dbconfig-common/dpkg/postinst ] && [ -f /etc/csas-authorize/csas-authorize.env ]; then
-
-    phinx migrate -c /usr/lib/csas-authorize/phinx-adapter.php
-
-fi
-
 pathfind() {
     OLDIFS="$IFS"
     IFS=:
@@ -62,6 +55,10 @@ install | upgrade)
     
     ;;
 configure)
+
+    # Bring the database schema up to date (new install as well as upgrade)
+    # stdout belongs to debconf, so the output goes to stderr
+    /usr/lib/csas-authorize/csas-authorize-migrate >&2
 
     # If the package has default file it could be sourced, so that
     # the local admin can overwrite the defaults

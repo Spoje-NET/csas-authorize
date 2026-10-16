@@ -43,7 +43,7 @@ class NotificatorTestFixed extends TestCase
         $notificator = new Notificator($mockToken);
 
         $this->assertInstanceOf(Notificator::class, $notificator);
-        $this->assertInstanceOf(\Ease\HtmlMailer::class, $notificator);
+        $this->assertInstanceOf(\SpojeNet\CSas\Mailer::class, $notificator);
     }
 
     public function testConstructorWithSandboxEnvironment(): void
@@ -84,7 +84,7 @@ class NotificatorTestFixed extends TestCase
         $this->assertInstanceOf(Notificator::class, $notificator);
     }
 
-    public function testInheritsFromHtmlMailer(): void
+    public function testInheritsFromMailer(): void
     {
         $mockToken = $this->createMock(Token::class);
         $mockToken->method('getDataValue')->willReturnMap([
@@ -100,6 +100,6 @@ class NotificatorTestFixed extends TestCase
 
         $notificator = new Notificator($mockToken);
 
-        $this->assertInstanceOf(\Ease\HtmlMailer::class, $notificator);
+        $this->assertInstanceOf(\SpojeNet\CSas\Mailer::class, $notificator);
     }
 }

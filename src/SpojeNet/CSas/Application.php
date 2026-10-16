@@ -102,6 +102,14 @@ class Application extends \Ease\SQL\Engine
     }
 
     /**
+     * Recipient of the authorization link: application email or the one requested.
+     */
+    public function getAuthorizationRecipient(): ?string
+    {
+        return $this->getDataValue('email') ?? \Ease\WebPage::getRequestValue('email');
+    }
+
+    /**
      * Sends an authorization link by email instead of redirecting the browser.
      */
     public function sendAuthorizationLinkByEmail(): bool
@@ -111,10 +119,10 @@ class Application extends \Ease\SQL\Engine
         $idpUri = $auth->getIdpUri();
 
         // Get recipient email from application data or request
-        $recipientEmail = $this->getDataValue('email') ?? WebPage::getRequestValue('email');
+        $recipientEmail = $this->getAuthorizationRecipient();
 
         if (empty($recipientEmail)) {
-            WebPage::singleton()->addStatusMessage(_('Recipient email address is not set.'), 'error');
+            \Ease\WebPage::singleton()->addStatusMessage(_('Recipient email address is not set.'), 'error');
             header('Location: application.php?id='.$this->getMyKey());
 
             exit;
@@ -126,17 +134,6 @@ class Application extends \Ease\SQL\Engine
             $idpUri,
         );
 
-        // Use Ease\Mail or PHP mail() as fallback
-        $mailSent = false;
-
-        if (class_exists('\Ease\Mailer')) {
-            $mailer = new \Ease\Mailer($recipientEmail, $subject, $message);
-            $mailSent = $mailer->send();
-        } else {
-            $headers = 'From: noreply@'.$_SERVER['SERVER_NAME']."\r\n";
-            $mailSent = mail($recipientEmail, $subject, $message, $headers);
-        }
-
-        return $mailSent;
+        return (new Mailer())->sendMessage($recipientEmail, $subject, $message);
     }
 }

@@ -1,0 +1,27 @@
+#!/bin/sh
+# Apply pending csas-authorize database migrations
+#
+# Called from postinst of csas-authorize and of csas-authorize-mysql/-sqlite
+# once the database is configured. Safe to run repeatedly.
+set -e
+
+ENV_FILE=/etc/csas-authorize/csas-authorize.env
+PHINX_CONFIG=/usr/lib/csas-authorize/phinx-adapter.php
+
+if [ ! -f "$ENV_FILE" ]; then
+    echo "csas-authorize: $ENV_FILE not found, database not configured yet - skipping migrations"
+    exit 0
+fi
+
+if ! command -v phinx >/dev/null 2>&1; then
+    echo "csas-authorize: phinx not available yet - skipping migrations"
+    exit 0
+fi
+
+if [ ! -f "$PHINX_CONFIG" ] || [ ! -f /usr/share/csas-authorize/autoload.php ]; then
+    echo "csas-authorize: application files not installed yet - skipping migrations"
+    exit 0
+fi
+
+echo "csas-authorize: applying database migrations"
+phinx migrate -c "$PHINX_CONFIG" -e production

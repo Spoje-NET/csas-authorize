@@ -22,8 +22,12 @@ namespace SpojeNet\CSas;
  *
  * @no-named-arguments
  */
-class Notificator extends \Ease\HtmlMailer
+class Notificator extends Mailer
 {
+    public string $recipient;
+    public string $subject;
+    public string $body;
+
     public function __construct(Token $token)
     {
         $mailBody = new \Ease\Html\DivTag();
@@ -46,10 +50,18 @@ class Notificator extends \Ease\HtmlMailer
 
         $mailBody->addItem(new \Ease\Html\ATag($renewalLink, '♻️ '._('Renew'), ['style' => 'font-size: xxx-large;']));
 
-        $hostname = gethostname();
-        $username = get_current_user();
-        $fromEmail = \Ease\Shared::cfg('EMAIL_FROM', "{$username}@{$hostname}");
-        parent::__construct((string) ($token->getDataValue('email') ?? ''), sprintf(_('%s token renew'), $token->getDataValue('name')), (string) $mailBody, ['From' => $fromEmail]);
+        parent::__construct();
+        $this->recipient = (string) ($token->getDataValue('email') ?? '');
+        $this->subject = sprintf(_('%s token renew'), $token->getDataValue('name'));
+        $this->body = (string) $mailBody;
+    }
+
+    /**
+     * Send the renewal notification.
+     */
+    public function send(): bool
+    {
+        return $this->sendMessage($this->recipient, $this->subject, strip_tags($this->body), $this->body);
     }
 
     /**

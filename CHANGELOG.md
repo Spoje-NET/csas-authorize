@@ -7,17 +7,52 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- Removing a token revokes it at the bank IDP (`{idp}/revoke`, RFC 7009) before deleting it
+- Token expiration reminder is sent at most once per `CSAS_AUTHORIZE_NOTIFY_INTERVAL` seconds (default 86400) instead of every daemon cycle; new column `token.notified_at` (migration)
+
+### Changed
+- Debian: database migrations run by `/usr/lib/csas-authorize/csas-authorize-migrate` on `configure` of `csas-authorize` and also after (re)configuring the database in `csas-authorize-mysql` / `csas-authorize-sqlite`; they no longer run on `abort-*` actions
+- Emails (authorization link, token renewal reminder) are sent by Symfony Mailer configured with `MAIL_DSN` and `MAIL_FROM`; deprecated `EASE_SMTP` is still understood. Failure reason is shown to the user
+- New dependency `php-symfony-mailer`
+
+### Fixed
+- `welcomeback.php`: rejected consent (`error=access_denied`, also in the URL fragment) shows the reason with a re-authorize button instead of redirecting to the non-existent `{idp}/authorize`; failed code exchange is shown in the page
+- `welcomeback.php`: a `state` of an already completed authorization is not accepted again
+- Re-authorization link after an expired refresh token (`token.php`) pointed to `auth.php?id=` and ended on the index page
+- Refresh token is cleared only when the IDP rejects it (`invalid_grant`, 7109, expired); transient errors like `server_error` keep it for the next attempt
+- `token.php`: token of an unfinished authorization (no `expires_in`) no longer ends with a fatal `DateTime` error
+- Redirects now stop the script, so removing or refreshing a token no longer fails in `PageTop`
+- `mailauth.php`: undefined `$recipientEmail` in status messages
+- Sending authorization link for an application without email no longer fails on unknown `WebPage` class
+- Status messages carried over a redirect no longer store objects in the session (an `Ease\Mailer` there broke every following request). A session already affected must be reset once by clearing the browser cookie
+
+## [0.5.0] - 2026-10-15
+
+### Added
+- Older tokens listed in `welcomeback.php` with individual Remove buttons and a bulk action removing all unusable tokens (`token.php?action=purge`)
+- Czech translation of new messages
+- Tests for `TokenObsolete` and CSRF helpers
+
+### Security
+- Token actions in `token.php` and `welcomeback.php` are protected by a CSRF token
+
+### Changed
+- Debian Test stage installs the Zabbix repository
+
 ## [0.4.0] - 2026-10-12
 
 ### Added
-- Package `csas-authorize-zabbix`: Zabbix agent2 monitoring of CSAS token expiration (discovery of tokens, days left of the refresh token, access token validity, Zabbix 7.2 template)
+- New package `csas-authorize-zabbix`: Zabbix agent2 monitoring of token expiration (LLD discovery, refresh token days left, template included)
+- `csas-authorize.service` restarts on failure and waits for the database
 
 ### Fixed
-- `token.php?action=refresh` returned HTTP 500 when the refresh token was missing; the user is now redirected to reauthorization
-- `welcomeback.php` shows the main menu and buttons leading back to the token and the application
-- Refresh token expiry (180 days) calculation and the "close to expire" notification
-- `csas-authorize.service` is restarted on failure and starts after the database
-- Removed composer from the Debian build dependencies
+- `token.php`: missing refresh token no longer ends with HTTP 500, user is redirected to reauthorization
+- Refresh token expiry calculation and expiring tokens notification
+- `welcomeback.php`: main menu and buttons back to the token and application
+
+### Changed
+- Static Debian autoloader only, composer removed from Build-Depends
 
 ## [0.3.0] - 2024-09-29
 
