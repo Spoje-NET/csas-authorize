@@ -23,6 +23,17 @@ session_start();
 );
 \Ease\Locale::singleton(null, '../i18n', 'csas-authorize');
 
+// Ease restores the messages kept over redirect only into Shared::$statusMessages,
+// the status line reads the logger: put them back there without logging them again
+$restoredMessages = array_filter(\Ease\Shared::$statusMessages, static fn ($message): bool => $message instanceof \Ease\Logger\Message);
+
+if ($restoredMessages) {
+    (function (array $messages): void {
+        array_push($this->messages, ...array_values($messages));
+    })->call(\Ease\Shared::logger(), $restoredMessages);
+    \Ease\Shared::$statusMessages = [];
+}
+
 /**
  * @global WebPage $oPage
  */
