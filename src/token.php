@@ -73,6 +73,49 @@ if ($action === 'refresh') {
     }
 }
 
+if ($action === 'test') {
+    $envArray = $token->exportEnv();
+
+    if (empty($envArray['CSAS_ACCESS_TOKEN'])) {
+        WebPage::singleton()->addStatusMessage(_('Token has no access token to test. Please re-authorize the application.'), 'warning');
+    } else {
+        if ($token->needsRefresh() && !empty($token->getDataValue('refresh_token'))) {
+            try {
+                $token->refreshToken(new \SpojeNet\CSas\Auth($app));
+                $envArray = $token->exportEnv();
+            } catch (\RuntimeException $exception) {
+                WebPage::singleton()->addStatusMessage(_('Access token refresh before test failed').': '.$exception->getMessage(), 'warning');
+            }
+        }
+
+        $apiInstance = new \SpojeNet\CSas\Accounts\DefaultApi(new \SpojeNet\CSas\ApiClient(
+            [
+                'apikey' => $envArray['CSAS_API_KEY'],
+                'token' => $envArray['CSAS_ACCESS_TOKEN'],
+                'debug' => false,
+                'sandbox' => $envArray['CSAS_SANDBOX_MODE'],
+            ],
+        ));
+
+        try {
+            $toDate = new \DateTime();
+
+            $result = $apiInstance->getAccounts();
+
+            // Uložení výstupu Kint do proměnné
+
+            ob_clean();
+            Kint::$enabled_mode = true;
+            Kint::$expanded = true; // Expand the dump by default
+            ob_start();
+            Kint::dump($result, true);
+            $kintOutput = ob_get_clean();
+        } catch (\Exception $e) {
+            $kintOutput = 'Exception when calling DefaultApi->getAccounts: '.$e->getMessage();
+        }
+    }
+}
+
 WebPage::singleton()->addItem(new PageTop(_('CSAS').': '._('Token')));
 
 $tokenRow = new \Ease\TWB5\Row();
@@ -104,38 +147,6 @@ foreach ($envArray as $key => $value) {
 $envDiv = new \Ease\Html\DivTag(nl2br($envContent));
 
 WebPage::singleton()->container->addItem($envDiv);
-
-if ($action === 'test') {
-    if (empty($envArray['CSAS_ACCESS_TOKEN'])) {
-        WebPage::singleton()->addStatusMessage(_('Token has no access token to test. Please re-authorize the application.'), 'warning');
-    } else {
-        $apiInstance = new \SpojeNet\CSas\Accounts\DefaultApi(new \SpojeNet\CSas\ApiClient(
-            [
-                'apikey' => $envArray['CSAS_API_KEY'],
-                'token' => $envArray['CSAS_ACCESS_TOKEN'],
-                'debug' => false,
-                'sandbox' => $envArray['CSAS_SANDBOX_MODE'],
-            ],
-        ));
-
-        try {
-            $toDate = new \DateTime();
-
-            $result = $apiInstance->getAccounts();
-
-            // Uložení výstupu Kint do proměnné
-
-            ob_clean();
-            Kint::$enabled_mode = true;
-            Kint::$expanded = true; // Expand the dump by default
-            ob_start();
-            Kint::dump($result, true);
-            $kintOutput = ob_get_clean();
-        } catch (\Exception $e) {
-            $kintOutput = 'Exception when calling DefaultApi->getAccounts: '.$e->getMessage();
-        }
-    }
-}
 
 if (isset($kintOutput)) {
     WebPage::singleton()->container->addItem($kintOutput);

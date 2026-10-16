@@ -61,6 +61,10 @@ msgstr "obnova tokenu %s č. %d"
 msgid "Token has no access token to test. Please re-authorize the application."
 msgstr "Token nemá žádný přístupový token k otestování. Prosím, znovu autorizujte aplikaci."
 
+#: ../src/token.php
+msgid "Access token refresh before test failed"
+msgstr "Obnovení přístupového tokenu před testem selhalo"
+
 #: ../src/SpojeNet/CSas/Token.php:36
 msgid "Error Creating Token Record"
 msgstr "Chyba ukládání záznamu Tokenu"
