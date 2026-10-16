@@ -45,4 +45,25 @@ class WebPage extends \Ease\TWB5\WebPage
 
 EOD);
     }
+
+    /**
+     * Redirect and stop the script.
+     *
+     * Messages are kept in session for the next page, so their callers must
+     * not be objects (e.g. Ease\Mailer cannot be unserialized again).
+     *
+     * @param string $url
+     */
+    public function redirect($url): void
+    {
+        foreach (\Ease\Shared::logger()->getMessages() as $message) {
+            if (\is_object($message->caller)) {
+                $message->caller = $message->caller::class;
+            }
+        }
+
+        parent::redirect($url);
+
+        exit;
+    }
 }

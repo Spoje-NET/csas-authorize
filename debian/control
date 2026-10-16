@@ -31,6 +31,7 @@ Depends:
  php-psr-http-factory,
  php-psr-http-message,
  php-cakephp-phinx,
+ php-symfony-mailer,
  csas-authorize-sqlite | csas-authorize-mysql
 Description: CSas/Erste Access Token obtainer
  Manage Renew/Access tokens for your Erste/Csas Apps

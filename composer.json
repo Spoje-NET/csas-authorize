@@ -28,7 +28,8 @@
         "vitexsoftware/ease-fluentpdo": "^1.4",
         "vitexsoftware/ease-html-widgets": "^1.1",
         "spojenet/csas-accountsapi": "^0.7",
-        "kint-php/kint": "^6.0"
+        "kint-php/kint": "^6.0",
+        "symfony/mailer": "^5.4 || ^6.4 || ^7.0"
     },
     "require-dev": {
         "robmorgan/phinx": "^0.16",

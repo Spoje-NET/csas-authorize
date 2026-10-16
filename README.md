@@ -38,6 +38,21 @@ One application can have multiple tokens
 Once is token created you can see it's details. Each Refresh Token can have multiple Access Tokens.
 Refresh token is valid for 180 days and Access Token for 5 minutes.
 
+## Mail configuration
+
+Authorization links ("Mail Auth Link" button) and token renewal reminders are sent by
+[Symfony Mailer](https://symfony.com/doc/current/mailer.html). Configure it in
+`/etc/csas-authorize/csas-authorize.env`:
+
+```env
+MAIL_DSN="smtp://username:password@mail.example.com:587"
+MAIL_FROM=noreply@example.com
+```
+
+- `MAIL_DSN` – transport in [Symfony mailer DSN format](https://symfony.com/doc/current/mailer.html#transport-setup). STARTTLS is used when the server offers it, special characters in username/password must be URL encoded (`@` → `%40`). Without it the local `sendmail` is used.
+- `MAIL_FROM` – sender address (`EMAIL_FROM` is also accepted), defaults to `user@hostname`.
+- `EASE_SMTP` – deprecated JSON configuration, still used when `MAIL_DSN` is not set.
+
 ## Command line usage
 
 ```shell

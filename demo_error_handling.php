@@ -35,10 +35,24 @@ echo "   - Tests for token validation methods\n\n";
 echo "Error Flow:\n";
 echo "1. User clicks 'Refresh' button on expired token\n";
 echo "2. Token::refreshToken() catches IdentityProviderException\n";
+echo "   - Checks for error code 7109 (ČSAS specific expired token error)\n";
+echo "   - Also checks for 'expired' keyword in error message\n";
 echo "3. Expired refresh token is cleared from database\n";
-echo "4. RuntimeException with code 24 is thrown\n";
-echo "5. token.php catches the exception\n";
-echo "6. User is redirected to auth.php for re-authorization\n";
-echo "7. Clear message explains what happened\n\n";
+echo "4. RuntimeException with code 24 is thrown for expired tokens\n";
+echo "5. RuntimeException with code 25 is thrown for other OAuth2 errors\n";
+echo "6. token.php catches the exception based on error code\n";
+echo "7. User is redirected to auth.php for re-authorization\n";
+echo "8. Clear message explains what happened\n\n";
+
+echo "4. Updated csas-access-token.php command:\n";
+echo "   - Catches expired refresh token errors\n";
+echo "   - Returns JSON error response with --json flag\n";
+echo "   - Returns text error message otherwise\n";
+echo "   - Exits with status code 1 for script automation\n\n";
+
+echo "5. New helper methods:\n";
+echo "   - isRefreshTokenExpired(): Proactive expiration check\n";
+echo "   - needsRefresh(): Check if token needs refresh\n";
+echo "   - getTokenStatus(): Get detailed token status\n\n";
 
 echo "This ensures a graceful user experience when refresh tokens expire.\n";

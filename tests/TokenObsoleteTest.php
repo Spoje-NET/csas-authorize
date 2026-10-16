@@ -55,4 +55,13 @@ class TokenObsoleteTest extends TestCase
         $_SESSION = [];
         $this->assertFalse(Token::csrfValid($csrf));
     }
+
+    public function testSecondsToExpireWithoutExpiry(): void
+    {
+        $token = new Token();
+        $token->setDataValue('expires_in', null);
+
+        $this->assertSame(0, $token->secondsToExpire('expires_in'));
+        $this->assertSame(0, $token->tokenValiditySeconds());
+    }
 }

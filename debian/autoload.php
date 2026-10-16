@@ -13,6 +13,7 @@ require_once '/usr/share/php/Psr/Http/Message/autoload.php';
 require_once '/usr/share/php/Psr/Http/Message/factory-autoload.php';
 require_once '/usr/share/php/League/OAuth2/Client/autoload.php';
 require_once '/usr/share/php/Kint/autoload.php';
+require_once '/usr/share/php/Symfony/Component/Mailer/autoload.php';
 
 require_once '/usr/share/php/CSasAccounts/autoload.php';
 
