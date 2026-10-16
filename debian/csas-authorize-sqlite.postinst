@@ -16,5 +16,10 @@ dbc_dbfile_perms="0664"
 
 dbc_go csas-authorize "$@"
 
+# Database (re)configured: apply migrations when the application is already unpacked
+if [ "$1" = "configure" ] && [ -x /usr/lib/csas-authorize/csas-authorize-migrate ]; then
+    /usr/lib/csas-authorize/csas-authorize-migrate >&2
+fi
+
 
 #DEBHELPER#

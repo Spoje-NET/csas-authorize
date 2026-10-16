@@ -33,7 +33,7 @@ migration: ## Run database migrations
 
 .PHONY: sysmigration
 sysmigration: ## Run database migrations using system phinx
-	cd src ; /usr/bin/phinx migrate -c /usr/lib/multiflexi/phinx-adapter.php ; cd ..
+	cd src ; /usr/bin/phinx migrate -c /usr/lib/csas-authorize/phinx-adapter.php ; cd ..
 
 .PHONY: newmigration
 newmigration: ## Prepare new Database Migration
