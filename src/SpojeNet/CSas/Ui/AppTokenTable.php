@@ -27,7 +27,7 @@ class AppTokenTable extends \Ease\TWB5\Table
     public function __construct(\SpojeNet\CSas\Application $application)
     {
         parent::__construct();
-        $this->addRowHeaderColumns(['#', _('Environment'), _('Access Token'), _('Refresh Token'), _('Expiration'), _('Created'), _('Updated')]);
+        $this->addRowHeaderColumns(['#', _('Environment'), _('Access Token'), _('Refresh Token'), _('Expiration'), _('Created'), _('Updated'), '']);
         $tokens = new \SpojeNet\CSas\Token();
 
         foreach ($tokens->getAppTokens($application)->fetchAll() as $tokenData) {
@@ -53,6 +53,12 @@ class AppTokenTable extends \Ease\TWB5\Table
 
                 $tokenData['expires_in'] = new \Ease\Html\Widgets\LiveAge($expiresAt, ['class' => $class]);
             }
+
+            $tokenData[] = new \Ease\TWB5\LinkButton(
+                'token.php?id='.$tokenData['id'].'&action=delete&csrf='.\SpojeNet\CSas\Token::csrfToken(),
+                '🗑 ️'._('Remove'),
+                'danger btn-sm',
+            );
 
             $tokenData['id'] = new \Ease\TWB5\LinkButton('token.php?id='.$tokenData['id'], $tokenData['id'], 'link');
 
