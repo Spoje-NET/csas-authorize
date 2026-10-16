@@ -30,6 +30,13 @@ if (null === $tokenId) {
 }
 
 $token = new \SpojeNet\CSas\Token($tokenId, ['autoload' => true]);
+
+if (empty($token->getDataValue('application_id'))) {
+    // Token was removed (e.g. replaced by a newer one) or never existed
+    $token->addStatusMessage(sprintf(_('Token %d not found'), $tokenId), 'warning');
+    WebPage::singleton()->redirect('index.php');
+}
+
 $app = $token->getApplication();
 
 $action = \Ease\WebPage::getRequestValue('action');

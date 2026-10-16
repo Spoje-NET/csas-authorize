@@ -2158,3 +2158,9 @@ msgstr "Neplatný nebo chybějící bezpečnostní token, akce nebyla provedena.
 #, fuzzy
 #~ msgid "Transakce"
 #~ msgstr "Transakce"
+
+msgid "Token %d not found"
+msgstr "Token %d nebyl nalezen"
+
+msgid "Token is not bound to any application"
+msgstr "Token není přiřazen k žádné aplikaci"

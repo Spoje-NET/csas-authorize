@@ -390,6 +390,10 @@ class Token extends \Ease\SQL\Engine
 
     public function getApplication(): Application
     {
+        if (!isset($this->application)) {
+            throw new \RuntimeException(_('Token is not bound to any application'), 26);
+        }
+
         return $this->application;
     }
 
