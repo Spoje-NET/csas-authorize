@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.6.0] - 2026-10-16
+
 ### Added
 - Removing a token revokes it at the bank IDP (`{idp}/revoke`, RFC 7009) before deleting it
 - Token expiration reminder is sent at most once per `CSAS_AUTHORIZE_NOTIFY_INTERVAL` seconds (default 86400) instead of every daemon cycle; new column `token.notified_at` (migration)

@@ -1,3 +1,19 @@
+csas-authorize (0.6.0) noble; urgency=medium
+
+  * Emails are sent by Symfony Mailer configured with MAIL_DSN and
+    MAIL_FROM (new dependency php-symfony-mailer)
+  * Removing a token revokes it at the bank IDP (RFC 7009)
+  * Rejected consent and failed code exchange are shown in
+    welcomeback.php with a re-authorize button
+  * Refresh token is kept on transient IDP errors, cleared only when
+    rejected
+  * Expiration reminder sent at most once per
+    CSAS_AUTHORIZE_NOTIFY_INTERVAL (new column token.notified_at)
+  * Database migrations run on configure and after database
+    reconfiguration
+
+ -- Vítězslav Vitex Dvořák <info@vitexsoftware.cz>  Fri, 16 Oct 2026 11:00:43 +0200
+
 csas-authorize (0.5.0) noble; urgency=medium
 
   * Token actions in token.php and welcomeback.php are protected by CSRF token
