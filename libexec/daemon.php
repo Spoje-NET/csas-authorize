@@ -30,17 +30,25 @@ if (strtolower(\Ease\Shared::cfg('APP_DEBUG', 'false')) === 'true') {
 $token = new \SpojeNet\CSas\Token();
 $token->logBanner( \Ease\Shared::appName().' '.\Ease\Shared::appVersion(), 'CSas authorize Daemon started');
 
+$notifyInterval = (int) \Ease\Shared::cfg('CSAS_AUTHORIZE_NOTIFY_INTERVAL', 86400);
+
 do {
     $tokensCloseToExpire = $token->getTokensCloseToExpire();
 
     foreach ($tokensCloseToExpire as $tokenCloseToExpire) {
+        if (\SpojeNet\CSas\Token::notificationDue($tokenCloseToExpire, $notifyInterval) === false) {
+            continue; // Already notified recently
+        }
+
         $token->setData($tokenCloseToExpire);
         //Send notification with token renewal link
         $token->addStatusMessage('Token ' . $tokenCloseToExpire['uuid'] . ' is close to expire');
 
         $notificator = new \SpojeNet\CSas\Notificator($token);
-        $notificator->send();
-        
+
+        if ($notificator->send()) {
+            $token->markNotified((int) $tokenCloseToExpire['id']);
+        }
     }
 
     if ($daemonize) {

@@ -82,4 +82,31 @@ class Auth extends \League\OAuth2\Client\Provider\GenericProvider
 
         return Fnc::addUrlParams($this->idpLink.'/auth', $idpParams);
     }
+
+    /**
+     * Revoke access or refresh token (RFC 7009).
+     *
+     * The IDP announces revocation_endpoint_auth_methods_supported: none, so only client_id is sent.
+     *
+     * @param string $tokenTypeHint refresh_token|access_token
+     *
+     * @throws \RuntimeException when the IDP refuses the revocation
+     */
+    public function revokeToken(string $token, string $tokenTypeHint = 'refresh_token'): void
+    {
+        $request = $this->getRequestFactory()->getRequestWithOptions('POST', $this->idpLink.'/revoke', [
+            'headers' => ['Content-Type' => 'application/x-www-form-urlencoded'],
+            'body' => http_build_query([
+                'token' => $token,
+                'token_type_hint' => $tokenTypeHint,
+                'client_id' => $this->application->getClientId(),
+            ]),
+        ]);
+
+        $response = $this->getResponse($request);
+
+        if ($response->getStatusCode() >= 400) {
+            throw new \RuntimeException(sprintf(_('IDP refused token revocation: HTTP %d %s'), $response->getStatusCode(), (string) $response->getBody()));
+        }
+    }
 }

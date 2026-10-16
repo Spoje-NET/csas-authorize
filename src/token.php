@@ -40,6 +40,7 @@ if (\in_array($action, ['delete', 'purge', 'refresh'], true) && !\SpojeNet\CSas\
 }
 
 if ($action === 'delete') {
+    $token->revoke(new \SpojeNet\CSas\Auth($app));
     $token->deleteFromSQL();
     $token->addStatusMessage(sprintf(_('Token %s removal'), $token->getMyKey()), 'success');
     WebPage::singleton()->redirect('application.php?id='.$app->getMyKey());
@@ -57,7 +58,7 @@ if ($action === 'refresh') {
         if (\in_array($exception->getCode(), [23, 24], true)) {
             // Refresh token is missing (23) or has expired (24), redirect to re-authorization
             $token->addStatusMessage(_('Refresh token is missing or has expired. Please re-authorize the application.'), 'warning');
-            WebPage::singleton()->redirect('auth.php?id='.$app->getMyKey());
+            WebPage::singleton()->redirect('auth.php?'.http_build_query(['app' => $app->getMyKey(), 'env' => $token->getDataValue('environment')]));
         } else {
             // Other runtime exception, re-throw it
             throw $exception;
