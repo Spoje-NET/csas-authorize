@@ -126,6 +126,10 @@ $opsCol = $tokenRow->addColumn(6, [
 ]);
 
 if ($token->isExpired()) {
+    $opsCol->addItem(new \Ease\TWB5\Alert('warning', _('The access token has expired. The bank would reject the test request - refresh the token first.')));
+}
+
+if ($token->isExpired()) {
     $opsCol->addItem(new \Ease\TWB5\LinkButton('token.php?id='.$tokenId.'&action=delete&csrf='.\SpojeNet\CSas\Token::csrfToken(), '🗑 ️'._('Remove'), 'danger'));
 } else {
     $opsCol->addItem(new \Ease\TWB5\LinkButton('', '🗑 ️'._('Remove'), 'danger disabled'));

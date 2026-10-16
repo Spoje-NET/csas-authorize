@@ -65,6 +65,10 @@ msgstr "Token nemá žádný přístupový token k otestování. Prosím, znovu 
 msgid "Access token refresh before test failed"
 msgstr "Obnovení přístupového tokenu před testem selhalo"
 
+#: ../src/token.php
+msgid "The access token has expired. The bank would reject the test request - refresh the token first."
+msgstr "Přístupový token je expirovaný. Banka by testovací požadavek odmítla – nejprve proveďte refresh tokenu."
+
 #: ../src/SpojeNet/CSas/Token.php:36
 msgid "Error Creating Token Record"
 msgstr "Chyba ukládání záznamu Tokenu"
