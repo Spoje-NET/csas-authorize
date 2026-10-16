@@ -129,11 +129,7 @@ if ($token->isExpired()) {
     $opsCol->addItem(new \Ease\TWB5\Alert('warning', _('The access token has expired. The bank would reject the test request - refresh the token first.')));
 }
 
-if ($token->isExpired()) {
-    $opsCol->addItem(new \Ease\TWB5\LinkButton('token.php?id='.$tokenId.'&action=delete&csrf='.\SpojeNet\CSas\Token::csrfToken(), '🗑 ️'._('Remove'), 'danger'));
-} else {
-    $opsCol->addItem(new \Ease\TWB5\LinkButton('', '🗑 ️'._('Remove'), 'danger disabled'));
-}
+$opsCol->addItem(new \Ease\TWB5\LinkButton('token.php?id='.$tokenId.'&action=delete&csrf='.\SpojeNet\CSas\Token::csrfToken(), '🗑 ️'._('Remove'), 'danger'));
 
 $opsCol->addItem(new \Ease\TWB5\LinkButton('token.php?id='.$tokenId.'&action=refresh&csrf='.\SpojeNet\CSas\Token::csrfToken(), '♻️ ️'._('Refresh'), $token->tokenValiditySeconds() < 0 ? 'success' : 'secondary'));
 
