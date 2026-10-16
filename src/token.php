@@ -106,30 +106,34 @@ $envDiv = new \Ease\Html\DivTag(nl2br($envContent));
 WebPage::singleton()->container->addItem($envDiv);
 
 if ($action === 'test') {
-    $apiInstance = new \SpojeNet\CSas\Accounts\DefaultApi(new \SpojeNet\CSas\ApiClient(
-        [
-            'apikey' => $envArray['CSAS_API_KEY'],
-            'token' => $envArray['CSAS_ACCESS_TOKEN'],
-            'debug' => false,
-            'sandbox' => $envArray['CSAS_SANDBOX_MODE'],
-        ],
-    ));
+    if (empty($envArray['CSAS_ACCESS_TOKEN'])) {
+        WebPage::singleton()->addStatusMessage(_('Token has no access token to test. Please re-authorize the application.'), 'warning');
+    } else {
+        $apiInstance = new \SpojeNet\CSas\Accounts\DefaultApi(new \SpojeNet\CSas\ApiClient(
+            [
+                'apikey' => $envArray['CSAS_API_KEY'],
+                'token' => $envArray['CSAS_ACCESS_TOKEN'],
+                'debug' => false,
+                'sandbox' => $envArray['CSAS_SANDBOX_MODE'],
+            ],
+        ));
 
-    try {
-        $toDate = new \DateTime();
+        try {
+            $toDate = new \DateTime();
 
-        $result = $apiInstance->getAccounts();
+            $result = $apiInstance->getAccounts();
 
-        // Uložení výstupu Kint do proměnné
+            // Uložení výstupu Kint do proměnné
 
-        ob_clean();
-        Kint::$enabled_mode = true;
-        Kint::$expanded = true; // Expand the dump by default
-        ob_start();
-        Kint::dump($result, true);
-        $kintOutput = ob_get_clean();
-    } catch (\Exception $e) {
-        $kintOutput = 'Exception when calling DefaultApi->getAccounts: '.$e->getMessage();
+            ob_clean();
+            Kint::$enabled_mode = true;
+            Kint::$expanded = true; // Expand the dump by default
+            ob_start();
+            Kint::dump($result, true);
+            $kintOutput = ob_get_clean();
+        } catch (\Exception $e) {
+            $kintOutput = 'Exception when calling DefaultApi->getAccounts: '.$e->getMessage();
+        }
     }
 }
 

@@ -45,14 +45,17 @@ class Notificator extends Mailer
 
         $mailBody->addItem(new \Ease\Html\PTag(sprintf(_('Token expiration date: %s'), $expirationDate->format('Y-m-d H:i:s'))));
         $mailBody->addItem(new \Ease\Html\PTag(sprintf(_('Remaining time: %d days, %d hours, %d minutes'), $remainingTime->days, $remainingTime->h, $remainingTime->i)));
+        $mailBody->addItem(new \Ease\Html\PTag(sprintf(_('Token number: %d (UUID: %s)'), (int) $token->getDataValue('id'), (string) $token->getDataValue('uuid'))));
+        $mailBody->addItem(new \Ease\Html\PTag(sprintf(_('Environment: %s'), (string) ($token->getDataValue('environment') ?? ''))));
 
-        $renewalLink = $this->buildRenewalLink($redirectUri, (int) $token->getDataValue('application_id'), (string) $token->getDataValue('environment'));
+        $renewalLink = $this->buildRenewalLink($redirectUri, (int) $token->getDataValue('application_id'), (string) ($token->getDataValue('environment') ?? ''));
 
         $mailBody->addItem(new \Ease\Html\ATag($renewalLink, '♻️ '._('Renew'), ['style' => 'font-size: xxx-large;']));
+        $mailBody->addItem(new \Ease\Html\PTag(sprintf(_('Notification sent from: %s on server %s'), self::from(), (string) gethostname())));
 
         parent::__construct();
         $this->recipient = (string) ($token->getDataValue('email') ?? '');
-        $this->subject = sprintf(_('%s token renew'), $token->getDataValue('name'));
+        $this->subject = sprintf(_('%s token #%d renew'), (string) $token->getDataValue('name'), (int) $token->getDataValue('id'));
         $this->body = (string) $mailBody;
     }
 

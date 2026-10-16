@@ -36,14 +36,30 @@ msgstr "Datum expirace tokenu: %s"
 msgid "Remaining time: %d days, %d hours, %d minutes"
 msgstr "Zbývající čas: %d dní, %d hodin, %d minut"
 
+#, php-format
+msgid "Token number: %d (UUID: %s)"
+msgstr "Číslo tokenu: %d (UUID: %s)"
+
+#, php-format
+msgid "Environment: %s"
+msgstr "Prostředí: %s"
+
+#, php-format
+msgid "Notification sent from: %s on server %s"
+msgstr "Oznámení odesláno z adresy %s na serveru %s"
+
 #: ../src/SpojeNet/CSas/Notificator.php:46
 msgid "Renew"
 msgstr "Obnovení"
 
 #: ../src/SpojeNet/CSas/Notificator.php:51
 #, php-format
-msgid "%s token renew"
-msgstr "obnova tokenu %s"
+msgid "%s token #%d renew"
+msgstr "obnova tokenu %s č. %d"
+
+#: ../src/token.php
+msgid "Token has no access token to test. Please re-authorize the application."
+msgstr "Token nemá žádný přístupový token k otestování. Prosím, znovu autorizujte aplikaci."
 
 #: ../src/SpojeNet/CSas/Token.php:36
 msgid "Error Creating Token Record"
