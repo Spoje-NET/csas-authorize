@@ -30,7 +30,7 @@ switch ($action) {
     case 'delete':
         $app->deleteFromSQL();
         $app->addStatusMessage(sprintf(_('Application %s removal'), $app->getRecordName()), 'success');
-        WebPage::singleton()->redirect('apps.php');
+        WebPage::singleton()->redirect('index.php');
 
         break;
 
