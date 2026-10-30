@@ -15,8 +15,6 @@ declare(strict_types=1);
 
 namespace SpojeNet\CSas\Ui;
 
-use Kint\Kint;
-
 require_once '../vendor/autoload.php';
 
 require_once './init.php';
@@ -98,20 +96,11 @@ if ($action === 'test') {
         ));
 
         try {
-            $toDate = new \DateTime();
-
             $result = $apiInstance->getAccounts();
-
-            // Uložení výstupu Kint do proměnné
-
-            ob_clean();
-            Kint::$enabled_mode = true;
-            Kint::$expanded = true; // Expand the dump by default
-            ob_start();
-            Kint::dump($result, true);
-            $kintOutput = ob_get_clean();
-        } catch (\Exception $e) {
-            $kintOutput = 'Exception when calling DefaultApi->getAccounts: '.$e->getMessage();
+            $testOutput = new \Ease\Html\DivTag(htmlspecialchars(print_r($result, true)), ['style' => 'font-family: monospace; white-space: pre-wrap']);
+        } catch (\Throwable $e) {
+            // Throwable: library type errors must not end in a bare HTTP 500
+            WebPage::singleton()->addStatusMessage(_('Test failed').': '.$e->getMessage(), 'error');
         }
     }
 }
@@ -148,8 +137,8 @@ $envDiv = new \Ease\Html\DivTag(nl2br($envContent));
 
 WebPage::singleton()->container->addItem($envDiv);
 
-if (isset($kintOutput)) {
-    WebPage::singleton()->container->addItem($kintOutput);
+if (isset($testOutput)) {
+    WebPage::singleton()->container->addItem($testOutput);
 }
 
 WebPage::singleton()->addItem(new PageBottom());
