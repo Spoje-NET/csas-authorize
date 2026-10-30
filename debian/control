@@ -22,7 +22,7 @@ Depends:
  php-vitexsoftware-ease-bootstrap5-widgets,
  php-vitexsoftware-ease-fluentpdo,
  php-spojenet-csas-accountsapi,
- php-kint-php-kint,
+ php-kint-php-kint (>= 6.1.0-3),
  php-league-oauth2-client,
  php-guzzlehttp-guzzle,
  php-guzzlehttp-promises,

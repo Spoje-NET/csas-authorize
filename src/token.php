@@ -15,6 +15,8 @@ declare(strict_types=1);
 
 namespace SpojeNet\CSas\Ui;
 
+use Kint\Kint;
+
 require_once '../vendor/autoload.php';
 
 require_once './init.php';
@@ -97,7 +99,9 @@ if ($action === 'test') {
 
         try {
             $result = $apiInstance->getAccounts();
-            $testOutput = new \Ease\Html\DivTag(htmlspecialchars(print_r($result, true)), ['style' => 'font-family: monospace; white-space: pre-wrap']);
+            Kint::$return = true;
+            Kint::$expanded = true;
+            $testOutput = Kint::dump($result);
         } catch (\Throwable $e) {
             // Throwable: library type errors must not end in a bare HTTP 500
             WebPage::singleton()->addStatusMessage(_('Test failed').': '.$e->getMessage(), 'error');
