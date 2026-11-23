@@ -33,7 +33,7 @@
     },
     "require-dev": {
         "robmorgan/phinx": "^0.16",
-        "phpunit/phpunit": "^12.3",
+        "phpunit/phpunit": "^13.4",
         "phpstan/phpstan": "*",
         "phpstan/phpstan-phpunit": "^2.0",
         "friendsofphp/php-cs-fixer": "^3.92",
